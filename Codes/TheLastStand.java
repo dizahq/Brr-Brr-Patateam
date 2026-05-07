@@ -10,6 +10,8 @@ public class TheLastStand extends JFrame{
     MainLayeredPane mainLayeredPane;
     
     public TheLastStand(){
+        SaveManager.resetFile();
+        
         setBounds(0, 0, frameWidth, frameHeight);
         setUndecorated(true);
         setLocationRelativeTo(null);

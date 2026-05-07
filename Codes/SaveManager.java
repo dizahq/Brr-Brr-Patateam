@@ -14,7 +14,19 @@ public class SaveManager {
 
     // Checks if a save file exists
     public static boolean hasSave() {
-        return Files.exists(Paths.get(SAVE_FILE));
+        File file = new File(SAVE_FILE);
+        if (!file.exists()) return false;
+
+        try (Scanner scanner = new Scanner(file)){
+            if (scanner.hasNextLine()) {
+                String firstLine = scanner.nextLine();
+                return !firstLine.equals("RESET");
+            }
+        } catch (IOException e) {
+            return false;
+        }
+        // return Files.exists(Paths.get(SAVE_FILE));
+        return false;
     }
 
     public static boolean save(SaveData data) {
@@ -72,6 +84,19 @@ public class SaveManager {
         } catch (IOException e) {
             System.err.println("[SaveManager] Delete failed: " + e.getMessage());
             return false;
+        }
+    }
+
+    // Savegame.txt reset when main method runs
+    public static void resetFile() {
+        try {
+            Files.createDirectories(Paths.get(SAVE_DIR));
+            try (PrintWriter writer = new PrintWriter(new FileWriter(SAVE_FILE))) {
+                writer.println("RESET");
+            } 
+            System.out.println("[SaveManager] Save file reset for new main game.");
+        } catch (IOException e) {
+            System.err.println("[SaveManager] Failed to reset file: " + e.getMessage());
         }
     }
 }
