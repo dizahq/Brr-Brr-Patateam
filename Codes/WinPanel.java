@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 public class WinPanel extends OverlayPanel {
     private JPanel container;
-    private JLabel title = new JLabel("Congratulations. You won!");
+    private JLabel title = new JLabel("Congratulations. \nYou won!");
     private JButton mainMenuBtn = new JButton("Main Menu");
     private JButton exitBtn = new JButton("Exit Game");
 

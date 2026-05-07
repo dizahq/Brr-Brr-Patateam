@@ -185,6 +185,13 @@ public class Game extends JPanel {
             List<Enemy> newEnemies = bossEnemy.spawnEnemies();
             enemies.addAll(newEnemies);
         }
+
+        // Temp just to test try win condition
+        if (heldKeys.contains(KeyEvent.VK_K)) {
+            System.out.println("[Game] Debug: Manual win triggered.");
+            this.killBoss(); 
+            return;
+        }
     }
 
     @Override
@@ -448,5 +455,12 @@ public class Game extends JPanel {
 
     public void killBoss(){
         this.bossEnemy = null;
+
+        // to win
+        gameLoop.stopThread();
+        SwingUtilities.invokeLater(() ->
+            rootLayeredPane.getWinPanel().setVisible(true)
+        );
+        System.out.println("[Game] Boss defeated! Player wins!");
     }
 }
