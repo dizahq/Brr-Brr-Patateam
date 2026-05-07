@@ -27,9 +27,9 @@ public class SaveManager {
                 writer.println(data.currentLevel);
                 writer.println(data.currentWave);
                 writer.println(data.lives);
-                writer.println(data.spawnRate);
                 writer.println(data.playerX);
                 writer.println(data.playerY);
+                writer.println(data.spawnRate);
             }
 
             System.out.println("[SaveManager] Game saved: " + data);
@@ -55,7 +55,7 @@ public class SaveManager {
             int spawnRate = scanner.hasNextLine() ? Integer.parseInt(scanner.nextLine()) : 5000;
 
             return new SaveData(level, wave, lives, pX, pY, spawnRate);
-        } catch (IOException e) {
+        } catch (IOException | NumberFormatException e) {
             System.err.println("[SaveManager] Load failed (corrupt file): " + e.getMessage());
             return null;
         }

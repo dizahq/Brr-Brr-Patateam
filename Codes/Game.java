@@ -61,6 +61,8 @@ public class Game extends JPanel {
 
     private BossEnemy bossEnemy;
 
+    private boolean restoringFromSave = false;
+
     public Game(int panelWidth, int panelHeight, MainLayeredPane rootLayeredPane) {
         this.rootLayeredPane = rootLayeredPane;
         this.panelWidth = panelWidth;
@@ -305,11 +307,11 @@ public class Game extends JPanel {
             obstacles.add(new Obstacle(getWidth()/2 - 100, getHeight()/2 -100, 80, 400, panelWidth, panelHeight, 2));
         }
 
-
-        
         currentRespawn = 0;
         spawnCount = ((currentLevel * currentLevel) - (currentLevel * 2) + 20) / respawns;
-        spawnRate = spawnRate + (int)(currentLevel * 250);
+        if (!restoringFromSave) {
+            spawnRate = spawnRate + (int)(currentLevel * 250);
+        }
 
         // Increment wave 
         currentWave++;
@@ -418,9 +420,11 @@ public class Game extends JPanel {
         bossEnemy = null;
         heldKeys.clear();
 
+        restoringFromSave = true;
         currentWave--; // pre-decrement so initializeWave lands on correct wave
         initializeWave(currentLevel, null);
 
+        restoringFromSave = false;
         player.setCurrentLives(data.lives);
         player.setPosition(data.playerX, data.playerY);
     
