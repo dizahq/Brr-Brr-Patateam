@@ -50,13 +50,14 @@ public class PauseMenuPanel extends OverlayPanel{
     }
 
     public void backToMainMenu(){
-        // Savee game progress
+        // Save game progress
         SaveData data = new SaveData(
             game.getCurrentLevel(), 
             game.getCurrentWave(),
             game.getLives(), 
             game.getPlayerX(), 
-            game.getPlayerY()
+            game.getPlayerY(),
+            game.getSpawnRate()
         );
         boolean saved = SaveManager.save(data);
         if (!saved) {
@@ -74,7 +75,8 @@ public class PauseMenuPanel extends OverlayPanel{
             game.getCurrentWave(),
             game.getLives(), 
             game.getPlayerX(), 
-            game.getPlayerY()
+            game.getPlayerY(),
+            game.getSpawnRate()
         );
         SaveManager.save(data);
 

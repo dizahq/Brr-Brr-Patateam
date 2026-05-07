@@ -103,17 +103,13 @@ public class MainMenuPanel extends JPanel{
         // File read
         if (data != null) {
             // Restore game state from the save file
-            game.setCurrentLevel(data.currentLevel);
-            game.setCurrentWave(data.currentWave);
-            game.setLives(data.lives);
-            game.setPlayerPosition(data.playerX, data.playerY);
+            game.restoreFromSave(data);
             System.out.println("[MainMenuPanel] Continuing from: " + data);
         } else {
             // Save file wass corrupt/missing
             System.err.println("[MainMenuPanel] No valid save found, startingnew.");
             game.setCurrentLevel(0);
-            game.setCurrentWave(0);
-            game.setLives(4);
+            game.resetGame();
         }
 
         switchPanel.accept("game");

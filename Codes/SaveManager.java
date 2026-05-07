@@ -22,10 +22,12 @@ public class SaveManager {
             // Create saves/directory if missing
             Files.createDirectories(Paths.get(SAVE_DIR));
             
+            // Write data into savegame.txt
             try (PrintWriter writer = new PrintWriter(new FileWriter(SAVE_FILE))) {
                 writer.println(data.currentLevel);
                 writer.println(data.currentWave);
                 writer.println(data.lives);
+                writer.println(data.spawnRate);
                 writer.println(data.playerX);
                 writer.println(data.playerY);
             }
@@ -50,8 +52,9 @@ public class SaveManager {
             int lives = Integer.parseInt(scanner.nextLine());
             int pX = Integer.parseInt(scanner.nextLine());
             int pY = Integer.parseInt(scanner.nextLine());
+            int spawnRate = scanner.hasNextLine() ? Integer.parseInt(scanner.nextLine()) : 5000;
 
-            return new SaveData(level, wave, lives, pX, pY);
+            return new SaveData(level, wave, lives, pX, pY, spawnRate);
         } catch (IOException e) {
             System.err.println("[SaveManager] Load failed (corrupt file): " + e.getMessage());
             return null;

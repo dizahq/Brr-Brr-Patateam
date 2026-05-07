@@ -408,10 +408,23 @@ public class Game extends JPanel {
     public void setCurrentLevel(int level) { this.currentLevel = level; }
 
     public int getCurrentWave() { return currentWave; }
-    public void setCurrentWave(int wave) {
-        this.currentWave = wave;
-    }
+    public void setCurrentWave(int wave) { this.currentWave = wave; } // sets display counter - doesn't trigger initializeWave
     
+    public int getSpawnRate() { return spawnRate; }
+    public void restoreFromSave (SaveData data) {
+        currentLevel = data.currentLevel;
+        currentWave = data.currentWave; // wave read back from file
+        spawnRate = data.spawnRate; // difficulty read back from file
+        bossEnemy = null;
+        heldKeys.clear();
+
+        currentWave--; // pre-decrement so initializeWave lands on correct wave
+        initializeWave(currentLevel, null);
+
+        player.setCurrentLives(data.lives);
+        player.setPosition(data.playerX, data.playerY);
+    
+    }
     public int getLives() { return player.getCurrentLives(); }
     public void setLives(int lives) { player.setCurrentLives(lives); }
 
