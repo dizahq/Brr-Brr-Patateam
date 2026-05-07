@@ -2,7 +2,6 @@ package Codes;
 
 import java.awt.CardLayout;
 import java.util.function.Consumer;
-
 import javax.swing.JPanel;
 
 public class MainPanel extends JPanel{
@@ -28,6 +27,12 @@ public class MainPanel extends JPanel{
     }
     public void switchPanel(String name){
         cards.show(this, name);
+
+        if (name.equals("game")) {
+            SoundManager.getInstance().playMusic("Music/Game_music.wav");
+        } else if (name.equals("mainMenu")) {
+            SoundManager.getInstance().playMusic("Music/MainMenu_music.wav");
+        }
     }
 
     public Consumer<String> getSwitchPanel() {

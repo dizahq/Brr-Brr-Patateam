@@ -20,7 +20,7 @@ public class ExitConfirmPanel extends OverlayPanel{
         cancelExitBtn.setPreferredSize(new Dimension(200, 50));
 
         confirmExitBtn.addActionListener(e -> {
-            // SaveManager.deleteSave(); -> use only if exit game = delete saved data
+            // SaveManager.deleteSave(); // use only if exit game = delete saved data
             System.exit(0);
         });
         cancelExitBtn.addActionListener(e -> {

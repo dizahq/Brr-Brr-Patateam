@@ -81,6 +81,7 @@ public class PauseMenuPanel extends OverlayPanel{
         SaveManager.save(data);
 
         game.stopGameThread();
+        SoundManager.getInstance().stopMusic();
         System.exit(0);
     }
 }
