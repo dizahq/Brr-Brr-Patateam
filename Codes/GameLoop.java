@@ -65,6 +65,7 @@ public class GameLoop implements Runnable {
     }
 
 
+    // Game loop
     @Override
     public void run() {
         long lastTime = System.nanoTime();

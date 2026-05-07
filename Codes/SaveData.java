@@ -1,12 +1,9 @@
 package Codes;
 
-import java.io.Serializable;
 
 // container that holds all game info we want to save 
 
-public class SaveData implements Serializable {
-    private static final long serialVersionUID = 2L;
-
+public class SaveData {
     public int currentLevel;
     public int currentWave; 
     public int lives;

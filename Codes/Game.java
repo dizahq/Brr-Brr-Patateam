@@ -10,14 +10,14 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import java.util.Map;
-import java.util.Random;
 
 public class Game extends JPanel {
     private Player player;
@@ -229,7 +229,7 @@ public class Game extends JPanel {
             drawHealthBar(g, bossEnemy);
         }
 
-        // Temp banner (Fades after 2.5s)
+        // Temp banner (fade after 2.5s)
         if (showWaveBanner) {
             long elapsed = System.currentTimeMillis() - waveBannerStartTime;
             if (elapsed < WAVE_BANNER_DURATION) {
@@ -244,7 +244,7 @@ public class Game extends JPanel {
     private void drawWaveHUD(Graphics g) {
         String text = "Wave " + currentWave;
 
-        g.setFont(new Font("Arial", Font.BOLD, 22));
+        g.setFont(new Font("Arial", Font.BOLD, 30));
 
         int textWidth = g.getFontMetrics().stringWidth(text);
         int x = (panelWidth - textWidth) / 2;
