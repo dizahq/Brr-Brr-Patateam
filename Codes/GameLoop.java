@@ -14,7 +14,6 @@ public class GameLoop implements Runnable {
         this.game = game;
     }
 
-
     //Create and start the game loop
     public synchronized void startThread() {
         if (gameThread != null && gameThread.isAlive()) return;

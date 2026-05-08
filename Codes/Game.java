@@ -292,21 +292,23 @@ public class Game extends JPanel {
         obstacles.clear();
 
 
-        if (currentLevel == 0 || currentLevel == 2 || currentLevel == 5){
-            obstacles.add(new Obstacle(getWidth() /2 - 300, 150, 220, 60, panelWidth, panelHeight, 1));
-            obstacles.add(new Obstacle(getWidth() /2 + 100,300, 220, 60, panelWidth, panelHeight, 1));
-            obstacles.add(new Obstacle(getWidth() /2 - 500, getHeight()/2 -100, 80, 300, panelWidth, panelHeight, 2));
+        if (currentLevel % 2 == 0){
+            obstacles.add(new Obstacle(getWidth() /2 - 300, 150, 220, 60, panelWidth, panelHeight, 1, false));
+            obstacles.add(new Obstacle(getWidth() /2 + 100,300, 220, 60, panelWidth, panelHeight, 1, false));
+            obstacles.add(new Obstacle(getWidth() /2 - 500, getHeight()/2 -100, 80, 300, panelWidth, panelHeight, 2, true));
+            obstacles.add(new Obstacle(getWidth() - 250, getHeight()/2 + 100, 70, 200, panelWidth, panelHeight, 3, true));
+            obstacles.add(new Obstacle(getWidth() /2 - 50, getHeight() - 200, 160, 90, panelWidth, panelHeight, 4, false));
+
         }
 
-        if (currentLevel == 1 || currentLevel == 4){
-            obstacles.add(new Obstacle(getWidth() /2 -400,300, 220, 60, panelWidth, panelHeight, 1));
-            obstacles.add(new Obstacle(getWidth() /2, getHeight() - 200, 220, 60, panelWidth, panelHeight, 1));
-            obstacles.add(new Obstacle(getWidth() - 300, getHeight()/2 -500, 80, 400, panelWidth, panelHeight, 2));
-            obstacles.add(new Obstacle(getWidth()/2 - 100, getHeight()/2 -100, 80, 400, panelWidth, panelHeight, 2));
+        if (currentLevel % 2 != 0){
+            obstacles.add(new Obstacle(getWidth() /2 -600,200, 220, 60, panelWidth, panelHeight, 1, false));
+            obstacles.add(new Obstacle(getWidth() /2, getHeight() - 300, 220, 60, panelWidth, panelHeight, 1, false));
+            obstacles.add(new Obstacle(getWidth() - 300, getHeight()/2 -300, 80, 400, panelWidth, panelHeight, 2, true));
+            obstacles.add(new Obstacle(getWidth()/2 - 200, getHeight()/2 -100, 80, 400, panelWidth, panelHeight, 2, false));
         }
 
 
-        
         currentRespawn = 0;
         spawnCount = ((currentLevel * currentLevel) - (currentLevel * 2) + 20) / respawns;
         spawnRate = spawnRate + (int)(currentLevel * 250);

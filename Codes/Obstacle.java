@@ -14,10 +14,15 @@ public class Obstacle extends GameObject {
     private Image obstacle4;
     private Image currentImage;
     private int type;
+    private boolean fullCollision;
+
     
     // Constructor passing coordinates and dimensions to the GameObject parent.
-    Obstacle(int x, int y, int width, int height, int panelWidth, int panelHeight, int type) {
+    Obstacle(int x, int y, int width, int height, int panelWidth, int panelHeight, int type, boolean fullCollision) {
         super(x, y, width, height);
+        this.type = type;
+        this.fullCollision = fullCollision;
+
 
         //image = new ImageIcon("Entities/Object/rock1.png").getImage();
         
@@ -48,6 +53,10 @@ public class Obstacle extends GameObject {
     //Mainly used for collision detection, so we define a smaller hitbox that better matches the visual representation of the wall.
     @Override
     public Rectangle getBounds() {
+        if (fullCollision){
+            return new Rectangle (x,y,width,height); //allows full collision 
+        }
+
         int collisionHeight = 20; // how tall the bottom collision strip is
         return new Rectangle(x, y + height - collisionHeight, width, collisionHeight);
     }
