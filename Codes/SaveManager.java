@@ -1,33 +1,47 @@
 package Codes;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
-// Handles all file reading and writing
 public class SaveManager {
-    private static final String SAVE_DIR = "Saves";
-    private static final String SAVE_FILE = SAVE_DIR + File.separator + "Savegame.dat";
+    private static final String SAVE_DIR = "Save";
+    private static final String SAVE_FILE = SAVE_DIR + File.separator + "Savegame.txt";
 
     // Checks if a save file exists
     public static boolean hasSave() {
-        return Files.exists(Paths.get(SAVE_FILE));
+        File file = new File(SAVE_FILE);
+        if (!file.exists()) return false;
+
+        try (Scanner scanner = new Scanner(file)){
+            if (scanner.hasNextLine()) {
+                String firstLine = scanner.nextLine();
+                return !firstLine.equals("RESET");
+            }
+        } catch (IOException e) {
+            return false;
+        }
+        // return Files.exists(Paths.get(SAVE_FILE));
+        return false;
     }
 
-    // Writes SaveData to disk
     public static boolean save(SaveData data) {
         try {
             // Create saves/directory if missing
             Files.createDirectories(Paths.get(SAVE_DIR));
             
-            // Serialize and write
-            try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(SAVE_FILE))) {
-                out.writeObject(data);
+            // Write data into savegame.txt
+            try (PrintWriter writer = new PrintWriter(new FileWriter(SAVE_FILE))) {
+                writer.println(data.currentLevel);
+                writer.println(data.currentWave);
+                writer.println(data.lives);
+                writer.println(data.playerX);
+                writer.println(data.playerY);
+                writer.println(data.spawnRate);
             }
 
             System.out.println("[SaveManager] Game saved: " + data);
@@ -38,22 +52,23 @@ public class SaveManager {
         }
     }
 
-    // Read SaveData from disk
     public static SaveData load() {
         if (!hasSave()) {
             System.out.println("[SaveManager] No save file found.");
             return null;
         }
 
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(SAVE_FILE))) {
-            SaveData data = (SaveData) in.readObject();
-            System.out.println("[SaveManager] Game loaded: " + data);
-            return data;
-        } catch (IOException e) {
+        try (Scanner scanner = new Scanner(new File(SAVE_FILE))) {
+            int level = Integer.parseInt(scanner.nextLine());
+            int wave = Integer.parseInt(scanner.nextLine());
+            int lives = Integer.parseInt(scanner.nextLine());
+            int pX = Integer.parseInt(scanner.nextLine());
+            int pY = Integer.parseInt(scanner.nextLine());
+            int spawnRate = scanner.hasNextLine() ? Integer.parseInt(scanner.nextLine()) : 5000;
+
+            return new SaveData(level, wave, lives, pX, pY, spawnRate);
+        } catch (IOException | NumberFormatException e) {
             System.err.println("[SaveManager] Load failed (corrupt file): " + e.getMessage());
-            return null;
-        } catch (ClassNotFoundException e) {
-            System.err.println("[SaveManager] Load failed (incompatible save): " + e.getMessage());
             return null;
         }
     }
@@ -69,6 +84,19 @@ public class SaveManager {
         } catch (IOException e) {
             System.err.println("[SaveManager] Delete failed: " + e.getMessage());
             return false;
+        }
+    }
+
+    // Savegame.txt reset when main method runs
+    public static void resetFile() {
+        try {
+            Files.createDirectories(Paths.get(SAVE_DIR));
+            try (PrintWriter writer = new PrintWriter(new FileWriter(SAVE_FILE))) {
+                writer.println("RESET");
+            } 
+            System.out.println("[SaveManager] Save file reset for new main game.");
+        } catch (IOException e) {
+            System.err.println("[SaveManager] Failed to reset file: " + e.getMessage());
         }
     }
 }

@@ -10,12 +10,16 @@ public class TheLastStand extends JFrame{
     MainLayeredPane mainLayeredPane;
     
     public TheLastStand(){
+        SaveManager.resetFile();
+        
         setBounds(0, 0, frameWidth, frameHeight);
         setUndecorated(true);
         setLocationRelativeTo(null);
         
         mainLayeredPane = new MainLayeredPane(frameWidth, frameHeight);
         add(mainLayeredPane);
+
+        SoundManager.getInstance().playMusic("Music/MainMenu_music.wav");
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);

@@ -10,14 +10,14 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import java.util.Map;
-import java.util.Random;
 
 public class Game extends JPanel {
     private Player player;
@@ -60,6 +60,8 @@ public class Game extends JPanel {
     private boolean showWaveBanner = false;
 
     private BossEnemy bossEnemy;
+
+    private boolean restoringFromSave = false;
 
     public Game(int panelWidth, int panelHeight, MainLayeredPane rootLayeredPane) {
         this.rootLayeredPane = rootLayeredPane;
@@ -183,6 +185,13 @@ public class Game extends JPanel {
             List<Enemy> newEnemies = bossEnemy.spawnEnemies();
             enemies.addAll(newEnemies);
         }
+
+        // Temp just to test try win condition
+        if (heldKeys.contains(KeyEvent.VK_K)) {
+            System.out.println("[Game] Debug: Manual win triggered.");
+            this.killBoss(); 
+            return;
+        }
     }
 
     @Override
@@ -229,7 +238,7 @@ public class Game extends JPanel {
             drawHealthBar(g, bossEnemy);
         }
 
-        // Temp banner (Fades after 2.5s)
+        // Temp banner (fade after 2.5s)
         if (showWaveBanner) {
             long elapsed = System.currentTimeMillis() - waveBannerStartTime;
             if (elapsed < WAVE_BANNER_DURATION) {
@@ -244,7 +253,7 @@ public class Game extends JPanel {
     private void drawWaveHUD(Graphics g) {
         String text = "Wave " + currentWave;
 
-        g.setFont(new Font("Arial", Font.BOLD, 22));
+        g.setFont(new Font("Arial", Font.BOLD, 30));
 
         int textWidth = g.getFontMetrics().stringWidth(text);
         int x = (panelWidth - textWidth) / 2;
@@ -308,10 +317,15 @@ public class Game extends JPanel {
             obstacles.add(new Obstacle(getWidth()/2 - 200, getHeight()/2 -100, 80, 400, panelWidth, panelHeight, 2, false));
         }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e143b83d179d94667724cefa4ff29108a08a7bb5
         currentRespawn = 0;
         spawnCount = ((currentLevel * currentLevel) - (currentLevel * 2) + 20) / respawns;
-        spawnRate = spawnRate + (int)(currentLevel * 250);
+        if (!restoringFromSave) {
+            spawnRate = spawnRate + (int)(currentLevel * 250);
+        }
 
         // Increment wave 
         currentWave++;
@@ -410,10 +424,25 @@ public class Game extends JPanel {
     public void setCurrentLevel(int level) { this.currentLevel = level; }
 
     public int getCurrentWave() { return currentWave; }
-    public void setCurrentWave(int wave) {
-        this.currentWave = wave;
-    }
+    public void setCurrentWave(int wave) { this.currentWave = wave; } // sets display counter - doesn't trigger initializeWave
     
+    public int getSpawnRate() { return spawnRate; }
+    public void restoreFromSave (SaveData data) {
+        currentLevel = data.currentLevel;
+        currentWave = data.currentWave; // wave read back from file
+        spawnRate = data.spawnRate; // difficulty read back from file
+        bossEnemy = null;
+        heldKeys.clear();
+
+        restoringFromSave = true;
+        currentWave--; // pre-decrement so initializeWave lands on correct wave
+        initializeWave(currentLevel, null);
+
+        restoringFromSave = false;
+        player.setCurrentLives(data.lives);
+        player.setPosition(data.playerX, data.playerY);
+    
+    }
     public int getLives() { return player.getCurrentLives(); }
     public void setLives(int lives) { player.setCurrentLives(lives); }
 
@@ -433,5 +462,12 @@ public class Game extends JPanel {
 
     public void killBoss(){
         this.bossEnemy = null;
+
+        // to win
+        gameLoop.stopThread();
+        SwingUtilities.invokeLater(() ->
+            rootLayeredPane.getWinPanel().setVisible(true)
+        );
+        System.out.println("[Game] Boss defeated! Player wins!");
     }
 }
