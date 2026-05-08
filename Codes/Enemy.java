@@ -367,8 +367,10 @@ public abstract class Enemy extends Entity {
                 if(strikeCount >= 1 && missRate.nextInt(100) >= MISS_CHANCE){
                     isDamageFrame = true;
                     strikeCount = 0; // reset for next 1-strike cycle
+                    SoundManager.getInstance().playSFX("Music/sword.wav");
                 }else{
                     System.out.println("MISS");        //to be replaced by actual miss sound effect and visual cue
+                    SoundManager.getInstance().playSFX("Music/sword.wav");
                 }
             }
         }

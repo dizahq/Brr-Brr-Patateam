@@ -1,6 +1,8 @@
 package Codes;
 
 import java.io.File;
+import java.lang.classfile.instruction.ConstantInstruction.ArgumentConstantInstruction;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -36,6 +38,26 @@ public class SoundManager {
             }
         } catch (Exception e) {
             System.err.println("[SoundManager] Error loading music: " + e.getMessage());
+        }
+    }
+
+    public void playSFX (String filePath){
+        try{
+            File sfxPath = new File(filePath);
+            if (sfxPath.exists()){
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(sfxPath);
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInput);
+                clip.start();
+
+                clip.addLineListener( e->{
+                    if (e.getType() == javax.sound.sampled.LineEvent.Type.STOP){
+                        clip.close();
+                    }
+                });
+            }
+        }catch(Exception e){
+             System.err.println("[SoundManager] Error playing SFX: " + e.getMessage());
         }
     }
 

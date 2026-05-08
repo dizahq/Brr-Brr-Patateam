@@ -145,6 +145,10 @@ public class Player extends Entity {
             double length = Math.sqrt(dx * dx + dy * dy);
             dx = (dx / length) * speed;
             dy = (dy / length) * speed;
+
+            if (animationTick == 0){
+                SoundManager.getInstance().playSFX("Music/walk.wav");
+            }
         }
 
         // Accumulate remainder from previous frames
@@ -199,6 +203,10 @@ public class Player extends Entity {
 
         //Shoot bullet
         if(canFire){
+            if (shootUp || shootDown || shootLeft || shootRight) {
+                SoundManager.getInstance().playSFX("Music/bow_and_arrow.wav");
+            }
+
             if (shootRight && shootUp) {
                 game.addBullet(new Bullet(centerX, centerY, Direction.NORTHEAST));
                 currentAttack = attackUpRight;
@@ -224,6 +232,7 @@ public class Player extends Entity {
                 game.addBullet(new Bullet(centerX, centerY, Direction.WEST));
                 currentAttack = attackLeft;
             }else return;
+
 
             lastFired = System.currentTimeMillis();
             canFire = false;

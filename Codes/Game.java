@@ -317,10 +317,6 @@ public class Game extends JPanel {
             obstacles.add(new Obstacle(getWidth()/2 - 200, getHeight()/2 -100, 80, 400, panelWidth, panelHeight, 2, false));
         }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> e143b83d179d94667724cefa4ff29108a08a7bb5
         currentRespawn = 0;
         spawnCount = ((currentLevel * currentLevel) - (currentLevel * 2) + 20) / respawns;
         if (!restoringFromSave) {
@@ -454,7 +450,7 @@ public class Game extends JPanel {
     public void pauseGameThread() { gameLoop.pauseThread(); }
     public void resumeGameThread() { gameLoop.resumeThread(); }
     public void stopGameThread() { gameLoop.stopThread(); }
-
+    public int getSoawnRate(){ return spawnRate; }
 
     public void setActivePowerup(Powerup activePowerup) {
         this.activePowerup = activePowerup;
