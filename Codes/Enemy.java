@@ -64,10 +64,10 @@ public abstract class Enemy extends Entity {
             walkLeft  = loadStrip("Entities/Enemy/Walk/Normal/left",  8);
             walkRight = loadStrip("Entities/Enemy/Walk/Normal/right", 8);
 
-            attackUp    = loadStrip("Entities/Enemy/Attack/attack_up",6);
-            attackDown  = loadStrip("Entities/Enemy/Attack/attack_down",6);
-            attackLeft  = loadStrip("Entities/Enemy/Attack/attack_left",6);
-            attackRight = loadStrip("Entities/Enemy/Attack/attack_right",6);
+            attackUp    = loadStrip("Entities/Enemy/Attack/Normal/attack_up",6);
+            attackDown  = loadStrip("Entities/Enemy/Attack/Normal/attack_down",6);
+            attackLeft  = loadStrip("Entities/Enemy/Attack/Normal/attack_left",6);
+            attackRight = loadStrip("Entities/Enemy/Attack/Normal/attack_right",6);
         }
 
         currentImage = walkDown[0]; // default idle frame facing down
