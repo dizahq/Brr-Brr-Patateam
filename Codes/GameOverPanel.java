@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 public class GameOverPanel extends OverlayPanel {
     private JPanel container;
     private JLabel title = new JLabel("Game Over!");
-    private JButton restartBtn = new JButton("Restart");
+    private JButton respawnBtn = new JButton("Respawn");
     private JButton mainMenuBtn = new JButton("Main Menu");
 
     private Game game;
@@ -25,26 +25,25 @@ public class GameOverPanel extends OverlayPanel {
 
         title.setFont(new Font("Arial", Font.BOLD, 35));
 
-        restartBtn.setPreferredSize(new Dimension(200, 50));
+        respawnBtn.setPreferredSize(new Dimension(200, 50));
         mainMenuBtn.setPreferredSize(new Dimension(200, 50));
 
-        restartBtn.addActionListener(e -> restart());
+        respawnBtn.addActionListener(e -> respawn());
 
         mainMenuBtn.addActionListener(e -> goToMainMenu());
 
         container.add(title);
-        container.add(restartBtn);
+        container.add(respawnBtn);
         container.add(mainMenuBtn);
     }
 
-    public void restart() {
-        SaveManager.deleteSave();
+    public void respawn() {
         setVisible(false);          // 1. hide game over screen first
-        game.resetGame();           // 2. reset state + clear keys
-        switchPanel.accept("game"); // 3. switch to game panel (makes it visible)
+        game.setLives(4);           // 2. respawns + reset lives again to max
+        game.initializeWave(game.getCurrentLevel(), null); // 3. restart current level/wave. Create new player instance
         game.startGameThread();     // 4. start loop last, panel is visible and focused now
     
-        System.out.println("[GameOverPanel] Restarting game.");
+        System.out.println("[GameOverPanel] Respawning.");
     }
 
     private void goToMainMenu() {
