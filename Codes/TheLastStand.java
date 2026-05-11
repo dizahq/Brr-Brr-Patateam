@@ -20,6 +20,7 @@ public class TheLastStand extends JFrame{
         add(mainLayeredPane);
 
         SoundManager.getInstance().playMusic("Music/MainMenu_music.wav");
+        SoundManager.getInstance().setMusicVolume(.50f); // max volume
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);

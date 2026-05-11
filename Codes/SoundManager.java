@@ -1,8 +1,7 @@
 package Codes;
 
 import java.io.File;
-import java.lang.classfile.instruction.ConstantInstruction.ArgumentConstantInstruction;
-
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -11,6 +10,8 @@ public class SoundManager {
     private static SoundManager instance;
     private Clip backgroundMusic;
     private String currentTrack = "";
+    private float sfxVolume = 0.75f;   // 0.0 = mute, 1.0 = max
+    private float musicVolume = 0.75f;
 
     private SoundManager() {}
 
@@ -32,8 +33,8 @@ public class SoundManager {
                 AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
                 backgroundMusic = AudioSystem.getClip();
                 backgroundMusic.open(audioInput);
+                setVolume(backgroundMusic, musicVolume);
                 backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
-                backgroundMusic.start();
                 currentTrack = filePath;
             }
         } catch (Exception e) {
@@ -48,6 +49,7 @@ public class SoundManager {
                 AudioInputStream audioInput = AudioSystem.getAudioInputStream(sfxPath);
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioInput);
+                setVolume(clip, sfxVolume);
                 clip.start();
 
                 clip.addLineListener( e->{
@@ -68,4 +70,25 @@ public class SoundManager {
             currentTrack = "";
         }
     }
+
+    private void setVolume(Clip clip, float volume) {
+        if (clip == null) return;
+        FloatControl control = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        // Convert 0.0-1.0 range to decibels
+        float dB = (float) (Math.log10(Math.max(volume, 0.0001f)) * 20f);
+        dB = Math.max(control.getMinimum(), Math.min(control.getMaximum(), dB));
+        control.setValue(dB);
+    }
+
+    public void setSFXVolume(float volume) {
+        this.sfxVolume = Math.max(0f, Math.min(1f, volume));
+    }
+
+    public void setMusicVolume(float volume) {
+        this.musicVolume = Math.max(0f, Math.min(1f, volume));
+        setVolume(backgroundMusic, this.musicVolume); // apply immediately to playing music
+    }
+
+    public float getSFXVolume() { return sfxVolume; }
+    public float getMusicVolume() { return musicVolume; }
 }
