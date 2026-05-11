@@ -59,10 +59,10 @@ public abstract class Enemy extends Entity {
 
         // Load sprites only once — all Enemy instances share the same static arrays
         if (walkDown == null){
-            walkUp    = loadStrip("Entities/Enemy/Walk/up",8);
-            walkDown  = loadStrip("Entities/Enemy/Walk/down",8);
-            walkLeft  = loadStrip("Entities/Enemy/Walk/left",  8);
-            walkRight = loadStrip("Entities/Enemy/Walk/right", 8);
+            walkUp    = loadStrip("Entities/Enemy/Walk/Normal/up",8);
+            walkDown  = loadStrip("Entities/Enemy/Walk/Normal/down",8);
+            walkLeft  = loadStrip("Entities/Enemy/Walk/Normal/left",  8);
+            walkRight = loadStrip("Entities/Enemy/Walk/Normal/right", 8);
 
             attackUp    = loadStrip("Entities/Enemy/Attack/attack_up",6);
             attackDown  = loadStrip("Entities/Enemy/Attack/attack_down",6);
