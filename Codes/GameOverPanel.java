@@ -38,10 +38,9 @@ public class GameOverPanel extends OverlayPanel {
     }
 
     public void respawn() {
-        SaveManager.deleteSave();
         setVisible(false);          // 1. hide game over screen first
-        // game.resetGame();           // 2. reset state + clear keys
-        switchPanel.accept("game"); // 3. switch to game panel (makes it visible)
+        game.setLives(4);           // 2. respawns + reset lives again to max
+        game.initializeWave(game.getCurrentLevel(), null); // 3. restart current level/wave. Create new player instance
         game.startGameThread();     // 4. start loop last, panel is visible and focused now
     
         System.out.println("[GameOverPanel] Respawning.");
