@@ -73,6 +73,14 @@ public class Bullet extends Entity{
             break;
         }
 
+        // Bullet vs obstacle collision 
+        for (Obstacle obs : obstacles) {
+            if (this.getBounds().intersects(obs.getBounds())) {
+                bulletsToRemove.add(this);
+                return; // stop checking anything else
+            }
+        }
+
         // Bullet vs enemy collision
         Random powerupRandom = new Random(); // For random powerup drops
         for (Enemy enemy : enemies) {
@@ -103,15 +111,7 @@ public class Bullet extends Entity{
                             break;
                     }
                 }
-                break;
-            }
-        }
-
-        // Bullet vs obstacle collision
-        for (Obstacle obs : obstacles) {
-            if (this.getBounds().intersects(obs.getBounds())) {
-            bulletsToRemove.add(this);
-            return; // stop checking anything else
+                return;
             }
         }
 
