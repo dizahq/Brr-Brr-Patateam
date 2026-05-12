@@ -31,7 +31,7 @@ public class GameOverPanel extends OverlayPanel {
         respawnBtn.addActionListener(e -> {
             SoundManager.getInstance().playSFX("Music/click.wav");
             SoundManager.getInstance().playMusic("Music/Game_music.wav");
-            respawn();
+            playerRespawn();
         });
 
         mainMenuBtn.addActionListener(e -> {
@@ -44,13 +44,13 @@ public class GameOverPanel extends OverlayPanel {
         container.add(mainMenuBtn);
     }
 
-    public void respawn() {
+    public void playerRespawn() {
         setVisible(false);          // 1. hide game over screen first
         game.setLives(4);           // 2. respawns + reset lives again to max
-        game.initializeWave(game.getCurrentLevel(), null); // 3. restart current level/wave. Create new player instance
+        game.playerRespawn(); // 3. restart current level/wave. Create new player instance
         game.startGameThread();     // 4. start loop last, panel is visible and focused now
     
-        System.out.println("[GameOverPanel] Respawning.");
+        System.out.println("[GameOverPanel] Player respawned.");
     }
 
     private void goToMainMenu() {

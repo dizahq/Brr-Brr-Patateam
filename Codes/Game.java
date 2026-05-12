@@ -422,6 +422,13 @@ public class Game extends JPanel {
         }
     }
 
+    public void playerRespawn() {
+        player.setPosition(panelWidth/2, panelHeight/2);
+        player.getCurrentPowerups().clear();
+        currentWave--;
+        initializeWave(currentLevel, this.player);
+    }
+
     public int getSpawnRate() { return spawnRate; }
     public void restoreFromSave (SaveData data) {
         currentLevel = data.currentLevel;
@@ -435,9 +442,7 @@ public class Game extends JPanel {
         initializeWave(currentLevel, null);
 
         restoringFromSave = false;
-        player.setCurrentLives(data.lives);
-        player.setPosition(data.playerX, data.playerY);
-    
+        player.setCurrentLives(data.lives);    
     }
 
     public int getCurrentLevel() { return currentLevel; }

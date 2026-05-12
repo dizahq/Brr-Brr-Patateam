@@ -99,7 +99,7 @@ public class MainMenuPanel extends JPanel{
 
     public void continueGame(){
         SaveData data = SaveManager.load();
-        // File read
+
         if (data != null) {
             // Restore game state from the save file
             game.restoreFromSave(data);
