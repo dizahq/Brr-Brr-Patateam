@@ -175,9 +175,11 @@ public class Game extends JPanel {
 
         // --- Level up when all waves cleared and no enemies left ---
         if (currentRespawn == respawns && enemies.isEmpty()) {
-            currentLevel++;
-            System.out.println("[Game] Level Up! Current Level: " + currentLevel);
-            initializeWave(currentLevel, this.player);
+            checkGameStatus(); // win if applicable
+            if (currentLevel < 1) { // only level up if not the final level
+                currentLevel++;
+                initializeWave(currentLevel, this.player);
+            }
         }
 
         checkPowerup(player);
@@ -300,6 +302,7 @@ public class Game extends JPanel {
             obstacles.add(new Obstacle(getWidth() /2, getHeight() - 300, 160, 140, panelWidth, panelHeight, 4, false));
         }
 
+        safelyRepositionPlayer(); 
         currentRespawn = 0;
         spawnCount = ((currentLevel * currentLevel) - (currentLevel * 2) + 20) / respawns;
         if (!restoringFromSave) {
@@ -435,6 +438,44 @@ public class Game extends JPanel {
         restoringFromSave = false;
         player.setCurrentLives(data.lives);    
     }
+    
+    private void safelyRepositionPlayer() {
+        int[] center = { panelWidth / 2, panelHeight / 2 };
+        int[][] candidates = {
+            center,
+            { panelWidth / 2, panelHeight / 4 },          // top-center
+            { panelWidth / 2, 3 * panelHeight / 4 },      // bottom-center
+            { panelWidth / 4, panelHeight / 2 },           // left-center
+            { 3 * panelWidth / 4, panelHeight / 2 },      // right-center
+            { panelWidth / 4, panelHeight / 4 },           // top-left
+            { 3 * panelWidth / 4, panelHeight / 4 },      // top-right
+            { panelWidth / 4, 3 * panelHeight / 4 },      // bottom-left
+            { 3 * panelWidth / 4, 3 * panelHeight / 4 }, // bottom-right
+        };
+
+        for (int[] pos : candidates) {
+            player.setPosition(pos[0] - player.getWidth() / 2, pos[1] - player.getHeight() / 2);
+            boolean blocked = obstacles.stream().anyMatch(o -> player.getBounds().intersects(o.getBounds()));
+            if (!blocked) return; // found a clear spot
+        }
+
+        // Last resort: just use center and hope for the best
+        player.setPosition(center[0], center[1]);
+        System.out.println("[Game] Warning: no clear spawn found for player");
+    }
+
+    public void setActivePowerup(Powerup activePowerup) {
+        this.activePowerup = activePowerup;
+    }
+
+    public void killBoss(){
+        this.bossEnemy = null;
+        enemies.clear();
+        bullets.clear();
+        heldKeys.clear();
+
+        triggerWin();
+    }
 
     public int getCurrentLevel() { return currentLevel; }
     public void setCurrentLevel(int level) { this.currentLevel = level; }
@@ -455,10 +496,9 @@ public class Game extends JPanel {
     public void stopGameThread() { gameLoop.stopThread(); }
     public int getSoawnRate(){ return spawnRate; }
 
-    public void setActivePowerup(Powerup activePowerup) {
-        this.activePowerup = activePowerup;
-    }
 
+<<<<<<< HEAD
+=======
     public void killBoss(){
         this.bossEnemy = null;
         enemies.clear();
@@ -467,4 +507,5 @@ public class Game extends JPanel {
 
         checkGameStatus();
     }
+>>>>>>> e273ef19fa769fc9d580c4e43f81615865e564e4
 }

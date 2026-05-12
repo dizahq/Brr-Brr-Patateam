@@ -209,28 +209,28 @@ public class Player extends Entity {
             }
 
             if (shootRight && shootUp) {
-                game.addBullet(new Bullet(centerX, centerY, Direction.NORTHEAST));
+                game.addBullet(new Bullet(centerX, centerY, Bullet.Direction.NORTHEAST));
                 currentAttack = attackUpRight;
             }else if (shootLeft && shootUp) {
-                game.addBullet(new Bullet(centerX, centerY, Direction.NORTHWEST));
+                game.addBullet(new Bullet(centerX, centerY, Bullet.Direction.NORTHWEST));
                 currentAttack = attackUpLeft;
             }else if (shootRight && shootDown) {
-                game.addBullet(new Bullet(centerX, centerY, Direction.SOUTHEAST));
+                game.addBullet(new Bullet(centerX, centerY, Bullet.Direction.SOUTHEAST));
                 currentAttack = attackDownRight;
             }else if (shootLeft && shootDown) {
-                game.addBullet(new Bullet(centerX, centerY, Direction.SOUTHWEST));
+                game.addBullet(new Bullet(centerX, centerY, Bullet.Direction.SOUTHWEST));
                 currentAttack = attackDownLeft;
             }else if (shootUp) {
-                game.addBullet(new Bullet(centerX, centerY, Direction.NORTH));
+                game.addBullet(new Bullet(centerX, centerY, Bullet.Direction.NORTH));
                 currentAttack = attackUp;
             }else if (shootDown) {
-                game.addBullet(new Bullet(centerX, centerY, Direction.SOUTH));
+                game.addBullet(new Bullet(centerX, centerY, Bullet.Direction.SOUTH));
                 currentAttack = attackDown;
             }else if (shootRight) {
-                game.addBullet(new Bullet(centerX, centerY, Direction.EAST));
+                game.addBullet(new Bullet(centerX, centerY, Bullet.Direction.EAST));
                 currentAttack = attackRight;
             }else if (shootLeft) {
-                game.addBullet(new Bullet(centerX, centerY, Direction.WEST));
+                game.addBullet(new Bullet(centerX, centerY, Bullet.Direction.WEST));
                 currentAttack = attackLeft;
             }else return;
 
@@ -252,12 +252,6 @@ public class Player extends Entity {
         currentLives--;
     }
 
-    public int getX() { return x; }
-    public int getY() { return y; }
-    public int getMaxLives() { return maxLives; }
-    public int getCurrentLives() { return currentLives; }
-    public Map<Powerup, Long> getCurrentPowerups() { return currentPowerups; }
-
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
@@ -274,4 +268,12 @@ public class Player extends Entity {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
+    public int getX() { return x; }
+    public int getY() { return y; }
+    public int getMaxLives() { return maxLives; }
+    public int getCurrentLives() { return currentLives; }
+    public Map<Powerup, Long> getCurrentPowerups() { return currentPowerups; }
+    public int getWidth()  { return width; }
+    public int getHeight() { return height; }
 }

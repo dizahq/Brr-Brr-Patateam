@@ -40,6 +40,7 @@ public abstract class Entity extends GameObject{
         currentImage = frames [frameIndex];
     }
 
+    // Getters and Setters
     @Override
     public abstract void draw(Graphics g);
     

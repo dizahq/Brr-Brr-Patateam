@@ -8,6 +8,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+// Confirmation panel that appears when the player tries to exit the game
 public class ExitConfirmPanel extends OverlayPanel{
     private JPanel container;
     

@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
+// Powerup that increases the player's fire rate for a limited duration
 public class FireRatePowerup extends Powerup{
     private Image icon;
 
