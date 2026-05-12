@@ -3,7 +3,8 @@ package Codes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BossEnemy extends Enemy{
+// Boss enemy that spawns minions around it
+public class BossEnemy extends Enemy{ 
     private int maxHealth = 67;
     private int enemySpacing = 100;
     //enemy spawning conditions
@@ -29,7 +30,8 @@ public class BossEnemy extends Enemy{
         attackRight = loadStrip("Entities/Enemy/Attack/Minion/minion_attack_right", 6);
     }
 
-    public List<Enemy> spawnEnemies(){
+    // Spawns minions in a grid around the boss, with a cooldown between spawns and stops spawning when the boss health is low
+    public List<Enemy> spawnEnemies(){ 
         // Stops spawning minions when boss health is low 
         if (getHealth() <= 25) {
             return new ArrayList<>();

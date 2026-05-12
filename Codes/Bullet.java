@@ -7,6 +7,7 @@ import java.util.Random;
 
 import javax.swing.ImageIcon;
 
+// Bullet class represents a projectile fired by the player
 public class Bullet extends Entity{
     private Direction direction; //direction of where the bullet must travel
     private int speed;
@@ -126,4 +127,9 @@ public class Bullet extends Entity{
             g.fillOval(x, y, width, height);
         }
     }
+
+    // 8 possible directions for the bullet
+    public enum Direction { NORTH, NORTHEAST, EAST, SOUTHEAST,
+                            SOUTH, SOUTHWEST, WEST, NORTHWEST}
+
 }

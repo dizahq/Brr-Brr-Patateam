@@ -1,5 +1,6 @@
 package Codes;
 
+// BossMinionEnemies are the weaker enemies that spawn during the boss fight
 public class BossMinionEnemies extends Enemy{
     public BossMinionEnemies(int x, int y, int panelWidth, int panelHeight){
         super(x, y, panelWidth, panelHeight);
