@@ -219,7 +219,8 @@ public class Game extends JPanel {
         List<GameObject> drawables = new ArrayList<>();
         drawables.addAll(obstacles);
         if (player != null) drawables.add(player);
-        drawables.sort((a, b) -> Integer.compare(a.getY(), b.getY()));
+        // Fixed - sorts by feet position (correct depth sorting)
+        drawables.sort((a, b) -> Integer.compare(a.getY() + a.getHeight(), b.getY() + b.getHeight()));
         for (GameObject obj : drawables) obj.draw(g);
 
         //draw overlay (NEW)
@@ -305,19 +306,22 @@ public class Game extends JPanel {
 
 
         if (currentLevel % 2 == 0){
-            obstacles.add(new Obstacle(getWidth() /2 - 300, 150, 220, 70, panelWidth, panelHeight, 1, false));
-            obstacles.add(new Obstacle(getWidth() /2 + 100,300, 220, 70, panelWidth, panelHeight, 1, false));
-            obstacles.add(new Obstacle(getWidth() /2 - 500, getHeight()/2 -100, 80, 300, panelWidth, panelHeight, 2, true));
-            obstacles.add(new Obstacle(getWidth() - 250, getHeight()/2 + 100, 70, 200, panelWidth, panelHeight, 3, true));
-            obstacles.add(new Obstacle(getWidth() /2 - 50, getHeight() - 200, 160, 90, panelWidth, panelHeight, 4, false));
+            obstacles.add(new Obstacle(getWidth() /2 - 300, 150, 220, 80, panelWidth, panelHeight, 1, false));
+            obstacles.add(new Obstacle(getWidth() /2 + 100,300, 220, 80, panelWidth, panelHeight, 1, false));
+             obstacles.add(new Obstacle(getWidth() /2 - 350, getHeight()/2 + 100, 220, 80, panelWidth, panelHeight, 1, false));
+            obstacles.add(new Obstacle(getWidth() /2 - 500, getHeight()/2 - 100, 50, 400, panelWidth, panelHeight, 2, true));
+            obstacles.add(new Obstacle(getWidth() - 200, getHeight()/2 - 300, 40, 300, panelWidth, panelHeight, 2, true));
+            obstacles.add(new Obstacle(getWidth()/2 + 250, getHeight()/2 + 100, 200, 110, panelWidth, panelHeight, 3, false));
+            obstacles.add(new Obstacle(getWidth() /2 - 50, getHeight() - 200, 160, 120, panelWidth, panelHeight, 4, false));
 
         }
 
         if (currentLevel % 2 != 0){
-            obstacles.add(new Obstacle(getWidth() /2 -600,200, 220, 70, panelWidth, panelHeight, 1, false));
-            obstacles.add(new Obstacle(getWidth() /2, getHeight() - 300, 220, 70, panelWidth, panelHeight, 1, false));
-            obstacles.add(new Obstacle(getWidth() - 300, getHeight()/2 -300, 80, 400, panelWidth, panelHeight, 2, true));
-            obstacles.add(new Obstacle(getWidth()/2 - 200, getHeight()/2 -100, 80, 400, panelWidth, panelHeight, 2, false));
+            obstacles.add(new Obstacle(getWidth() /2 -600,200, 220, 80, panelWidth, panelHeight, 1, false));
+            obstacles.add(new Obstacle(getWidth() - 300, getHeight()/2 -50, 40, 300, panelWidth, panelHeight, 2, true));
+            obstacles.add(new Obstacle(getWidth()/2 - 200, getHeight()/2 -100, 30, 200, panelWidth, panelHeight, 2, true));
+            obstacles.add(new Obstacle(getWidth()/2, getHeight()/2 - 300, 220, 80, panelWidth, panelHeight, 3, false));
+            obstacles.add(new Obstacle(getWidth() /2, getHeight() - 300, 160, 120, panelWidth, panelHeight, 4, false));
         }
 
         currentRespawn = 0;

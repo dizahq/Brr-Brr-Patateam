@@ -20,7 +20,6 @@ public class MainMenuPanel extends JPanel{
     //new
     private Image backgroundImage;
 
-    private JLabel title = new JLabel("The Last Stand");
     private JButton newGameBtn = new JButton("New Game");
     private JButton continueBtn = new JButton("Continue");
     private JButton exitBtn = new JButton("Exit Game");  
@@ -31,12 +30,10 @@ public class MainMenuPanel extends JPanel{
         this.game = game;
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        title.setAlignmentX(CENTER_ALIGNMENT);
         newGameBtn.setAlignmentX(CENTER_ALIGNMENT);
         continueBtn.setAlignmentX(CENTER_ALIGNMENT);
         exitBtn.setAlignmentX(CENTER_ALIGNMENT);
 
-        title.setFont(new Font("Arial", Font.BOLD, 35));
         newGameBtn.setPreferredSize(new Dimension(200, 50));
         continueBtn.setPreferredSize(new Dimension(200, 50));
         exitBtn.setPreferredSize(new Dimension(200, 50));
@@ -56,7 +53,6 @@ public class MainMenuPanel extends JPanel{
         });
 
         add(Box.createVerticalGlue());
-        add(title);
         add(Box.createRigidArea(new Dimension(0, 50)));
         add(newGameBtn);
         add(Box.createRigidArea(new Dimension(0, 25)));

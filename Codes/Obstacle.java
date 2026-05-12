@@ -76,9 +76,5 @@ public class Obstacle extends GameObject {
             g.setColor(Color.BLACK);
             g.drawRect(x, y, width, height);
         }
-
-        Rectangle b = getBounds();
-        g.setColor(new java.awt.Color(255, 0, 0, 140));
-        g.drawRect(b.x, b.y, b.width, b.height);
     }
 }
