@@ -1,32 +1,56 @@
 package Codes;
 
 import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.util.function.Consumer;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class PauseMenuPanel extends OverlayPanel{
     private Consumer<String> switchPanel;
     private Game game;
 
-    private JPanel container = getContainerPanel();
-    private JLabel title = new JLabel("Game Paused");
-    private JButton backToMainMenu = new JButton("Back to Main Menu");
-    private JButton resume = new JButton("Resume");
-    private JButton exit = new JButton("Exit");
+    private JPanel container;
+
+    private Image background = new ImageIcon("Entities/UserInterface/pauseMenu/game_paused.png").getImage();
+    private GameButton backToMainMenu = new GameButton("mainmenuButton.png", "mainmenuButton_pressed.png", null);
+    private GameButton resume = new GameButton("pauseMenu/resumeButton.png", "pauseMenu/resumeButton_pressed.png", null);
+    private GameButton exit = new GameButton("MainMenu/exitButton.png", "MainMenu/exitButton_pressed.png", null);
     
     public PauseMenuPanel(int panelWidth, int panelHeight, Consumer<String> switchPanel, Game game){
         super(panelWidth, panelHeight, false);
         this.switchPanel = switchPanel;
         this.game = game;
 
-        title.setFont(new Font("Arial", Font.BOLD, 35));
+        container = getContainerPanel();
+        container.setOpaque(false); // false to see image
+        this.remove(container); // remove old container and replace 
+        container = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                if (background != null) {
+                    g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+                } else {
+                    super.paintComponent(g);
+                }
+            }
+        };
 
-        backToMainMenu.setPreferredSize(new Dimension(200, 50));
-        resume.setPreferredSize(new Dimension(200, 50));
-        exit.setPreferredSize(new Dimension(200, 50));
+        container.setPreferredSize(new Dimension(450, 550));
+        container.setOpaque(false);
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        this.add(container);
+
+        backToMainMenu.setAlignmentX(CENTER_ALIGNMENT);
+        resume.setAlignmentX(CENTER_ALIGNMENT);
+        exit.setAlignmentX(CENTER_ALIGNMENT);
+
+        backToMainMenu.setButtonSize(200, 60);
+        resume.setButtonSize(200, 60);
+        exit.setButtonSize(200, 50);
 
         backToMainMenu.addActionListener(e -> {
             SoundManager.getInstance().playSFX("Music/click.wav");
@@ -42,10 +66,19 @@ public class PauseMenuPanel extends OverlayPanel{
             exitGame();
         });
 
-        container.add(title);
+        container.removeAll();
+        container.add(Box.createRigidArea(new Dimension(0, 280)));
         container.add(backToMainMenu);
+        container.add(Box.createRigidArea(new Dimension(0, 10)));
         container.add(resume);
+        container.add(Box.createRigidArea(new Dimension(0, 15)));
         container.add(exit);
+        container.add(Box.createVerticalGlue());
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
     }
 
     public void resume(){

@@ -55,6 +55,7 @@ public class GameButton extends JButton {
     public void setButtonSize(int width, int height) {
         Dimension size = new Dimension(width, height);
         setPreferredSize(size);
+        setMinimumSize(size);
         setMaximumSize(size);
     }
 }

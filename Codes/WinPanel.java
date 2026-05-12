@@ -1,17 +1,20 @@
 package Codes;
 
 import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.util.function.Consumer;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class WinPanel extends OverlayPanel {
     private JPanel container;
-    private JLabel title = new JLabel("Congratulations. \nYou won!");
-    private JButton mainMenuBtn = new JButton("Main Menu");
-    private JButton exitBtn = new JButton("Exit Game");
+
+    private Image background = new ImageIcon("Entities/UserInterface/gameWon/game_won.png").getImage();
+    private GameButton mainMenuBtn = new GameButton("mainmenuButton.png", "mainmenuButton_pressed.png", null);
+    private GameButton exitBtn = new GameButton("MainMenu/newgameButton.png", "MainMenu/newgameButton_pressed.png", null);
 
     private Game game;
     private Consumer<String> switchPanel;
@@ -22,11 +25,14 @@ public class WinPanel extends OverlayPanel {
         this.game = game;
 
         container = getContainerPanel();
-
-        title.setFont(new Font("Arial", Font.BOLD, 35));
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        container.setOpaque(false);
         
-        mainMenuBtn.setPreferredSize(new Dimension(200, 50));
-        exitBtn.setPreferredSize(new Dimension(200, 50));
+        mainMenuBtn.setAlignmentX(CENTER_ALIGNMENT);
+        exitBtn.setAlignmentX(CENTER_ALIGNMENT);
+
+        mainMenuBtn.setButtonSize(300, 100);
+        exitBtn.setButtonSize(300, 100);
 
         mainMenuBtn.addActionListener(e -> {
             SaveManager.deleteSave();
@@ -39,8 +45,20 @@ public class WinPanel extends OverlayPanel {
             System.exit(0);
         });
 
-        container.add(title);
+        container.add(Box.createVerticalGlue());
+        container.add(Box.createRigidArea(new Dimension(0, 500)));
         container.add(mainMenuBtn);
+        container.add(Box.createRigidArea(new Dimension(0, 20)));
         container.add(exitBtn);
+        container.add(Box.createVerticalGlue());
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        if (background != null) {
+            g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+        } else {
+            super.paintComponent(g);
+        }
     }
 }

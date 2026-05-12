@@ -23,11 +23,10 @@ public abstract class OverlayPanel extends JPanel{
         // Control whether full screen or not
         if (fullScreen) {
             containerPanel.setPreferredSize(new Dimension(panelWidth, panelHeight));
-            containerPanel.setOpaque(false);
         } else {
-            containerPanel.setPreferredSize(new Dimension(400, 400));
-            containerPanel.setBackground(Color.GRAY);
+            containerPanel.setPreferredSize(new Dimension(500, 600));
         }
+        containerPanel.setOpaque(false);
         add(containerPanel);
 
         setVisible(false);

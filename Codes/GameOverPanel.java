@@ -31,8 +31,8 @@ public class GameOverPanel extends OverlayPanel {
         respawnBtn.setAlignmentX(CENTER_ALIGNMENT);
         mainMenuBtn.setAlignmentX(CENTER_ALIGNMENT);
 
-        respawnBtn.setPreferredSize(new Dimension(300, 80));
-        mainMenuBtn.setPreferredSize(new Dimension(300, 80));
+        respawnBtn.setButtonSize(300, 100);
+        mainMenuBtn.setButtonSize(300, 100);
 
         respawnBtn.addActionListener(e -> {
             SoundManager.getInstance().playSFX("Music/click.wav");
@@ -46,6 +46,7 @@ public class GameOverPanel extends OverlayPanel {
         });
 
         container.add(Box.createVerticalGlue());
+        container.add(Box.createRigidArea(new Dimension(0, 300)));
         container.add(respawnBtn);
         container.add(Box.createRigidArea(new Dimension(0, 20)));
         container.add(mainMenuBtn);
