@@ -20,9 +20,9 @@ public class MainMenuPanel extends JPanel{
     //new
     private Image backgroundImage;
 
-    private JButton newGameBtn = new JButton("New Game");
-    private JButton continueBtn = new JButton("Continue");
-    private JButton exitBtn = new JButton("Exit Game");  
+    private GameButton newGameBtn = new GameButton("newgameButton.png", "newgameButton_pressed.png", null);
+    private GameButton continueBtn = new GameButton("continueButton.png", "continueButton_pressed.png", "continueButton_locked.png");
+    private GameButton exitBtn = new GameButton("exitButton.png", "exitButton_pressed.png", null);  
     
     public MainMenuPanel(MainLayeredPane rootLayeredPane, Consumer<String> switchPanel, Game game){
         this.rootLayeredPane = rootLayeredPane;
@@ -34,9 +34,9 @@ public class MainMenuPanel extends JPanel{
         continueBtn.setAlignmentX(CENTER_ALIGNMENT);
         exitBtn.setAlignmentX(CENTER_ALIGNMENT);
 
-        newGameBtn.setPreferredSize(new Dimension(200, 50));
-        continueBtn.setPreferredSize(new Dimension(200, 50));
-        exitBtn.setPreferredSize(new Dimension(200, 50));
+        newGameBtn.setPreferredSize(new Dimension(300, 100));
+        continueBtn.setPreferredSize(new Dimension(300, 100));
+        exitBtn.setPreferredSize(new Dimension(300, 100));
         
 
         newGameBtn.addActionListener(e -> {
@@ -53,7 +53,7 @@ public class MainMenuPanel extends JPanel{
         });
 
         add(Box.createVerticalGlue());
-        add(Box.createRigidArea(new Dimension(0, 50)));
+        add(Box.createRigidArea(new Dimension(0, 380)));
         add(newGameBtn);
         add(Box.createRigidArea(new Dimension(0, 25)));
         add(continueBtn);
