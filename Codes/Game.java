@@ -15,7 +15,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -42,7 +41,7 @@ public class Game extends JPanel {
     private static final int BAR_HEIGHT = 25;
 
     private MainLayeredPane rootLayeredPane;
-    private JButton pauseBtn = new JButton("Pause");
+    private GameButton pauseBtn = new GameButton("pauseMenu/pauseButton.png", "pauseMenu/pauseButton_pressed.png", null);
 
     // spawning parameters
     private double lastEnemySpawnTime;
@@ -82,7 +81,7 @@ public class Game extends JPanel {
         initializeWave(currentLevel, null);
 
         // Pause button
-        pauseBtn.setBounds(panelWidth - 125, 20, 100, 40);
+        pauseBtn.setBounds(panelWidth - 210, 20, 180, 70);
         pauseBtn.setFocusable(false);
         pauseBtn.addActionListener(e -> {
             SoundManager.getInstance().playSFX("Music/click.wav");

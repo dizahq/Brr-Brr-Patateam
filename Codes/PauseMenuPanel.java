@@ -27,9 +27,9 @@ public class PauseMenuPanel extends OverlayPanel{
         resume.setAlignmentX(CENTER_ALIGNMENT);
         exit.setAlignmentX(CENTER_ALIGNMENT);
 
-        backToMainMenu.setButtonSize(250, 80);
-        resume.setButtonSize(250, 80);
-        exit.setButtonSize(250, 60);
+        backToMainMenu.setButtonSize(250, 85);
+        resume.setButtonSize(250, 85);
+        exit.setButtonSize(250, 65);
 
         resume.setAlignmentX(CENTER_ALIGNMENT);
         backToMainMenu.setAlignmentX(CENTER_ALIGNMENT);
@@ -51,7 +51,7 @@ public class PauseMenuPanel extends OverlayPanel{
 
         this.removeAll(); // Clears anything prev added to the container and makes sure panel is a blank state
         add(Box.createVerticalGlue());
-        add(Box.createRigidArea(new Dimension(0, 300)));
+        add(Box.createRigidArea(new Dimension(0, 280)));
         add(resume);
         add(Box.createRigidArea(new Dimension(0, 20)));
         add(backToMainMenu);
