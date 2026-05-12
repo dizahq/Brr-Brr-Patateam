@@ -57,6 +57,7 @@ public class WinPanel extends OverlayPanel {
             SaveManager.deleteSave(); // Clear progress upon completion
             game.stopGameThread(); // Safely terminate the game loop
             switchPanel.accept("mainMenu");
+            setVisible(false);
         });
 
         exitBtn.addActionListener(e -> System.exit(0));
