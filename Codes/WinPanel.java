@@ -1,5 +1,7 @@
 package Codes;
 
+// Victory screen when player completes the game
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -10,9 +12,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class WinPanel extends OverlayPanel {
-    private JPanel container;
+    private JPanel container; // Inner container panel used to roganize and position UI components
 
-    private Image background = new ImageIcon("Entities/UserInterface/gameWon/game_won.png").getImage();
+    private Image background = new ImageIcon("Entities/UserInterface/gameWon/game_won.png").getImage(); // Full screen background image rendered behind all UI components
     private GameButton mainMenuBtn = new GameButton("mainmenuButton.png", "mainmenuButton_pressed.png", null);
     private GameButton exitBtn = new GameButton("MainMenu/exitButton.png", "MainMenu/exitButton_pressed.png", null);
 
@@ -32,7 +34,7 @@ public class WinPanel extends OverlayPanel {
         exitBtn.setAlignmentX(CENTER_ALIGNMENT);
 
         mainMenuBtn.setButtonSize(300, 100);
-        exitBtn.setButtonSize(300, 100);
+        exitBtn.setButtonSize(300, 80);
 
         mainMenuBtn.addActionListener(e -> {
             SaveManager.deleteSave();
