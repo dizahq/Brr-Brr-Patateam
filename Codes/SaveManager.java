@@ -1,5 +1,8 @@
 package Codes;
 
+// Utility class for managing game persistence
+// Handles saving, loading, and deleting game state data using File I/O
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,14 +12,17 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class SaveManager {
-    private static final String SAVE_DIR = "Save";
-    private static final String SAVE_FILE = SAVE_DIR + File.separator + "Savegame.txt";
+    private static final String SAVE_DIR = "saves";
+    private static final String SAVE_FILE = SAVE_DIR + File.separator + "Savegame.txt"; // Separator ensures it works on both windows and max/linux
 
-    // Checks if a save file exists
+    // Returns true if a valid save exists, false otherwise
     public static boolean hasSave() {
         File file = new File(SAVE_FILE);
+
+        // Check if file exists on the disk
         if (!file.exists()) return false;
 
+        // Check if it's just a placeholder "RESET" file
         try (Scanner scanner = new Scanner(file)){
             if (scanner.hasNextLine()) {
                 String firstLine = scanner.nextLine();
@@ -25,17 +31,18 @@ public class SaveManager {
         } catch (IOException e) {
             return false;
         }
-        // return Files.exists(Paths.get(SAVE_FILE));
+       
         return false;
     }
 
+    // Serializes SaveData object fields into a text file
     public static boolean save(SaveData data) {
         try {
-            // Create saves/directory if missing
+            // Create saves/directory if missing. Ensures the save folder exists.
             Files.createDirectories(Paths.get(SAVE_DIR));
             
-            // Write data into savegame.txt
-            try (PrintWriter writer = new PrintWriter(new FileWriter(SAVE_FILE))) {
+            // Write data into savegame.txt. 
+            try (PrintWriter writer = new PrintWriter(new FileWriter(SAVE_FILE))) { // PrintWriter writes human-readable text. FileWriter(file) opens the stream.
                 writer.println(data.currentLevel);
                 writer.println(data.currentWave);
                 writer.println(data.lives);
@@ -52,6 +59,7 @@ public class SaveManager {
         }
     }
 
+    // Reads the save file and reconstructs a SaveData object
     public static SaveData load() {
         if (!hasSave()) {
             System.out.println("[SaveManager] No save file found.");
@@ -59,12 +67,13 @@ public class SaveManager {
         }
 
         try (Scanner scanner = new Scanner(new File(SAVE_FILE))) {
+            // Must read in the exact same order it was saved. Level -> Wave -> Lives
             int level = Integer.parseInt(scanner.nextLine());
             int wave = Integer.parseInt(scanner.nextLine());
             int lives = Integer.parseInt(scanner.nextLine());
             int pX = Integer.parseInt(scanner.nextLine());
             int pY = Integer.parseInt(scanner.nextLine());
-            int spawnRate = scanner.hasNextLine() ? Integer.parseInt(scanner.nextLine()) : 5000;
+            int spawnRate = scanner.hasNextLine() ? Integer.parseInt(scanner.nextLine()) : 5000; // Ternary check for spawnRate to prevent errors if loading an older save version
 
             return new SaveData(level, wave, lives, pX, pY, spawnRate);
         } catch (IOException | NumberFormatException e) {
@@ -87,7 +96,7 @@ public class SaveManager {
         }
     }
 
-    // Savegame.txt reset when main method runs
+    // Overwrites the current save with a RESET flag. Clears progress without deleting the file itself.
     public static void resetFile() {
         try {
             Files.createDirectories(Paths.get(SAVE_DIR));
