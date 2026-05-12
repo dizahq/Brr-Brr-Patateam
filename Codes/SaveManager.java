@@ -39,7 +39,7 @@ public class SaveManager {
     public static boolean save(SaveData data) {
         try {
             // Create saves/directory if missing. Ensures the save folder exists.
-            Files.createDirectories(Paths.get(SAVE_DIR));
+            Files.createDirectories(Paths.get(SAVE_DIR)); // If save folder is missing, esnures the game won't crash when trying to write a file. Will simply build the folder first.
             
             // Write data into savegame.txt. 
             try (PrintWriter writer = new PrintWriter(new FileWriter(SAVE_FILE))) { // PrintWriter writes human-readable text. FileWriter(file) opens the stream.
@@ -76,8 +76,7 @@ public class SaveManager {
             int spawnRate = scanner.hasNextLine() ? Integer.parseInt(scanner.nextLine()) : 5000; // Ternary check for spawnRate to prevent errors if loading an older save version
 
             return new SaveData(level, wave, lives, pX, pY, spawnRate);
-        } catch (IOException | NumberFormatException e) {
-            System.err.println("[SaveManager] Load failed (corrupt file): " + e.getMessage());
+        } catch (IOException | NumberFormatException e) { // Prevents game from crashing if savegame.txt is manually edited. Will simply return null and log a corrupt file error            System.err.println("[SaveManager] Load failed (corrupt file): " + e.getMessage());
             return null;
         }
     }
