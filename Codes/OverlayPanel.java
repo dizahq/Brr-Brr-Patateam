@@ -1,17 +1,17 @@
 package Codes;
 
-import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import java.awt.event.MouseAdapter;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Color;
+import java.awt.GridBagLayout;
+import java.awt.event.MouseAdapter;
+import javax.swing.JPanel;
 
 public abstract class OverlayPanel extends JPanel{
     private int panelWidth, panelHeight;
     private JPanel containerPanel = new JPanel();
     
-    public OverlayPanel(int panelWidth, int panelHeight){
+    public OverlayPanel(int panelWidth, int panelHeight, boolean fullScreen){
         this.panelWidth = panelWidth;
         this.panelHeight = panelHeight;
 
@@ -20,8 +20,14 @@ public abstract class OverlayPanel extends JPanel{
         setOpaque(false);
         addMouseListener(new MouseAdapter(){});
         
-        containerPanel.setPreferredSize(new Dimension(400, 400));
-        containerPanel.setBackground(Color.GRAY);
+        // Control whether full screen or not
+        if (fullScreen) {
+            containerPanel.setPreferredSize(new Dimension(panelWidth, panelHeight));
+            containerPanel.setOpaque(false);
+        } else {
+            containerPanel.setPreferredSize(new Dimension(400, 400));
+            containerPanel.setBackground(Color.GRAY);
+        }
         add(containerPanel);
 
         setVisible(false);

@@ -1,14 +1,13 @@
 package Codes;
 
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class GameButton extends JButton {
@@ -21,13 +20,6 @@ public class GameButton extends JButton {
         this.pressedImg = loadImage(pressedPath);
         this.lockedImg = loadImage(lockedPath);
 
-        if(normalImg != null) {
-            setIcon(new ImageIcon(normalImg));
-        }
-        if(pressedImg != null) {
-            setIcon(new ImageIcon(pressedImg));
-        }
-
         setContentAreaFilled(false);
         setBorderPainted(false);
         setFocusPainted(false);
@@ -39,7 +31,7 @@ public class GameButton extends JButton {
             return null;
         }
         try {
-            return ImageIO.read(new File("Entities/UserInterface/MainMenu/" + path));
+            return ImageIO.read(new File("Entities/UserInterface/" + path));
         } catch (IOException e) {
             System.out.println("[GameButton]Error loading button: " + path);
             return null;
@@ -58,5 +50,11 @@ public class GameButton extends JButton {
         } else {
             g2d.drawImage(normalImg, 0, 0, getWidth(), getHeight(), null);
         }
+    }
+
+    public void setButtonSize(int width, int height) {
+        Dimension size = new Dimension(width, height);
+        setPreferredSize(size);
+        setMaximumSize(size);
     }
 }

@@ -1,15 +1,12 @@
 package Codes;
 
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.function.Consumer;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class MainMenuPanel extends JPanel{
@@ -20,9 +17,9 @@ public class MainMenuPanel extends JPanel{
     //new
     private Image backgroundImage;
 
-    private GameButton newGameBtn = new GameButton("newgameButton.png", "newgameButton_pressed.png", null);
-    private GameButton continueBtn = new GameButton("continueButton.png", "continueButton_pressed.png", "continueButton_locked.png");
-    private GameButton exitBtn = new GameButton("exitButton.png", "exitButton_pressed.png", null);  
+    private GameButton newGameBtn = new GameButton("MainMenu/newgameButton.png", "MainMenu/newgameButton_pressed.png", null);
+    private GameButton continueBtn = new GameButton("MainMenu/continueButton.png", "MainMenu/continueButton_pressed.png", "MainMenu/continueButton_locked.png");
+    private GameButton exitBtn = new GameButton("MainMenu/exitButton.png", "MainMenu/exitButton_pressed.png", null);  
     
     public MainMenuPanel(MainLayeredPane rootLayeredPane, Consumer<String> switchPanel, Game game){
         this.rootLayeredPane = rootLayeredPane;
@@ -34,10 +31,10 @@ public class MainMenuPanel extends JPanel{
         continueBtn.setAlignmentX(CENTER_ALIGNMENT);
         exitBtn.setAlignmentX(CENTER_ALIGNMENT);
 
-        newGameBtn.setPreferredSize(new Dimension(300, 100));
-        continueBtn.setPreferredSize(new Dimension(300, 100));
-        exitBtn.setPreferredSize(new Dimension(300, 100));
-        
+        // newGameBtn.setPreferredSize(new Dimension(300, 100));
+        newGameBtn.setButtonSize(300, 100);
+        continueBtn.setButtonSize(300, 100);
+        exitBtn.setButtonSize(300, 100);
 
         newGameBtn.addActionListener(e -> {
             SoundManager.getInstance().playSFX("Music/click.wav");
@@ -76,7 +73,6 @@ public class MainMenuPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         if (backgroundImage != null) {
             // Stretch image to fill panel
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);

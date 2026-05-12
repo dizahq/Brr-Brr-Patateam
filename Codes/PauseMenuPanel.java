@@ -18,7 +18,7 @@ public class PauseMenuPanel extends OverlayPanel{
     private JButton exit = new JButton("Exit");
     
     public PauseMenuPanel(int panelWidth, int panelHeight, Consumer<String> switchPanel, Game game){
-        super(panelWidth, panelHeight);
+        super(panelWidth, panelHeight, false);
         this.switchPanel = switchPanel;
         this.game = game;
 

@@ -17,7 +17,7 @@ public class WinPanel extends OverlayPanel {
     private Consumer<String> switchPanel;
 
     public WinPanel(int panelWidth, int panelHeight, Consumer<String> switchPanel, Game game) {
-        super(panelWidth, panelHeight);
+        super(panelWidth, panelHeight, true);
         this.switchPanel = switchPanel;
         this.game = game;
 

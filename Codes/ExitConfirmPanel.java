@@ -12,7 +12,7 @@ public class ExitConfirmPanel extends OverlayPanel{
     private JButton confirmExitBtn = new JButton("Yes");
     private JButton cancelExitBtn = new JButton("No");
     public ExitConfirmPanel(int panelWidth, int panelHeight){
-        super(panelWidth, panelHeight);
+        super(panelWidth, panelHeight, false);
         container = getContainerPanel();
 
         title.setFont(new Font("Arial", Font.BOLD, 35));
