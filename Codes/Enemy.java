@@ -5,6 +5,9 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.*;
+import javax.swing.ImageIcon;
+import java.awt.Graphics2D;
+import java.awt.AlphaComposite;
 
 public abstract class Enemy extends Entity {
 
@@ -17,6 +20,7 @@ public abstract class Enemy extends Entity {
     private static final int WALK_ANIM_SPEED = 5;
     private static final int ATTACK_ANIM_SPEED  = 10;
     private static final int MISS_CHANCE  = 50;  // percent
+    private static final int MISS_DURATION = 800;
 
     private static final Random RNG = new Random();
 
@@ -36,6 +40,11 @@ public abstract class Enemy extends Entity {
     private boolean attackLanded = false;
     private int contactCooldown = 0;
     private int strikeCount = 0;
+
+    // Miss
+    private Image missImage;
+    private boolean showingMiss = false;
+    private long missStartTime;
 
     // Pathfinding 
     private final Deque<int[]> path = new ArrayDeque<>();
@@ -72,6 +81,8 @@ public abstract class Enemy extends Entity {
         currentImage = walkDown[0];
         lastX = x;
         lastY = y;
+
+        missImage = new ImageIcon("Entities/UserInterface/miss.png").getImage();
     }
 
     //Public API
@@ -153,6 +164,35 @@ public abstract class Enemy extends Entity {
         } else {
             g.setColor(Color.RED);
             g.fillOval(x, y, width, height);
+        }
+
+        if (showingMiss && missImage != null) {
+            long elapsed = System.currentTimeMillis() - missStartTime;
+            if (elapsed >= MISS_DURATION) {
+                showingMiss = false;
+            } else {
+                Graphics2D g2d = (Graphics2D) g;
+
+                float alpha = 1.0f - ((float) elapsed / MISS_DURATION);
+
+                g2d.setComposite(
+                    AlphaComposite.getInstance(
+                        AlphaComposite.SRC_OVER,
+                        alpha
+                    )
+                );
+
+                // Above enemy
+                g2d.drawImage(missImage, x + 10, y - 25, 50, 25, null);
+
+                // Reset transparency
+                g2d.setComposite(
+                    AlphaComposite.getInstance(
+                        AlphaComposite.SRC_OVER,
+                        1.0f
+                    )
+                );
+            }
         }
     }
 
@@ -357,7 +397,9 @@ public abstract class Enemy extends Entity {
                     isDamageFrame = true;
                     strikeCount   = 0;
                 } else {
-                    System.out.println("MISS"); // TODO: replace with miss SFX + visual cue
+                    showingMiss = true;
+                    missStartTime = System.currentTimeMillis();
+                    System.out.println("Enemy attack missed!");
                 }
             }
         }
