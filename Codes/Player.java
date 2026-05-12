@@ -252,12 +252,6 @@ public class Player extends Entity {
         currentLives--;
     }
 
-    public int getX() { return x; }
-    public int getY() { return y; }
-    public int getMaxLives() { return maxLives; }
-    public int getCurrentLives() { return currentLives; }
-    public Map<Powerup, Long> getCurrentPowerups() { return currentPowerups; }
-
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
@@ -274,4 +268,12 @@ public class Player extends Entity {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
+    public int getX() { return x; }
+    public int getY() { return y; }
+    public int getMaxLives() { return maxLives; }
+    public int getCurrentLives() { return currentLives; }
+    public Map<Powerup, Long> getCurrentPowerups() { return currentPowerups; }
+    public int getWidth()  { return width; }
+    public int getHeight() { return height; }
 }
