@@ -41,8 +41,8 @@ public class ExitConfirmPanel extends OverlayPanel{
         confirmExitBtn.setAlignmentX(CENTER_ALIGNMENT);
         cancelExitBtn.setAlignmentX(CENTER_ALIGNMENT);
 
-        confirmExitBtn.setButtonSize(200, 60);
-        cancelExitBtn.setButtonSize(200, 60);
+        confirmExitBtn.setButtonSize(200, 90);
+        cancelExitBtn.setButtonSize(200, 90);
 
         confirmExitBtn.addActionListener(e -> {
             SoundManager.getInstance().playSFX("Music/click.wav");
