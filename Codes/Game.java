@@ -282,6 +282,7 @@ public class Game extends JPanel {
         bullets.clear(); // clear leftover bullets
         obstacles.clear();
 
+        bossEnemy = null;
 
         if (currentLevel % 2 == 0){
             obstacles.add(new Obstacle(getWidth() /2 - 300, 150, 220, 80, panelWidth, panelHeight, 1, false));
@@ -315,7 +316,7 @@ public class Game extends JPanel {
     }
 
     public void spawnEnemies(int enemyCount) {
-        int specialEnemySpawnChance = currentLevel * 5;
+        int specialEnemySpawnChance = currentLevel * 15;
         Random specialEnemyRandom = new Random();
 
         if(currentLevel == 4 && currentRespawn == 2){
