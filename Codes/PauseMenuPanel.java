@@ -7,50 +7,33 @@ import java.util.function.Consumer;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
 public class PauseMenuPanel extends OverlayPanel{
     private Consumer<String> switchPanel;
     private Game game;
 
-    private JPanel container;
-
     private Image background = new ImageIcon("Entities/UserInterface/pauseMenu/game_paused.png").getImage();
-    private GameButton backToMainMenu = new GameButton("mainmenuButton.png", "mainmenuButton_pressed.png", null);
     private GameButton resume = new GameButton("pauseMenu/resumeButton.png", "pauseMenu/resumeButton_pressed.png", null);
+    private GameButton backToMainMenu = new GameButton("mainmenuButton.png", "mainmenuButton_pressed.png", null);
     private GameButton exit = new GameButton("MainMenu/exitButton.png", "MainMenu/exitButton_pressed.png", null);
     
     public PauseMenuPanel(int panelWidth, int panelHeight, Consumer<String> switchPanel, Game game){
-        super(panelWidth, panelHeight, false);
+        super(panelWidth, panelHeight, true);
         this.switchPanel = switchPanel;
         this.game = game;
 
-        container = getContainerPanel();
-        container.setOpaque(false); // false to see image
-        this.remove(container); // remove old container and replace 
-        container = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                if (background != null) {
-                    g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-                } else {
-                    super.paintComponent(g);
-                }
-            }
-        };
-
-        container.setPreferredSize(new Dimension(450, 550));
-        container.setOpaque(false);
-        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-        this.add(container);
-
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         backToMainMenu.setAlignmentX(CENTER_ALIGNMENT);
         resume.setAlignmentX(CENTER_ALIGNMENT);
         exit.setAlignmentX(CENTER_ALIGNMENT);
 
-        backToMainMenu.setButtonSize(200, 60);
-        resume.setButtonSize(200, 60);
-        exit.setButtonSize(200, 50);
+        backToMainMenu.setButtonSize(250, 80);
+        resume.setButtonSize(250, 80);
+        exit.setButtonSize(250, 60);
+
+        resume.setAlignmentX(CENTER_ALIGNMENT);
+        backToMainMenu.setAlignmentX(CENTER_ALIGNMENT);
+        exit.setAlignmentX(CENTER_ALIGNMENT);
 
         backToMainMenu.addActionListener(e -> {
             SoundManager.getInstance().playSFX("Music/click.wav");
@@ -66,19 +49,24 @@ public class PauseMenuPanel extends OverlayPanel{
             exitGame();
         });
 
-        container.removeAll();
-        container.add(Box.createRigidArea(new Dimension(0, 280)));
-        container.add(backToMainMenu);
-        container.add(Box.createRigidArea(new Dimension(0, 10)));
-        container.add(resume);
-        container.add(Box.createRigidArea(new Dimension(0, 15)));
-        container.add(exit);
-        container.add(Box.createVerticalGlue());
+        this.removeAll(); // Clears anything prev added to the container and makes sure panel is a blank state
+        add(Box.createVerticalGlue());
+        add(Box.createRigidArea(new Dimension(0, 300)));
+        add(resume);
+        add(Box.createRigidArea(new Dimension(0, 20)));
+        add(backToMainMenu);
+        add(Box.createRigidArea(new Dimension(0, 20)));
+        add(exit);
+        add(Box.createVerticalGlue());
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        if (background != null) {
+            // Stretch image to fill panel
+            g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
+        }
     }
 
     public void resume(){
