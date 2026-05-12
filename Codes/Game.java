@@ -1,7 +1,6 @@
 package Codes;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.HierarchyEvent;
@@ -34,6 +33,8 @@ public class Game extends JPanel {
     private Image grassOverlay; //overlay, test (NEW)
     private Image lifeFullImage;
     private Image lifeEmptyImage;
+    private Image[] waveImages = new Image[5];
+
     private static final int HEART_SIZE = 60;
     private static final int HEART_PADDING = 16;
     private static final int HEART_MARGIN = 16;
@@ -52,10 +53,6 @@ public class Game extends JPanel {
 
     // wave display
     private int currentWave = 0;
-    
-    private static final long WAVE_BANNER_DURATION = 2500;
-    private long waveBannerStartTime = 0;
-    private boolean showWaveBanner = false;
 
     private BossEnemy bossEnemy;
 
@@ -77,6 +74,9 @@ public class Game extends JPanel {
         grassOverlay = new ImageIcon("Entities/Background/BG Overlay.png").getImage();      //NEW
         lifeFullImage = new ImageIcon("Entities/UserInterface/life_Full.png").getImage();
         lifeEmptyImage = new ImageIcon("Entities/UserInterface/life_Empty.png").getImage();
+        for (int i = 0; i < 5; i++) {
+            waveImages[i] = new ImageIcon("Entities/UserInterface/wave/wave" + (i + 1) + ".png").getImage();
+        }
 
         initializeWave(currentLevel, null);
 
@@ -230,58 +230,36 @@ public class Game extends JPanel {
         }
 
         if (player != null) {
-            drawLivesHUD(g, player); //draw GUI on top (NEW)
+            drawLives(g, player); //draw GUI on top (NEW)
         }
 
-        // Wave display
-        drawWaveHUD(g);
+        // Wave counter display
+        drawWaveCounter(g);
 
         if(bossEnemy != null){
             drawHealthBar(g, bossEnemy);
         }
-
-        // Temp banner (fade after 2.5s)
-        if (showWaveBanner) {
-            long elapsed = System.currentTimeMillis() - waveBannerStartTime;
-            if (elapsed < WAVE_BANNER_DURATION) {
-                drawWaveBanner(g, elapsed);
-            } else {
-                showWaveBanner = false; 
-            }
-        }
     }
 
     // Wave display counter
-    private void drawWaveHUD(Graphics g) {
-        String text = "Wave " + currentWave;
+    private void drawWaveCounter(Graphics g) {
+        if (currentWave <= 0 || currentWave > waveImages.length) {
+            return;
+        }
 
-        g.setFont(new Font("Arial", Font.BOLD, 30));
+        Image img = waveImages[currentWave - 1]; // since 0-indexed, wave1 png is in waveImages[0]
+        if (img != null && img.getWidth(null) != -1) {
+            int imgWidth = 200;
+            int imgHeight = 80;
 
-        int textWidth = g.getFontMetrics().stringWidth(text);
-        int x = (panelWidth - textWidth) / 2;
-        int y = 40;
+            // To center image
+            int currentWidth = (getWidth() > 0) ? getWidth() : panelWidth;
 
-        g.setColor(Color.WHITE);
-        g.drawString(text, x, y);
-    }
+            int x = (currentWidth - imgWidth) / 2;
+            int y = 10;
 
-    // Wave display when new wave starts
-    private void drawWaveBanner (Graphics g, long elapsed) { 
-        // fades from 255 -> 0 over last 500ms duration
-        float fadeStart = WAVE_BANNER_DURATION - 500f;
-        int alpha = (elapsed > fadeStart) ? (int) (255 * (1f - (elapsed - fadeStart) / 500f)) : 255;
-        alpha = Math.max(0, Math.min(255, alpha));
-
-        String text = "Wave " + currentWave;
-        g.setFont(new Font("Arial", Font.BOLD, 60));
-
-        int textWidth = g.getFontMetrics().stringWidth(text);
-        int x = (panelWidth - textWidth) / 2;
-        int y = panelHeight / 2;
-
-        g.setColor(new Color(255, 255, 255, alpha));
-        g.drawString(text, x, y);
-
+            g.drawImage(img, x, y, imgWidth, imgHeight, this);
+        }
     }
     
     public void drawHealthBar(Graphics g, BossEnemy bossEnemy){
@@ -330,10 +308,6 @@ public class Game extends JPanel {
 
         // Increment wave 
         currentWave++;
-        showWaveBanner = true;
-        waveBannerStartTime = System.currentTimeMillis();
-        System.out.println("[Game] Wave " + currentWave + " started.");
-
         spawnEnemies(spawnCount);
     }
 
@@ -393,7 +367,7 @@ public class Game extends JPanel {
         return rootLayeredPane;
     }
 
-    private void drawLivesHUD(Graphics g, Player player) {
+    private void drawLives(Graphics g, Player player) {
         int maxLives = player.getMaxLives();
         int currentLives = player.getCurrentLives();
         for (int i = 0; i < maxLives; i++) {
