@@ -1,20 +1,25 @@
 package Codes;
 
+// Handles audio for the game
+
 import java.io.File;
-import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 
 public class SoundManager {
+    // Singleton pattern: static variable to hold the one and only instance
     private static SoundManager instance;
     private Clip backgroundMusic;
     private String currentTrack = "";
-    private float sfxVolume = 0.75f;   // 0.0 = mute, 1.0 = max
+    private float sfxVolume = 0.75f;   // Normalized range: 0.0 = mute to 1.0 = max
     private float musicVolume = 0.75f;
 
+    // Private constructor to prevent other classes from creating new SoundManagers
     private SoundManager() {}
 
+    // Entry point for accessing the sound system. If instance doesn't exist, create it. Otherwise, return the existing one.
     public static SoundManager getInstance() {
         if (instance == null) {
             instance = new SoundManager();
@@ -22,6 +27,7 @@ public class SoundManager {
         return instance;
     }
 
+    // Prevents audio double-loading and loops background music continuously
     public void playMusic(String filePath) {
         // Prevent music restart if same track is alr playing
         if (currentTrack.equals(filePath)) return;
@@ -34,7 +40,7 @@ public class SoundManager {
                 backgroundMusic = AudioSystem.getClip();
                 backgroundMusic.open(audioInput);
                 setVolume(backgroundMusic, musicVolume);
-                backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
+                backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY); // Infinite loop for BGM
                 currentTrack = filePath;
             }
         } catch (Exception e) {
@@ -42,6 +48,7 @@ public class SoundManager {
         }
     }
 
+    // For short sounds. Use LineListener to close the clip after it finishes, freeing up system memory.
     public void playSFX (String filePath){
         try{
             File sfxPath = new File(filePath);
@@ -52,6 +59,7 @@ public class SoundManager {
                 setVolume(clip, sfxVolume);
                 clip.start();
 
+                // Auto-close sound thread when finishes
                 clip.addLineListener( e->{
                     if (e.getType() == javax.sound.sampled.LineEvent.Type.STOP){
                         clip.close();
