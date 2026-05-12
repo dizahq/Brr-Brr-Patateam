@@ -1,24 +1,34 @@
 package Codes;
 
+// The main entry point class
+// Initializes window
+
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 public class TheLastStand extends JFrame{
+    // Dynamically fetch screen resolution to ensure the game is truly full screen on any monitor
     private int frameWidth = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     private int frameHeight = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     
+    // Central container that holds all game layers (Menu, Game, Overlays)
     MainLayeredPane mainLayeredPane;
     
     public TheLastStand(){
+        // System initialization: ensures the save file is in clean state at launch
         SaveManager.resetFile();
         
-        setBounds(0, 0, frameWidth, frameHeight);
-        setUndecorated(true);
+        // Window configuration
+        setBounds(0, 0, frameWidth, frameHeight); // Match screen size
+        setUndecorated(true);             // Removes title bar/ borders for full screen feel
         setLocationRelativeTo(null);
         
-        mainLayeredPane = new MainLayeredPane(frameWidth, frameHeight);
+        // Layer management
+        mainLayeredPane = new MainLayeredPane(frameWidth, frameHeight); // Pass dimensions so the pane know how to scale its children
         add(mainLayeredPane);
 
+        // Audio System Initialization
+        // Singleton pattern: get single instance of SoundManager and start backgrond music
         SoundManager.getInstance().playMusic("Music/MainMenu_music.wav");
         SoundManager.getInstance().setMusicVolume(.50f); // max volume
         
