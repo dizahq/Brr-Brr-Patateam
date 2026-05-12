@@ -175,9 +175,18 @@ public class Player extends Entity {
         }
         
         if (powerup != null && getBounds().intersects(powerup.getBounds())){
-            powerup.applyEffect(this);
-            currentPowerups.put(powerup, System.currentTimeMillis());
+            if (powerup instanceof HealPowerUp){
+                powerup.applyEffect(this);
+            }else{
+                currentPowerups.put(powerup, System.currentTimeMillis());
+            }
             game.setActivePowerup(null);
+        }
+
+        for (Powerup powerups : currentPowerups.keySet()){
+            if (!(powerup instanceof HealPowerUp)){
+                powerups.applyEffect(this);
+            }
         }
 
         // 5. 8-directional animation logic (Keep your original logic here)

@@ -176,7 +176,7 @@ public class Game extends JPanel {
         // --- Level up when all waves cleared and no enemies left ---
         if (currentRespawn == respawns && enemies.isEmpty()) {
             checkGameStatus(); // win if applicable
-            if (currentLevel < 1) { // only level up if not the final level
+            if (currentLevel < 4) { // only level up if not the final level
                 currentLevel++;
                 initializeWave(currentLevel, this.player);
             }
