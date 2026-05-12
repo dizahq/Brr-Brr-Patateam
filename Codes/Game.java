@@ -465,6 +465,6 @@ public class Game extends JPanel {
         bullets.clear();
         heldKeys.clear();
 
-        triggerWin();
+        checkGameStatus();
     }
 }
