@@ -27,6 +27,10 @@ public class Game extends JPanel {
     private List<Bullet> bullets = new CopyOnWriteArrayList<>();
     private Powerup activePowerup = null;
 
+    private int currentLevel;
+    private int panelWidth, panelHeight;
+    private final Set<Integer> heldKeys = java.util.Collections.synchronizedSet(new HashSet<>());
+
     private Image grassImage;
     private Image grassOverlay; //overlay, test (NEW)
     private Image lifeFullImage;
@@ -35,12 +39,7 @@ public class Game extends JPanel {
     private static final int HEART_PADDING = 16;
     private static final int HEART_MARGIN = 16;
     
-    private static final int BAR_WIDTH = 750;
-    private static final int BAR_HEIGHT = 75;
-
-    private int currentLevel;
-    private int panelWidth, panelHeight;
-    private final Set<Integer> heldKeys = java.util.Collections.synchronizedSet(new HashSet<>());
+    private static final int BAR_HEIGHT = 25;
 
     private MainLayeredPane rootLayeredPane;
     private JButton pauseBtn = new JButton("Pause");
@@ -287,11 +286,11 @@ public class Game extends JPanel {
     }
     
     public void drawHealthBar(Graphics g, BossEnemy bossEnemy){
-        int currentHealthWidth = (int)(BAR_WIDTH * ((double)bossEnemy.getHealth()/bossEnemy.getMaxHealth()));
+        int currentHealthWidth = (int)(panelWidth * ((double)bossEnemy.getHealth()/bossEnemy.getMaxHealth()));
         g.setColor(Color.BLACK);
-        g.fillRect(panelWidth/2 - BAR_WIDTH/2, (int)(panelHeight-BAR_HEIGHT*1.5), BAR_WIDTH, BAR_HEIGHT);
+        g.fillRect(0, panelHeight-BAR_HEIGHT, panelWidth, BAR_HEIGHT);
         g.setColor(Color.RED);
-        g.fillRect(panelWidth/2 - BAR_WIDTH/2, (int)(panelHeight-BAR_HEIGHT*1.5), currentHealthWidth, BAR_HEIGHT);
+        g.fillRect(0, panelHeight-BAR_HEIGHT, currentHealthWidth, BAR_HEIGHT);
     }
 
     public void initializeWave(int currentLevel, Player player) {
