@@ -57,7 +57,6 @@ public class ExitConfirmPanel extends OverlayPanel{
         container.removeAll();
         container.add(Box.createRigidArea(new Dimension(0, 280)));
         container.add(confirmExitBtn);
-        container.add(Box.createRigidArea(new Dimension(0, 15)));
         container.add(cancelExitBtn);
         container.add(Box.createVerticalGlue());
     }
