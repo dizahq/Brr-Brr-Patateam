@@ -14,7 +14,7 @@ public class WinPanel extends OverlayPanel {
 
     private Image background = new ImageIcon("Entities/UserInterface/gameWon/game_won.png").getImage();
     private GameButton mainMenuBtn = new GameButton("mainmenuButton.png", "mainmenuButton_pressed.png", null);
-    private GameButton exitBtn = new GameButton("MainMenu/newgameButton.png", "MainMenu/newgameButton_pressed.png", null);
+    private GameButton exitBtn = new GameButton("MainMenu/exitButton.png", "MainMenu/exitButton_pressed.png", null);
 
     private Game game;
     private Consumer<String> switchPanel;

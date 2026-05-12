@@ -42,8 +42,8 @@ public class ExitConfirmPanel extends OverlayPanel{
         confirmExitBtn.setAlignmentX(CENTER_ALIGNMENT);
         cancelExitBtn.setAlignmentX(CENTER_ALIGNMENT);
 
-        confirmExitBtn.setButtonSize(200, 60);
-        cancelExitBtn.setButtonSize(200, 60);
+        confirmExitBtn.setButtonSize(200, 90);
+        cancelExitBtn.setButtonSize(200, 90);
 
         confirmExitBtn.addActionListener(e -> {
             SoundManager.getInstance().playSFX("Music/click.wav");
@@ -58,7 +58,6 @@ public class ExitConfirmPanel extends OverlayPanel{
         container.removeAll();
         container.add(Box.createRigidArea(new Dimension(0, 280)));
         container.add(confirmExitBtn);
-        container.add(Box.createRigidArea(new Dimension(0, 15)));
         container.add(cancelExitBtn);
         container.add(Box.createVerticalGlue());
     }

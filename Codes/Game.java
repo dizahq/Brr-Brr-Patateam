@@ -497,4 +497,15 @@ public class Game extends JPanel {
     public int getSoawnRate(){ return spawnRate; }
 
 
+<<<<<<< HEAD
+=======
+    public void killBoss(){
+        this.bossEnemy = null;
+        enemies.clear();
+        bullets.clear();
+        heldKeys.clear();
+
+        checkGameStatus();
+    }
+>>>>>>> e273ef19fa769fc9d580c4e43f81615865e564e4
 }
