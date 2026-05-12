@@ -40,8 +40,8 @@ public abstract class Enemy extends Entity {
     private int pathCooldown = 0;//countdown before next path recalculation
     
     //Static sprite strips - shared across all Enemy instances (loaded once from disk)
-    private static Image[] walkUp, walkDown, walkLeft, walkRight;
-    private static Image[] attackUp, attackDown, attackLeft, attackRight;
+    protected Image[] walkUp, walkDown, walkLeft, walkRight;
+    protected Image[] attackUp, attackDown, attackLeft, attackRight;
 
     protected int panelWidth, panelHeight; //game panel bound for clamping position
 
