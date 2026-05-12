@@ -19,6 +19,10 @@ public class BossEnemy extends Enemy{
     }
 
     public List<Enemy> spawnEnemies(){
+        // Stops spawning minions when boss health is low 
+        if (getHealth() <= 25) {
+            return new ArrayList<>();
+        }
         if(canSpawn){
             lastEnemySpawn = System.currentTimeMillis();
             List<Enemy> spawnedEnemies = new ArrayList<>();

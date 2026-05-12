@@ -342,7 +342,7 @@ public class Game extends JPanel {
         int specialEnemySpawnChance = currentLevel * 5;
         Random specialEnemyRandom = new Random();
 
-        if(currentLevel == 9 && currentRespawn == 2){
+        if(currentLevel == 4 && currentRespawn == 2){
             bossEnemy = new BossEnemy(panelWidth, panelHeight);
             enemies.add(bossEnemy);
         }
@@ -429,6 +429,24 @@ public class Game extends JPanel {
         initializeWave(currentLevel, this.player);
     }
 
+    private void checkGameStatus() {
+        if (currentLevel == 4 && bossEnemy == null && enemies.isEmpty()) {
+            triggerWin();
+        }
+    }
+
+    private void triggerWin() {
+        // to win
+        gameLoop.stopThread();
+        SwingUtilities.invokeLater(() ->
+            rootLayeredPane.getWinPanel().setVisible(true)
+        );
+        SoundManager.getInstance().stopMusic(); // stop background music
+        SoundManager.getInstance().playSFX("Music/win.wav"); // play win sound
+        
+        System.out.println("[Game] Boss defeated! Player wins!");
+    }
+
     public int getSpawnRate() { return spawnRate; }
     public void restoreFromSave (SaveData data) {
         currentLevel = data.currentLevel;
@@ -470,14 +488,10 @@ public class Game extends JPanel {
 
     public void killBoss(){
         this.bossEnemy = null;
+        enemies.clear();
+        bullets.clear();
+        heldKeys.clear();
 
-        // to win
-        gameLoop.stopThread();
-        SoundManager.getInstance().stopMusic(); // stop background music
-    SoundManager.getInstance().playSFX("Music/win.wav"); // play win sound
-        SwingUtilities.invokeLater(() ->
-            rootLayeredPane.getWinPanel().setVisible(true)
-        );
-        System.out.println("[Game] Boss defeated! Player wins!");
+        triggerWin();
     }
 }
