@@ -43,12 +43,15 @@ public class MainMenuPanel extends JPanel{
         
 
         newGameBtn.addActionListener(e -> {
+            SoundManager.getInstance().playSFX("Music/click.wav");
             newGame();
         });
         continueBtn.addActionListener(e -> {
+            SoundManager.getInstance().playSFX("Music/click.wav");
             continueGame();
         });
         exitBtn.addActionListener(e -> {
+            SoundManager.getInstance().playSFX("Music/click.wav");
             exitGame();
         });
 

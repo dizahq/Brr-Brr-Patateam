@@ -86,6 +86,7 @@ public class Game extends JPanel {
         pauseBtn.setBounds(panelWidth - 125, 20, 100, 40);
         pauseBtn.setFocusable(false);
         pauseBtn.addActionListener(e -> {
+            SoundManager.getInstance().playSFX("Music/click.wav");
             gameLoop.pauseThread();
             rootLayeredPane.getPauseMenu().setVisible(true);
         });
@@ -127,7 +128,9 @@ public class Game extends JPanel {
                 System.out.println("[Game] Player hit! Lives: " + player.getCurrentLives());
                 if (player.getCurrentLives() <= 0) {
                     gameLoop.stopThread();
-                    SwingUtilities.invokeLater(() ->
+                    SoundManager.getInstance().stopMusic(); // stop background music
+                    SoundManager.getInstance().playSFX("Music/game over.wav"); // play game over sound
+                    SwingUtilities.invokeLater(() -> 
                         rootLayeredPane.getGameOver().setVisible(true)
                     );
                     return;
@@ -141,7 +144,7 @@ public class Game extends JPanel {
         List<Enemy> enemiesToRemove = new ArrayList<>();
 
         for (Bullet bullet : bullets) {
-            bullet.update(enemies, bulletsToRemove, enemiesToRemove, activePowerup, this);
+            bullet.update(enemies, bulletsToRemove, enemiesToRemove, activePowerup, this, obstacles);
 
             // Remove bullet if off-screen
             if (bullet.getX() < 0 || bullet.getX() > panelWidth ||
@@ -302,8 +305,8 @@ public class Game extends JPanel {
 
 
         if (currentLevel % 2 == 0){
-            obstacles.add(new Obstacle(getWidth() /2 - 300, 150, 220, 60, panelWidth, panelHeight, 1, false));
-            obstacles.add(new Obstacle(getWidth() /2 + 100,300, 220, 60, panelWidth, panelHeight, 1, false));
+            obstacles.add(new Obstacle(getWidth() /2 - 300, 150, 220, 70, panelWidth, panelHeight, 1, false));
+            obstacles.add(new Obstacle(getWidth() /2 + 100,300, 220, 70, panelWidth, panelHeight, 1, false));
             obstacles.add(new Obstacle(getWidth() /2 - 500, getHeight()/2 -100, 80, 300, panelWidth, panelHeight, 2, true));
             obstacles.add(new Obstacle(getWidth() - 250, getHeight()/2 + 100, 70, 200, panelWidth, panelHeight, 3, true));
             obstacles.add(new Obstacle(getWidth() /2 - 50, getHeight() - 200, 160, 90, panelWidth, panelHeight, 4, false));
@@ -311,8 +314,8 @@ public class Game extends JPanel {
         }
 
         if (currentLevel % 2 != 0){
-            obstacles.add(new Obstacle(getWidth() /2 -600,200, 220, 60, panelWidth, panelHeight, 1, false));
-            obstacles.add(new Obstacle(getWidth() /2, getHeight() - 300, 220, 60, panelWidth, panelHeight, 1, false));
+            obstacles.add(new Obstacle(getWidth() /2 -600,200, 220, 70, panelWidth, panelHeight, 1, false));
+            obstacles.add(new Obstacle(getWidth() /2, getHeight() - 300, 220, 70, panelWidth, panelHeight, 1, false));
             obstacles.add(new Obstacle(getWidth() - 300, getHeight()/2 -300, 80, 400, panelWidth, panelHeight, 2, true));
             obstacles.add(new Obstacle(getWidth()/2 - 200, getHeight()/2 -100, 80, 400, panelWidth, panelHeight, 2, false));
         }
@@ -416,12 +419,6 @@ public class Game extends JPanel {
         }
     }
 
-    public int getCurrentLevel() { return currentLevel; }
-    public void setCurrentLevel(int level) { this.currentLevel = level; }
-
-    public int getCurrentWave() { return currentWave; }
-    public void setCurrentWave(int wave) { this.currentWave = wave; } // sets display counter - doesn't trigger initializeWave
-    
     public int getSpawnRate() { return spawnRate; }
     public void restoreFromSave (SaveData data) {
         currentLevel = data.currentLevel;
@@ -439,6 +436,13 @@ public class Game extends JPanel {
         player.setPosition(data.playerX, data.playerY);
     
     }
+
+    public int getCurrentLevel() { return currentLevel; }
+    public void setCurrentLevel(int level) { this.currentLevel = level; }
+
+    public int getCurrentWave() { return currentWave; }
+    public void setCurrentWave(int wave) { this.currentWave = wave; } // sets display counter - doesn't trigger initializeWave
+    
     public int getLives() { return player.getCurrentLives(); }
     public void setLives(int lives) { player.setCurrentLives(lives); }
 
@@ -461,6 +465,8 @@ public class Game extends JPanel {
 
         // to win
         gameLoop.stopThread();
+        SoundManager.getInstance().stopMusic(); // stop background music
+    SoundManager.getInstance().playSFX("Music/win.wav"); // play win sound
         SwingUtilities.invokeLater(() ->
             rootLayeredPane.getWinPanel().setVisible(true)
         );

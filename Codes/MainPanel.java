@@ -29,7 +29,8 @@ public class MainPanel extends JPanel{
         cards.show(this, name);
 
         if (name.equals("game")) {
-            SoundManager.getInstance().setMusicVolume(.10f); // max volume
+            SoundManager.getInstance().setMusicVolume(0.30f); // max volume
+            SoundManager.getInstance().setSFXVolume(1.0f); // game SFX louder
             SoundManager.getInstance().playMusic("Music/Game_music.wav");
         } else if (name.equals("mainMenu")) {
             SoundManager.getInstance().setMusicVolume(.40f); // max volume

@@ -29,12 +29,16 @@ public class PauseMenuPanel extends OverlayPanel{
         exit.setPreferredSize(new Dimension(200, 50));
 
         backToMainMenu.addActionListener(e -> {
+            SoundManager.getInstance().playSFX("Music/click.wav");
             backToMainMenu();
         });
+
         resume.addActionListener(e -> {
+            SoundManager.getInstance().playSFX("Music/click.wav");
             resume();
         });
         exit.addActionListener(e ->{
+            SoundManager.getInstance().playSFX("Music/click.wav");
             exitGame();
         });
 

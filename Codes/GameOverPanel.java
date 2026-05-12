@@ -28,9 +28,16 @@ public class GameOverPanel extends OverlayPanel {
         respawnBtn.setPreferredSize(new Dimension(200, 50));
         mainMenuBtn.setPreferredSize(new Dimension(200, 50));
 
-        respawnBtn.addActionListener(e -> respawn());
+        respawnBtn.addActionListener(e -> {
+            SoundManager.getInstance().playSFX("Music/click.wav");
+            SoundManager.getInstance().playMusic("Music/Game_music.wav");
+            respawn();
+        });
 
-        mainMenuBtn.addActionListener(e -> goToMainMenu());
+        mainMenuBtn.addActionListener(e -> {
+            SoundManager.getInstance().playSFX("Music/click.wav");
+            goToMainMenu();
+        });
 
         container.add(title);
         container.add(respawnBtn);

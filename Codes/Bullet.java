@@ -39,7 +39,7 @@ public class Bullet extends Entity{
     }
 
     //Moves the bullet each game tick based on its direction
-    public void update(List<Enemy> enemies, List<Bullet> bulletsToRemove, List<Enemy> enemiesToRemove, Powerup activePowerup, Game game){
+    public void update(List<Enemy> enemies, List<Bullet> bulletsToRemove, List<Enemy> enemiesToRemove, Powerup activePowerup, Game game, List<Obstacle> obstacles){
         switch (direction) {
             case NORTH:
                 this.y -= speed;
@@ -106,6 +106,15 @@ public class Bullet extends Entity{
                 break;
             }
         }
+
+        // Bullet vs obstacle collision
+        for (Obstacle obs : obstacles) {
+            if (this.getBounds().intersects(obs.getBounds())) {
+            bulletsToRemove.add(this);
+            return; // stop checking anything else
+            }
+        }
+
     }
 
     @Override

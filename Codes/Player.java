@@ -147,7 +147,6 @@ public class Player extends Entity {
             dy = (dy / length) * speed;
 
             if (animationTick == 0){
-                SoundManager.getInstance().setMusicVolume(1.0f); 
                 SoundManager.getInstance().playSFX("Music/walk.wav");
 
             }
@@ -206,7 +205,6 @@ public class Player extends Entity {
         //Shoot bullet
         if(canFire){
             if (shootUp || shootDown || shootLeft || shootRight) {
-                 SoundManager.getInstance().setMusicVolume(1.0f); // max volume
                 SoundManager.getInstance().playSFX("Music/bow_and_arrow.wav");
             }
 

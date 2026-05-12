@@ -61,7 +61,7 @@ public class SoundManager {
         }catch(Exception e){
              System.err.println("[SoundManager] Error playing SFX: " + e.getMessage());
         }
-    }
+    } 
 
     public void stopMusic() {
         if (backgroundMusic != null && backgroundMusic.isRunning()) {
@@ -85,6 +85,7 @@ public class SoundManager {
     }
 
     public void setMusicVolume(float volume) {
+        System.out.println("[SoundManager] setMusicVolume(" + volume + ")");
         this.musicVolume = Math.max(0f, Math.min(1f, volume));
         setVolume(backgroundMusic, this.musicVolume); // apply immediately to playing music
     }
