@@ -1,8 +1,9 @@
 package Codes;
 
-// container that holds all game info we want to save 
+// Container that holds all game info we want to save 
 
 public class SaveData {
+    // Public for quick access by SaveManager
     public int currentLevel;
     public int currentWave; 
     public int lives;
@@ -10,6 +11,8 @@ public class SaveData {
     public int playerY;
     public int spawnRate;
 
+    // Constructor used by SaveMaanger.load() to rebuild game state
+    // Every parameter corresponds to a line in Savegame.txt
     public SaveData(int currentLevel, int currentWave, int lives, int playerX, int playerY, int spawnRate) {
         this.currentLevel = currentLevel;
         this.currentWave = currentWave;
