@@ -132,55 +132,57 @@ __TheLastStand/
 |   ├── background/               
 │   ├── enemies/ 
 |   |   |── attack/
-|   |   |── walk/
+|   |   └── walk/
 |   |── music/ 
 |   |── object/
 |   |── obstacles/
 |   |── player/
 |   |   |── attack/
-|   |   |── normal/
-|   |── ui/
-|── config/
-|   |──README.md
+|   |   └── normal/
+|   └──ui/
 |── saves/
+|   |── Savegame.dat
+|   └── savegame.txt
 |── src/       
 │   ├── fileio/   
-|   |   |── SaveData.java
-|   |   |── SaveManager.java
-|   |   |── SoundManager.java              
+|   |   └── SaveData.java
+|   |   └── SaveManager.java
+|   |── gameloop/
+|   |   └── GameLoop.java           
 │   ├── objects/
-|   |   |── Enemy.java
 |   |   |── BasicEnemy.java
-|   |   |── BossEnemy.java 
+|   |   |── BossEnemy.java
+|   |   |── BossMinionEnemies.java 
+|   |   |── Bullet.java
+|   |   |── Enemy.java
 |   |   |── Entity.java
-|   |   |── GameObject.java  
+|   |   |── FireRatePowerup.java
+|   |   |── GameObject.java 
+|   |   |── HealPowerUp.java 
+|   |   |── MovementSpeedPowerup.java
 |   |   |── Obstacle.java
+|   |   |── PLayer.java
 |   |   |── SpeedyEnemy.java
-|   |   |── TankyEnemy.java
-|   |   |── Player.java           
-│   |   ├── powerUps/ 
-|   |   |   |── FireRatePowerup.java
-|   |   |   |── HealPowerUp.java
-|   |   |   |── MovementSpeedPowerup.java
-|   |   |   |── Powerup.java
-|   |   |── main/
-|   |   |   |── Game.java
-|   |   |   |── GameLoop.java
-|   |   |   |── TheLastStand.java
-|   |── threads 
-|   |   |──GameLoop.java
-|   |── ui
-|   |   |── MainLayeredPane.java
-|   |   |── MainPanel.java
-|   |   |── MainMenuPanel.java
-|   |   |── PauseMenuPanel.java
-|   |   |── GameOverPanel.java
-|   |   |── WinPanel.java
-|   |   |── ExitConfirmPanel.java
-|   |   |── OverlayPanel.java
-|   |   |── GameButton.java
-|   |___|
-|___|
+|   |   └── TankyEnemy.java 
+|   |── sound
+|   |   └── SoundManager.java        
+|   └── ui
+|       |── ExitConfirm.java
+|       |── Game.java
+|       |── GameButton.java
+|       |── GameOverPanel.java
+|       |── MainLayeredPane.java
+|       |── MainPanel.java
+|       |── MainMenuPanel.java
+|       |── OverlayPanel.java
+|       |── PauseMenuPanel.java
+|       |── WinPanel.java
+|       └── OverlayPanel.java
+|── .gitignore
+|── README.md
+|── TheLastStand.java
+|── TheLastStand.jar
+└── TheLastStand.exe
 
 ---
 
