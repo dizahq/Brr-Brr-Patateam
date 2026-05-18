@@ -1,10 +1,10 @@
 package ui;
 
-import javax.swing.JFrame;
-import java.awt.Toolkit;
-
 import fileio.SaveManager;
 import sound.SoundManager;
+
+import javax.swing.JFrame;
+import java.awt.Toolkit;
 
 public class MainFrame extends JFrame{
     // Dynamically fetch screen resolution to ensure the game is truly full screen on any monitor
@@ -20,7 +20,7 @@ public class MainFrame extends JFrame{
         
         // Window configuration
         setBounds(0, 0, frameWidth, frameHeight); // Match screen size
-        setUndecorated(true);             // Removes title bar/ borders for full screen feel
+        setUndecorated(true);            
         setLocationRelativeTo(null);
         
         // Layer management
@@ -28,14 +28,12 @@ public class MainFrame extends JFrame{
         add(mainLayeredPane);
 
         // Audio System Initialization
-        // Singleton pattern: get single instance of SoundManager and start backgrond music
         SoundManager.getInstance().playMusic("TheLastStand/assets/music/MainMenu_music.wav");
         SoundManager.getInstance().setMusicVolume(.50f); // max volume
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
-        // Tests:
         System.out.println("Your screen size is " + frameWidth + "x" + frameHeight);
     }
 }
