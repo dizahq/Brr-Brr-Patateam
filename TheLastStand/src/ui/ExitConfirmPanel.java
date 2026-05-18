@@ -10,21 +10,25 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-// Confirmation panel that appears when the player tries to exit the game
 public class ExitConfirmPanel extends OverlayPanel{
     private JPanel container;
     
-    private Image background = new ImageIcon("TheLastStand/assets/interface/confirmExit/confirm_exit.png").getImage();
-    private GameButton confirmExitBtn = new GameButton("confirmExit/yesButton.png", "confirmExit/yesButton_pressed.png", null);
-    private GameButton cancelExitBtn = new GameButton("confirmExit/noButton.png", "confirmExit/noButton_pressed.png", null);
+    private Image background;
+    private GameButton confirmExitBtn;
+    private GameButton cancelExitBtn;
 
     public ExitConfirmPanel(int panelWidth, int panelHeight){
         super(panelWidth, panelHeight, false);
+
+        background = new ImageIcon("TheLastStand/assets/interface/confirmExit/confirm_exit.png").getImage();
+        confirmExitBtn = new GameButton("confirmExit/yesButton.png", "confirmExit/yesButton_pressed.png", null);
+        cancelExitBtn = new GameButton("confirmExit/noButton.png", "confirmExit/noButton_pressed.png", null);
+
         container = getContainerPanel();
 
         container = getContainerPanel();
-        container.setOpaque(false); // false to see image
-        this.remove(container); // remove old container and replace 
+        container.setOpaque(false); 
+        this.remove(container); 
         container = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -49,7 +53,6 @@ public class ExitConfirmPanel extends OverlayPanel{
 
         confirmExitBtn.addActionListener(e -> {
             SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
-            // SaveManager.deleteSave(); // use only if exit game = delete saved data
             System.exit(0);
         });
         cancelExitBtn.addActionListener(e -> {
