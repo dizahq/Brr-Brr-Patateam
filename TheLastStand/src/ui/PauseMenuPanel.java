@@ -16,39 +16,44 @@ public class PauseMenuPanel extends OverlayPanel{
     private Consumer<String> switchPanel;
     private Game game;
 
-    private Image background = new ImageIcon("TheLastStand/assets/interface/pauseMenu/game_paused.png").getImage();
-    private GameButton resume = new GameButton("pauseMenu/resumeButton.png", "pauseMenu/resumeButton_pressed.png", null);
-    private GameButton backToMainMenu = new GameButton("mainmenuButton.png", "mainmenuButton_pressed.png", null);
-    private GameButton exit = new GameButton("mainMenu/exitButton.png", "mainMenu/exitButton_pressed.png", null);
+    private Image background;
+    private GameButton resumeBtn;
+    private GameButton backToMainMenuBtn;
+    private GameButton exitBtn;
     
     public PauseMenuPanel(int panelWidth, int panelHeight, Consumer<String> switchPanel, Game game){
         super(panelWidth, panelHeight, true);
         this.switchPanel = switchPanel;
         this.game = game;
 
+        background = new ImageIcon("TheLastStand/assets/interface/pauseMenu/game_paused.png").getImage();
+        resumeBtn = new GameButton("pauseMenu/resumeButton.png", "pauseMenu/resumeButton_pressed.png", null);;
+        backToMainMenuBtn = new GameButton("mainmenuButton.png", "mainmenuButton_pressed.png", null);
+        exitBtn = new GameButton("mainMenu/exitButton.png", "mainMenu/exitButton_pressed.png", null);
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        backToMainMenu.setAlignmentX(CENTER_ALIGNMENT);
-        resume.setAlignmentX(CENTER_ALIGNMENT);
-        exit.setAlignmentX(CENTER_ALIGNMENT);
+        backToMainMenuBtn.setAlignmentX(CENTER_ALIGNMENT);
+        resumeBtn.setAlignmentX(CENTER_ALIGNMENT);
+        exitBtn.setAlignmentX(CENTER_ALIGNMENT);
 
-        backToMainMenu.setButtonSize(250, 85);
-        resume.setButtonSize(250, 85);
-        exit.setButtonSize(250, 65);
+        backToMainMenuBtn.setButtonSize(250, 85);
+        resumeBtn.setButtonSize(250, 85);
+        exitBtn.setButtonSize(250, 65);
 
-        resume.setAlignmentX(CENTER_ALIGNMENT);
-        backToMainMenu.setAlignmentX(CENTER_ALIGNMENT);
-        exit.setAlignmentX(CENTER_ALIGNMENT);
+        resumeBtn.setAlignmentX(CENTER_ALIGNMENT);
+        backToMainMenuBtn.setAlignmentX(CENTER_ALIGNMENT);
+        exitBtn.setAlignmentX(CENTER_ALIGNMENT);
 
-        backToMainMenu.addActionListener(e -> {
+        backToMainMenuBtn.addActionListener(e -> {
             SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
             backToMainMenu();
         });
 
-        resume.addActionListener(e -> {
+        resumeBtn.addActionListener(e -> {
             SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
             resume();
         });
-        exit.addActionListener(e ->{
+        exitBtn.addActionListener(e ->{
             SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
             exitGame();
         });
@@ -56,11 +61,11 @@ public class PauseMenuPanel extends OverlayPanel{
         this.removeAll(); // Clears anything prev added to the container and makes sure panel is a blank state
         add(Box.createVerticalGlue());
         add(Box.createRigidArea(new Dimension(0, 280)));
-        add(resume);
+        add(resumeBtn);
         add(Box.createRigidArea(new Dimension(0, 20)));
-        add(backToMainMenu);
+        add(backToMainMenuBtn);
         add(Box.createRigidArea(new Dimension(0, 20)));
-        add(exit);
+        add(exitBtn);
         add(Box.createVerticalGlue());
     }
 
@@ -68,7 +73,6 @@ public class PauseMenuPanel extends OverlayPanel{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (background != null) {
-            // Stretch image to fill panel
             g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
         }
     }
@@ -78,21 +82,9 @@ public class PauseMenuPanel extends OverlayPanel{
         game.resumeGameThread();
     }
 
+    // Saves progress, stops game loop, and returns to main menu
     public void backToMainMenu(){
-        // Save game progress
-        SaveData data = new SaveData(
-            game.getCurrentLevel(), 
-            game.getCurrentWave(),
-            game.getLives(), 
-            game.getPlayerX(), 
-            game.getPlayerY(),
-            game.getSpawnRate()
-        );
-        boolean saved = SaveManager.save(data);
-        if (!saved) {
-            System.err.println("[PauseMenuPanel] Warning: progress can't be saved.");
-        }
-
+        saveProgress();
         setVisible(false);
         game.stopGameThread();
         switchPanel.accept("mainMenu");
@@ -112,5 +104,19 @@ public class PauseMenuPanel extends OverlayPanel{
         game.stopGameThread();
         SoundManager.getInstance().stopMusic();
         System.exit(0);
+    }
+
+    private void saveProgress() {
+        SaveData data = new SaveData(
+            game.getCurrentLevel(), 
+            game.getCurrentWave(),
+            game.getLives(), 
+            game.getPlayerX(), 
+            game.getPlayerY(),
+            game.getSpawnRate()
+        );
+        if (!SaveManager.save(data)) {
+            System.err.println("[PauseMenuPanel] Warning: progress can't be saved.");
+        }
     }
 }
