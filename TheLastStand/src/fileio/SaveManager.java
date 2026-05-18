@@ -102,7 +102,7 @@ public class SaveManager {
             try (PrintWriter writer = new PrintWriter(new FileWriter(SAVE_FILE))) {
                 writer.println("RESET");
             } 
-            System.out.println("[SaveManager] Save file reset for new main game.");
+            System.out.println("[SaveManager] Save file reset for new game.");
         } catch (IOException e) {
             System.err.println("[SaveManager] Failed to reset file: " + e.getMessage());
         }
