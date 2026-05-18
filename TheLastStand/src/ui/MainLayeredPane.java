@@ -11,6 +11,7 @@ public class MainLayeredPane extends JLayeredPane{
     private PauseMenuPanel pauseMenu;
     private ExitConfirmPanel exitConfirm;
     private HelpPanel help;
+    private CreditsPanel credits;
     private GameOverPanel gameOver;
     private WinPanel winPanel;
 
@@ -22,6 +23,7 @@ public class MainLayeredPane extends JLayeredPane{
         pauseMenu = new PauseMenuPanel(panelWidth, panelHeight, switchPanel, game);
         exitConfirm = new ExitConfirmPanel(panelWidth, panelHeight);
         help = new HelpPanel(panelWidth, panelHeight);
+        credits = new CreditsPanel(panelWidth, panelHeight);
         gameOver = new GameOverPanel(panelWidth, panelHeight, switchPanel, game);
         winPanel = new WinPanel(panelWidth, panelHeight, switchPanel, game);
 
@@ -29,6 +31,7 @@ public class MainLayeredPane extends JLayeredPane{
         add(pauseMenu, JLayeredPane.MODAL_LAYER);
         add(exitConfirm, JLayeredPane.MODAL_LAYER);
         add(help, JLayeredPane.MODAL_LAYER);
+        add(credits, JLayeredPane.MODAL_LAYER);
         add(gameOver, JLayeredPane.MODAL_LAYER);
         add(winPanel, JLayeredPane.MODAL_LAYER);
     }
@@ -41,6 +44,9 @@ public class MainLayeredPane extends JLayeredPane{
     }
     public HelpPanel getHelp() {
         return help;
+    }
+    public CreditsPanel getCredits(){
+        return credits;
     }
     public GameOverPanel getGameOver() {
         return gameOver;

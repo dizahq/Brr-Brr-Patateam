@@ -8,7 +8,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class HelpPanel extends OverlayPanel{
-    private Image helpImage;
+    private Image helpImage = new ImageIcon("TheLastStand/assets/interface/mainMenu/help1.png").getImage();
     private int size = 600;
     private int panelWidth;
     private int panelHeight;
@@ -17,8 +17,6 @@ public class HelpPanel extends OverlayPanel{
         this.panelWidth = panelWidth;
         this.panelHeight = panelHeight;
         setVisible(false);
-
-        helpImage = new ImageIcon("TheLastStand/assets/interface/mainMenu/help1.png").getImage();
 
         addMouseListener(new MouseAdapter() {
             @Override

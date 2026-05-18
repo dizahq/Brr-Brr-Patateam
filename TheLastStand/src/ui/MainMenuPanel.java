@@ -152,6 +152,6 @@ public class MainMenuPanel extends JPanel{
         rootLayeredPane.getHelp().setVisible(true);
     }
     public void credits(){
-
+        rootLayeredPane.getCredits().setVisible(true);
     }
 }
