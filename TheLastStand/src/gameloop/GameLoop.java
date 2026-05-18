@@ -96,10 +96,9 @@ public class GameLoop implements Runnable {
             
 
             // Fixed update steps
-            while (lag >= OPTIMAL_TIME) {
-                game.update();
-                lag -= OPTIMAL_TIME;
-            }
+            int ticks = (int) (lag / OPTIMAL_TIME);
+            for (int i = 0; i < ticks; i++) game.update();
+            lag -= (long) ticks * OPTIMAL_TIME;
 
             // Render
             game.repaint();
