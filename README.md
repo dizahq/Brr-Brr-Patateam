@@ -38,7 +38,7 @@ The game **automatically saves** your level, wave, health, and position when you
 Selecting *New Game*, or returning to the menu after a *Game Over* or *Victory*, will reset your save file.
 
 
-## 🚀 How to Run
+## How to Run
 
 **Requirements:** Java 11 or higher installed.
 
