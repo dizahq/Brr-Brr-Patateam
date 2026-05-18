@@ -13,20 +13,20 @@ import javax.swing.JPanel;
 
 public class WinPanel extends OverlayPanel {
     private JPanel container; // Inner container panel used to organize and position UI components
+    
+    private Consumer<String> switchPanel;
+    private Game game;
+
     private Image background;
     private GameButton mainMenuBtn;
     private GameButton exitBtn;
-    private Game game;
-    private Consumer<String> switchPanel;
 
     public WinPanel(int panelWidth, int panelHeight, Consumer<String> switchPanel, Game game) {
         super(panelWidth, panelHeight, true);
         this.switchPanel = switchPanel;
         this.game = game;
 
-        // Initialize background image 
-        background = new ImageIcon("TheLastStand/assets/interface/gameWon/game_won.png").getImage(); // Full screen background image rendered behind all UI components
-        // Initialize buttons 
+        background = new ImageIcon("TheLastStand/assets/interface/gameWon/game_won.png").getImage(); 
         mainMenuBtn = new GameButton("mainmenuButton.png", "mainmenuButton_pressed.png", null);
         exitBtn = new GameButton("mainMenu/exitButton.png", "mainMenu/exitButton_pressed.png", null);
 
@@ -45,23 +45,21 @@ public class WinPanel extends OverlayPanel {
         mainMenuBtn.setButtonSize(300, 100);
         exitBtn.setButtonSize(300, 80);
 
-        // Using vertical glue and rigid areas for precise spacing
         container.add(Box.createVerticalGlue());
-        container.add(Box.createRigidArea(new Dimension(0, 500))); // Vertical offset
+        container.add(Box.createRigidArea(new Dimension(0, 500)));
         container.add(mainMenuBtn);
-        container.add(Box.createRigidArea(new Dimension(0, 20))); // Gap between buttons
+        container.add(Box.createRigidArea(new Dimension(0, 20))); 
         container.add(exitBtn);
         container.add(Box.createVerticalGlue());
     }
 
     private void setupActionListeners() {
         mainMenuBtn.addActionListener(e -> {
-            SaveManager.deleteSave(); // Clear progress upon completion
-            game.stopGameThread(); // Safely terminate the game loop
+            SaveManager.deleteSave(); 
+            game.stopGameThread(); 
             switchPanel.accept("mainMenu");
             setVisible(false);
         });
-
         exitBtn.addActionListener(e -> System.exit(0));
     }
     @Override
