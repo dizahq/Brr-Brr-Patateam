@@ -1,10 +1,7 @@
 package ui;
 
-import gameloop.GameLoop;
-import sound.SoundManager;
-import objects.GameObject;
 import fileio.SaveData;
-
+import gameloop.GameLoop;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -21,20 +18,23 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
 import objects.BasicEnemy;
 import objects.BossEnemy;
 import objects.Bullet;
 import objects.Enemy;
 import objects.FireRatePowerup;
+import objects.GameObject;
 import objects.MovementSpeedPowerup;
 import objects.Obstacle;
 import objects.Player;
 import objects.Powerup;
 import objects.SpeedyEnemy;
 import objects.TankyEnemy;
+import sound.SoundManager;
 
 public class Game extends JPanel {
+
+    // Game Objects
     private Player player;
     private GameLoop gameLoop;
     private List<Obstacle> obstacles = new CopyOnWriteArrayList<>();
@@ -42,38 +42,41 @@ public class Game extends JPanel {
     private List<Bullet> bullets = new CopyOnWriteArrayList<>();
     private Powerup activePowerup = null;
 
+    // State
     private int currentLevel;
-    private int panelWidth, panelHeight;
+    private final int panelWidth, panelHeight;
     private final Set<Integer> heldKeys = java.util.Collections.synchronizedSet(new HashSet<>());
+    private boolean restoringFromSave = false;
 
+    // Assets
     private Image grassImage;
-    private Image grassOverlay; //overlay, test (NEW)
+    private Image grassOverlay; 
     private Image lifeFullImage;
     private Image lifeEmptyImage;
-    private Image[] waveImages = new Image[5];
+    private final Image[] waveImages = new Image[5];
 
+    // HUD Constants
     private static final int HEART_SIZE = 60;
     private static final int HEART_PADDING = 16;
     private static final int HEART_MARGIN = 16;
-    
     private static final int BAR_HEIGHT = 25;
 
+    // UI References
     private MainLayeredPane rootLayeredPane;
     private GameButton pauseBtn = new GameButton("pauseMenu/pauseButton.png", "pauseMenu/pauseButton_pressed.png", null);
 
-    // spawning parameters
+    // Spawning parameters
     private double lastEnemySpawnTime;
     private int spawnCount;
     private int spawnRate = 5000;
     private int currentRespawn = 0;
     private int respawns = 3;
 
-    // wave display
+    // Wave tracking
     private int currentWave = 0;
 
+    // Boss
     private BossEnemy bossEnemy;
-
-    private boolean restoringFromSave = false;
 
     public Game(int panelWidth, int panelHeight, MainLayeredPane rootLayeredPane) {
         this.rootLayeredPane = rootLayeredPane;
@@ -83,10 +86,18 @@ public class Game extends JPanel {
         setLayout(null);
         setFocusable(true);
 
-        //Game Loop
         gameLoop = new GameLoop (this);
 
-        // Load assets (bg + lives)
+        loadAssets();
+        setupPauseButton();
+        setupKeyListeners();
+        setupFocusListener();
+        
+        initializeWave(currentLevel, null);
+    }
+
+    // Load Assets
+    private void loadAssets() {
         grassImage = new ImageIcon("TheLastStand/assets/background/Grass BG.png").getImage();          //REPLACED
         grassOverlay = new ImageIcon("TheLastStand/assets/background/BG Overlay.png").getImage();      //NEW
         lifeFullImage = new ImageIcon("TheLastStand/assets/interface/life_Full.png").getImage();
@@ -94,10 +105,9 @@ public class Game extends JPanel {
         for (int i = 0; i < 5; i++) {
             waveImages[i] = new ImageIcon("TheLastStand/assets/interface/wave/wave" + (i + 1) + ".png").getImage();
         }
+    }
 
-        initializeWave(currentLevel, null);
-
-        // Pause button
+    private void setupPauseButton() {
         pauseBtn.setBounds(panelWidth - 210, 20, 180, 70);
         pauseBtn.setFocusable(false);
         pauseBtn.addActionListener(e -> {
@@ -106,8 +116,9 @@ public class Game extends JPanel {
             rootLayeredPane.getPauseMenu().setVisible(true);
         });
         add(pauseBtn);
+    }
 
-
+    private void setupKeyListeners() {
         // Key listeners
         addKeyListener(new KeyAdapter() {
             @Override
@@ -120,7 +131,9 @@ public class Game extends JPanel {
                 heldKeys.remove(e.getKeyCode());
             }
         });
+    }
 
+    private void setupFocusListener() {
         addHierarchyListener(e -> {
             if ((e.getChangeFlags() & HierarchyEvent.SHOWING_CHANGED) != 0 && isShowing()) {
                 requestFocusInWindow();
