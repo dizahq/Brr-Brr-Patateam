@@ -15,11 +15,12 @@ public class SaveManager {
     private static final String SAVE_DIR = "TheLastStand" + File.separator + "saves";
     private static final String SAVE_FILE = SAVE_DIR + File.separator + "savegame.txt"; // Separator ensures it works on both windows and mac/linux
 
-    // Returns true if a valid save exists, false otherwise
+    private SaveManager() {}
+
+    // Returns true if a valid (non-RESET) save exists
     public static boolean hasSave() {
         File file = new File(SAVE_FILE);
 
-        // Check if file exists on the disk
         if (!file.exists()) return false;
 
         // Check if it's just a placeholder "RESET" file
@@ -39,11 +40,10 @@ public class SaveManager {
     public static boolean save(SaveData data) {
         try {
             // Create saves/directory if missing. Ensures the save folder exists.
-            Files.createDirectories(Paths.get(SAVE_DIR)); // If save folder is missing, esnures the game won't crash when trying to write a file. Will simply build the folder first.
+            Files.createDirectories(Paths.get(SAVE_DIR)); 
             
             // Write data into savegame.txt. 
-            try (PrintWriter writer = new PrintWriter(new FileWriter(SAVE_FILE))) { // PrintWriter writes human-readable text. FileWriter(file) opens the stream.
-                writer.println(data.currentLevel);
+            try (PrintWriter writer = new PrintWriter(new FileWriter(SAVE_FILE))) { 
                 writer.println(data.currentWave);
                 writer.println(data.lives);
                 writer.println(data.playerX);
@@ -59,15 +59,15 @@ public class SaveManager {
         }
     }
 
-    // Reads the save file and reconstructs a SaveData object
+    // Reads the save file and reconstructs the saved game state
     public static SaveData load() {
         if (!hasSave()) {
-            System.out.println("[SaveManager] No save file found.");
+            System.out.println("[SaveManager] No valid save file found.");
             return null;
         }
 
         try (Scanner scanner = new Scanner(new File(SAVE_FILE))) {
-            // Must read in the exact same order it was saved. Level -> Wave -> Lives
+            // Must read in the exact same order it was saved. 
             int level = Integer.parseInt(scanner.nextLine());
             int wave = Integer.parseInt(scanner.nextLine());
             int lives = Integer.parseInt(scanner.nextLine());
@@ -76,7 +76,7 @@ public class SaveManager {
             int spawnRate = scanner.hasNextLine() ? Integer.parseInt(scanner.nextLine()) : 5000; // Ternary check for spawnRate to prevent errors if loading an older save version
 
             return new SaveData(level, wave, lives, pX, pY, spawnRate);
-        } catch (IOException | NumberFormatException e) { // Prevents game from crashing if savegame.txt is manually edited. Will simply return null and log a corrupt file error            System.err.println("[SaveManager] Load failed (corrupt file): " + e.getMessage());
+        } catch (IOException | NumberFormatException e) { 
             return null;
         }
     }
