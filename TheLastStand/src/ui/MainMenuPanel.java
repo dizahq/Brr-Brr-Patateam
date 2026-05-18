@@ -26,7 +26,7 @@ public class MainMenuPanel extends JPanel{
     private GameButton newGameBtn = new GameButton("mainMenu/newgameButton.png", "mainMenu/newgameButton_pressed.png", null);
     private GameButton continueBtn = new GameButton("mainMenu/continueButton.png", "mainMenu/continueButton_pressed.png", "mainMenu/continueButton_locked.png");
     private GameButton exitBtn = new GameButton("mainMenu/exitButton.png", "mainMenu/exitButton_pressed.png", null);  
-    private GameButton helpBtn = new GameButton("mainMenu/aboutButton.png", "mainMenu/aboutButton_hover.png", null);
+    private GameButton helpBtn = new GameButton("mainMenu/helpButton.png", "mainMenu/helpButton_hover.png", null);
     private GameButton creditsBtn = new GameButton("mainMenu/creditsButton.png", "mainMenu/creditsButton_hover.png", null);
     
     public MainMenuPanel(MainLayeredPane rootLayeredPane, Consumer<String> switchPanel, Game game){
