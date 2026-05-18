@@ -1,9 +1,7 @@
 package ui;
 
-import sound.SoundManager;
-import fileio.SaveManager;
 import fileio.SaveData;
-
+import fileio.SaveManager;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -14,6 +12,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import sound.SoundManager;
 
 public class MainMenuPanel extends JPanel{
     private MainLayeredPane rootLayeredPane;
@@ -60,7 +59,7 @@ public class MainMenuPanel extends JPanel{
         });
 
         centerPanel.add(Box.createVerticalGlue());
-        centerPanel.add(Box.createRigidArea(new Dimension(0, 380)));
+        centerPanel.add(Box.createRigidArea(new Dimension(0, 450)));
         centerPanel.add(newGameBtn);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         centerPanel.add(continueBtn);
