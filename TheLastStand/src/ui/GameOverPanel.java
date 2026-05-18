@@ -15,17 +15,21 @@ import javax.swing.JPanel;
 public class GameOverPanel extends OverlayPanel {
     private JPanel container;
 
-    private Image background = new ImageIcon("TheLastStand/assets/interface/gameOver/game_over.png").getImage();
-    private GameButton respawnBtn = new GameButton("gameOver/respawnButton.png", "gameOver/respawnButton_pressed.png", null);
-    private GameButton mainMenuBtn = new GameButton("mainmenuButton.png", "mainmenuButton_pressed.png", null);
-
-    private Game game;
     private Consumer<String> switchPanel;
+    private Game game;
+
+    private Image background;
+    private GameButton respawnBtn;
+    private GameButton mainMenuBtn;
 
     public GameOverPanel(int panelWidth, int panelHeight, Consumer<String> switchPanel, Game game) {
         super(panelWidth, panelHeight, true);
         this.switchPanel = switchPanel;
         this.game = game;
+
+        background = new ImageIcon("TheLastStand/assets/interface/gameOver/game_over.png").getImage();;
+        respawnBtn = new GameButton("gameOver/respawnButton.png", "gameOver/respawnButton_pressed.png", null);
+        mainMenuBtn = new GameButton("mainmenuButton.png", "mainmenuButton_pressed.png", null);
 
         container = getContainerPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
@@ -66,11 +70,10 @@ public class GameOverPanel extends OverlayPanel {
     }
 
     public void playerRespawn() {
-        setVisible(false);          // 1. hide game over screen first
-        game.setLives(4);           // 2. respawns + reset lives again to max
-        game.playerRespawn(); // 3. restart current level/wave. Create new player instance
-        game.startGameThread();     // 4. start loop last, panel is visible and focused now
-    
+        setVisible(false);          
+        game.setLives(4);          
+        game.playerRespawn(); 
+        game.startGameThread();     
         System.out.println("[GameOverPanel] Player respawned.");
     }
 
@@ -79,8 +82,6 @@ public class GameOverPanel extends OverlayPanel {
         setVisible(false);
         game.stopGameThread();
         switchPanel.accept("mainMenu");
-
-        // test
         System.out.println("[GameOverPanel] Returning to main menu.");
     }
 }
