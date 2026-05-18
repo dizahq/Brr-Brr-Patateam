@@ -21,11 +21,7 @@ public abstract class OverlayPanel extends JPanel{
         addMouseListener(new MouseAdapter(){});
         
         // Control whether full screen or not
-        if (fullScreen) {
-            containerPanel.setPreferredSize(new Dimension(panelWidth, panelHeight));
-        } else {
-            containerPanel.setPreferredSize(new Dimension(500, 600));
-        }
+        containerPanel.setPreferredSize(fullScreen ? new Dimension(panelWidth, panelHeight) : new Dimension(500, 600));
         containerPanel.setOpaque(false);
         add(containerPanel);
 
@@ -39,7 +35,5 @@ public abstract class OverlayPanel extends JPanel{
         g.fillRect(0, 0, panelWidth, panelHeight);
     }
 
-    public JPanel getContainerPanel() {
-        return containerPanel;
-    }
+    public JPanel getContainerPanel() { return containerPanel; }
 }
