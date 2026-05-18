@@ -1,12 +1,10 @@
-package src.ui;
+package ui;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
@@ -31,9 +29,9 @@ public class GameButton extends JButton {
             return null;
         }
         try {
-            return ImageIO.read(new File("TheLastStand/assets/interface/" + path));
-        } catch (IOException e) {
-            System.out.println("[GameButton]Error loading button: " + path);
+            return ImageIO.read(getClass().getResource("/assets/interface/" + path));
+        } catch (Exception e) {
+            System.out.println("[GameButton] Error loading button from JAR: " + path);
             return null;
         }
     }

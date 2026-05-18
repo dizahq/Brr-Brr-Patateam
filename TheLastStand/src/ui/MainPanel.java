@@ -1,10 +1,9 @@
-package src.ui;
-
-import src.sound.SoundManager;
+package ui;
 
 import java.awt.CardLayout;
 import java.util.function.Consumer;
 import javax.swing.JPanel;
+import sound.SoundManager;
 
 public class MainPanel extends JPanel{
     private CardLayout cards = new CardLayout();
@@ -33,10 +32,10 @@ public class MainPanel extends JPanel{
         if (name.equals("game")) {
             SoundManager.getInstance().setMusicVolume(0.30f); // max volume
             SoundManager.getInstance().setSFXVolume(1.0f); // game SFX louder
-            SoundManager.getInstance().playMusic("TheLastStand/assets/music/Game_music.wav");
+            SoundManager.getInstance().playMusic("/assets/music/Game_music.wav");
         } else if (name.equals("mainMenu")) {
             SoundManager.getInstance().setMusicVolume(.40f); // max volume
-            SoundManager.getInstance().playMusic("TheLastStand/assets/music/MainMenu_music.wav");
+            SoundManager.getInstance().playMusic("/assets/music/MainMenu_music.wav");
         }
     }
 

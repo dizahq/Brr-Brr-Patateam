@@ -1,7 +1,5 @@
-package src.ui;
+package ui;
 
-import src.fileio.SaveData;
-import src.fileio.SaveManager;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -12,7 +10,9 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import src.sound.SoundManager;
+import fileio.SaveData;
+import fileio.SaveManager;
+import sound.SoundManager;
 
 public class MainMenuPanel extends JPanel{
     private MainLayeredPane rootLayeredPane;
@@ -46,15 +46,15 @@ public class MainMenuPanel extends JPanel{
         exitBtn.setButtonSize(300, 100);
 
         newGameBtn.addActionListener(e -> {
-            SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
+            SoundManager.getInstance().playSFX("/assets/music/click.wav");
             newGame();
         });
         continueBtn.addActionListener(e -> {
-            SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
+            SoundManager.getInstance().playSFX("/assets/music/click.wav");
             continueGame();
         });
         exitBtn.addActionListener(e -> {
-            SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
+            SoundManager.getInstance().playSFX("/assets/music/click.wav");
             exitGame();
         });
 
@@ -74,11 +74,11 @@ public class MainMenuPanel extends JPanel{
         creditsBtn.setButtonSize(100, 100);
 
         helpBtn.addActionListener(e -> {
-            SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
+            SoundManager.getInstance().playSFX("/assets/music/click.wav");
             help();
         });
         creditsBtn.addActionListener(e -> {
-            SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
+            SoundManager.getInstance().playSFX("/assets/music/click.wav");
             credits();
         });
 
@@ -93,7 +93,7 @@ public class MainMenuPanel extends JPanel{
         add(buttonPanel, BorderLayout.SOUTH);
 
         //bg not final
-        backgroundImage = new ImageIcon("TheLastStand/assets/background/mainmenu.png").getImage();
+        backgroundImage = new ImageIcon(getClass().getResource("/assets/background/mainmenu.png")).getImage();
         refreshButtons();
 
         addHierarchyListener(e -> {

@@ -1,4 +1,4 @@
-package src.objects;
+package objects;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -12,7 +12,7 @@ public class MovementSpeedPowerup extends Powerup{
         super(x, y);
         setDuration(10000);
 
-        icon = new ImageIcon("TheLastStand/assets/objects/powerups/speedboost.png").getImage();
+        icon = new ImageIcon(getClass().getResource("/assets/objects/powerups/speedboost.png")).getImage();
     }
 
     @Override

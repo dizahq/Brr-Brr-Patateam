@@ -1,4 +1,4 @@
-package src.objects;
+package objects;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -24,7 +24,11 @@ public abstract class Entity extends GameObject{
         Image[] frames = new Image[count];
 
         for (int i = 0; i< count; i++){
-            frames[i] = new ImageIcon(prefix + (i + 1) + ".png").getImage();
+            String path = prefix.replace("TheLastStand/", "");
+            if (!path.startsWith("/")) {
+                path = "/" + path;
+            }
+            frames[i] = new ImageIcon(Entity.class.getResource(path + (i + 1) + ".png")).getImage();
         }
         return frames;
     }

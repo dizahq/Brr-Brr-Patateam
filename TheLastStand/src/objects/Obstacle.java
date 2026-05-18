@@ -1,4 +1,4 @@
-package src.objects;
+package objects;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -34,10 +34,10 @@ public class Obstacle extends GameObject {
         if (this.y + this.height > maxY) this.height = maxY - this.y;
 
 
-        obstacle1 = new ImageIcon("TheLastStand/assets/obstacles/obs1.PNG").getImage();
-        obstacle2 = new ImageIcon("TheLastStand/assets/obstacles/obs2.PNG").getImage();
-        obstacle3 = new ImageIcon("TheLastStand/assets/obstacles/obs3.PNG").getImage();
-        obstacle4 = new ImageIcon("TheLastStand/assets/obstacles/obs4.PNG").getImage();
+        obstacle1 = new ImageIcon(getClass().getResource("/assets/obstacles/obs1.PNG")).getImage();
+        obstacle2 = new ImageIcon(getClass().getResource("/assets/obstacles/obs2.PNG")).getImage();
+        obstacle3 = new ImageIcon(getClass().getResource("/assets/obstacles/obs3.PNG")).getImage();
+        obstacle4 = new ImageIcon(getClass().getResource("/assets/obstacles/obs4.PNG")).getImage();
 
         // Pick image based on type
         switch (type) {

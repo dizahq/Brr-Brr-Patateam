@@ -1,4 +1,4 @@
-package src.objects;
+package objects;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -12,7 +12,7 @@ public class HealPowerUp extends Powerup{
         super(x, y);
         setDuration(0);
 
-        icon = new ImageIcon("TheLastStand/assets/objects/powerups/heal.png").getImage();
+        icon = new ImageIcon(getClass().getResource("/assets/objects/powerups/heal.png")).getImage();
     }
     @Override
     public void draw(Graphics g) {

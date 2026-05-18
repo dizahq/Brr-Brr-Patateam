@@ -1,4 +1,4 @@
-package src.objects;
+package objects;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 

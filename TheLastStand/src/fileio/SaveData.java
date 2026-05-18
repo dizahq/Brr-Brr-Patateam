@@ -1,4 +1,4 @@
-package src.fileio;
+package fileio;
 
 // Container that holds all game info we want to save 
 

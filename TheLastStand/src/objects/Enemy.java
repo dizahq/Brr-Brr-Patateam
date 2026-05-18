@@ -1,6 +1,6 @@
-package src.objects;
+package objects;
 
-import src.sound.SoundManager;
+import sound.SoundManager;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -84,7 +84,7 @@ public abstract class Enemy extends Entity {
         lastX = x;
         lastY = y;
 
-        missImage = new ImageIcon("TheLastStand/assets/interface/miss.png").getImage();
+        missImage = new ImageIcon(getClass().getResource("/assets/interface/miss.png")).getImage();
     }
 
     //Public API

@@ -1,4 +1,4 @@
-package src.objects;
+package objects;
 
 public class TankyEnemy extends Enemy{
 

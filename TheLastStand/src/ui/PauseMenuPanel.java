@@ -1,8 +1,4 @@
-package src.ui;
-
-import src.sound.SoundManager;
-import src.fileio.SaveData;
-import src.fileio.SaveManager;
+package ui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -11,6 +7,9 @@ import java.util.function.Consumer;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import fileio.SaveData;
+import fileio.SaveManager;
+import sound.SoundManager;
 
 public class PauseMenuPanel extends OverlayPanel{
     private Consumer<String> switchPanel;
@@ -26,7 +25,7 @@ public class PauseMenuPanel extends OverlayPanel{
         this.switchPanel = switchPanel;
         this.game = game;
 
-        background = new ImageIcon("TheLastStand/assets/interface/pauseMenu/game_paused.png").getImage();
+        background = new ImageIcon(getClass().getResource("/assets/interface/pauseMenu/game_paused.png")).getImage();
         resumeBtn = new GameButton("pauseMenu/resumeButton.png", "pauseMenu/resumeButton_pressed.png", null);;
         backToMainMenuBtn = new GameButton("mainmenuButton.png", "mainmenuButton_pressed.png", null);
         exitBtn = new GameButton("mainMenu/exitButton.png", "mainMenu/exitButton_pressed.png", null);
@@ -45,16 +44,16 @@ public class PauseMenuPanel extends OverlayPanel{
         exitBtn.setAlignmentX(CENTER_ALIGNMENT);
 
         backToMainMenuBtn.addActionListener(e -> {
-            SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
+            SoundManager.getInstance().playSFX("/assets/music/click.wav");
             backToMainMenu();
         });
 
         resumeBtn.addActionListener(e -> {
-            SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
+            SoundManager.getInstance().playSFX("/assets/music/click.wav");
             resume();
         });
         exitBtn.addActionListener(e ->{
-            SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
+            SoundManager.getInstance().playSFX("/assets/music/click.wav");
             exitGame();
         });
 

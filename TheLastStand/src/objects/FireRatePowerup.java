@@ -1,4 +1,4 @@
-package src.objects;
+package objects;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -13,7 +13,7 @@ public class FireRatePowerup extends Powerup{
         super(x, y);
         setDuration(5000);
 
-        icon = new ImageIcon("TheLastStand/assets/objects/powerups/atkspeed.png").getImage();
+        icon = new ImageIcon(getClass().getResource("/assets/objects/powerups/atkspeed.png")).getImage();
     }
     @Override
     public void draw(Graphics g) {

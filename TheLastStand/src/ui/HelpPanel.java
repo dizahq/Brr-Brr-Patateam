@@ -1,14 +1,13 @@
-package src.ui;
+package ui;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class HelpPanel extends OverlayPanel{
-    private Image helpImage = new ImageIcon("TheLastStand/assets/interface/mainMenu/help1.png").getImage();
+    private Image helpImage = new ImageIcon(getClass().getResource("/assets/interface/mainMenu/help1.png")).getImage();
     private int size = 600;
     private int panelWidth;
     private int panelHeight;

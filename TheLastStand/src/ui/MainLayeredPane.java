@@ -1,4 +1,4 @@
-package src.ui;
+package ui;
 
 import java.util.function.Consumer;
 import javax.swing.JLayeredPane;

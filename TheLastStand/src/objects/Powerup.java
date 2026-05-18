@@ -1,4 +1,4 @@
-package src.objects;
+package objects;
 
 public abstract class Powerup extends GameObject {
     private int duration;

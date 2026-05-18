@@ -1,7 +1,5 @@
-package src.ui;
+package ui;
 
-import src.fileio.SaveData;
-import src.gameloop.GameLoop;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -18,19 +16,21 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import src.objects.BasicEnemy;
-import src.objects.BossEnemy;
-import src.objects.Bullet;
-import src.objects.Enemy;
-import src.objects.FireRatePowerup;
-import src.objects.GameObject;
-import src.objects.MovementSpeedPowerup;
-import src.objects.Obstacle;
-import src.objects.Player;
-import src.objects.Powerup;
-import src.objects.SpeedyEnemy;
-import src.objects.TankyEnemy;
-import src.sound.SoundManager;
+import fileio.SaveData;
+import gameloop.GameLoop;
+import objects.BasicEnemy;
+import objects.BossEnemy;
+import objects.Bullet;
+import objects.Enemy;
+import objects.FireRatePowerup;
+import objects.GameObject;
+import objects.MovementSpeedPowerup;
+import objects.Obstacle;
+import objects.Player;
+import objects.Powerup;
+import objects.SpeedyEnemy;
+import objects.TankyEnemy;
+import sound.SoundManager;
 
 public class Game extends JPanel {
 
@@ -98,12 +98,12 @@ public class Game extends JPanel {
 
     // Load Assets
     private void loadAssets() {
-        grassImage = new ImageIcon("TheLastStand/assets/background/Grass BG.png").getImage();          //REPLACED
-        grassOverlay = new ImageIcon("TheLastStand/assets/background/BG Overlay.png").getImage();      //NEW
-        lifeFullImage = new ImageIcon("TheLastStand/assets/interface/life_Full.png").getImage();
-        lifeEmptyImage = new ImageIcon("TheLastStand/assets/interface/life_Empty.png").getImage();
+        grassImage = new ImageIcon(getClass().getResource("/assets/background/Grass BG.png")).getImage();          //REPLACED
+        grassOverlay = new ImageIcon(getClass().getResource("/assets/background/BG overlay.png")).getImage();      //NEW
+        lifeFullImage = new ImageIcon(getClass().getResource("/assets/interface/life_Full.png")).getImage();
+        lifeEmptyImage = new ImageIcon(getClass().getResource("/assets/interface/life_Empty.png")).getImage();
         for (int i = 0; i < 5; i++) {
-            waveImages[i] = new ImageIcon("TheLastStand/assets/interface/wave/wave" + (i + 1) + ".png").getImage();
+            waveImages[i] = new ImageIcon(getClass().getResource("/assets/interface/wave/wave" + (i + 1) + ".png")).getImage();
         }
     }
 
@@ -111,7 +111,7 @@ public class Game extends JPanel {
         pauseBtn.setBounds(panelWidth - 210, 20, 180, 70);
         pauseBtn.setFocusable(false);
         pauseBtn.addActionListener(e -> {
-            SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
+            SoundManager.getInstance().playSFX("/assets/music/click.wav");
             gameLoop.pauseThread();
             rootLayeredPane.getPauseMenu().setVisible(true);
         });
@@ -157,7 +157,7 @@ public class Game extends JPanel {
                 if (player.getCurrentLives() <= 0) {
                     gameLoop.stopThread();
                     SoundManager.getInstance().stopMusic(); // stop background music
-                    SoundManager.getInstance().playSFX("TheLastStand/assets/music/game over.wav"); // play game over sound
+                    SoundManager.getInstance().playSFX("/assets/music/game over.wav"); // play game over sound
                     SwingUtilities.invokeLater(() -> 
                         rootLayeredPane.getGameOver().setVisible(true)
                     );
@@ -449,7 +449,7 @@ public class Game extends JPanel {
             rootLayeredPane.getWinPanel().setVisible(true)
         );
         SoundManager.getInstance().stopMusic(); // stop background music
-        SoundManager.getInstance().playSFX("TheLastStand/assets/music/win.wav"); // play win sound
+        SoundManager.getInstance().playSFX("/assets/music/win.wav"); // play win sound
         
         System.out.println("[Game] Boss defeated! Player wins!");
     }

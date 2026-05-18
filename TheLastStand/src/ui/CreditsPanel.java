@@ -1,18 +1,15 @@
-package src.ui;
+package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import java.awt.Image;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-
-import src.sound.SoundManager;
+import sound.SoundManager;
 
 public class CreditsPanel extends OverlayPanel{
     private JPanel containerPanel = getContainerPanel();
@@ -22,9 +19,9 @@ public class CreditsPanel extends OverlayPanel{
     private int currentPage = 1;
     private GameButton prevBtn = new GameButton("mainMenu/leftArrow_button.png", "mainMenu/leftArrow_button.png", null);
     private GameButton nextBtn = new GameButton("mainMenu/rightArrow_button.png", "mainMenu/rightArrow_button.png", null);
-    private Image credits1 = new ImageIcon("TheLastStand/assets/interface/mainMenu/credits1.png").getImage();
-    private Image credits2 = new ImageIcon("TheLastStand/assets/interface/mainMenu/credits2.png").getImage();
-    private Image credits3 = new ImageIcon("TheLastStand/assets/interface/mainMenu/credits3.png").getImage();
+    private Image credits1 = new ImageIcon(getClass().getResource("/assets/interface/mainMenu/credits1.png")).getImage();
+    private Image credits2 = new ImageIcon(getClass().getResource("/assets/interface/mainMenu/credits2.png")).getImage();
+    private Image credits3 = new ImageIcon(getClass().getResource("/assets/interface/mainMenu/credits3.png")).getImage();
 
     public CreditsPanel(int panelWidth, int panelHeight){
         super(panelWidth, panelHeight, false);
@@ -42,7 +39,7 @@ public class CreditsPanel extends OverlayPanel{
         buttonPanel.setOpaque(false);
 
         prevBtn.addActionListener(e -> {
-            SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
+            SoundManager.getInstance().playSFX("/assets/music/click.wav");
             if(currentPage > 1){
                 currentPage--;
             }else{
@@ -51,7 +48,7 @@ public class CreditsPanel extends OverlayPanel{
             repaint();
         });
         nextBtn.addActionListener(e -> {
-            SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
+            SoundManager.getInstance().playSFX("/assets/music/click.wav");
             if(currentPage < 3){
                 currentPage++;
             }else{

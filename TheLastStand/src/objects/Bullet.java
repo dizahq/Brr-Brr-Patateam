@@ -1,6 +1,6 @@
-package src.objects;
+package objects;
 
-import src.ui.Game;
+import ui.Game;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -27,14 +27,14 @@ public class Bullet extends Entity{
         // Load images once, observes the order based on the Direction enum
         if (bulletImages == null) {
             bulletImages = new Image[]{
-                new ImageIcon("TheLastStand/assets/objects/ammo/arrow_up.png").getImage(),
-                new ImageIcon("TheLastStand/assets/objects/ammo/arrow_upRight.png").getImage(),
-                new ImageIcon("TheLastStand/assets/objects/ammo/arrow_right.png").getImage(),
-                new ImageIcon("TheLastStand/assets/objects/ammo/arrow_downRight.png").getImage(),
-                new ImageIcon("TheLastStand/assets/objects/ammo/arrow_down.png").getImage(),
-                new ImageIcon("TheLastStand/assets/objects/ammo/arrow_downLeft.png").getImage(),
-                new ImageIcon("TheLastStand/assets/objects/ammo/arrow_left.png").getImage(),
-                new ImageIcon("TheLastStand/assets/objects/ammo/arrow_upLeft.png").getImage()
+                new ImageIcon(Bullet.class.getResource("/assets/objects/ammo/arrow_up.png")).getImage(),
+                new ImageIcon(Bullet.class.getResource("/assets/objects/ammo/arrow_upRight.png")).getImage(),
+                new ImageIcon(Bullet.class.getResource("/assets/objects/ammo/arrow_right.png")).getImage(),
+                new ImageIcon(Bullet.class.getResource("/assets/objects/ammo/arrow_downRight.png")).getImage(),
+                new ImageIcon(Bullet.class.getResource("/assets/objects/ammo/arrow_down.png")).getImage(),
+                new ImageIcon(Bullet.class.getResource("/assets/objects/ammo/arrow_downLeft.png")).getImage(),
+                new ImageIcon(Bullet.class.getResource("/assets/objects/ammo/arrow_left.png")).getImage(),
+                new ImageIcon(Bullet.class.getResource("/assets/objects/ammo/arrow_upLeft.png")).getImage()
             };
         }
 

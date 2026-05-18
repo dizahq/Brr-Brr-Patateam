@@ -1,6 +1,4 @@
-package src.ui;
-
-import src.sound.SoundManager;
+package ui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -9,6 +7,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import sound.SoundManager;
 
 public class ExitConfirmPanel extends OverlayPanel{
     private JPanel container;
@@ -20,7 +19,7 @@ public class ExitConfirmPanel extends OverlayPanel{
     public ExitConfirmPanel(int panelWidth, int panelHeight){
         super(panelWidth, panelHeight, false);
 
-        background = new ImageIcon("TheLastStand/assets/interface/confirmExit/confirm_exit.png").getImage();
+        background = new ImageIcon(getClass().getResource("/assets/interface/confirmExit/confirm_exit.png")).getImage();
         confirmExitBtn = new GameButton("confirmExit/yesButton.png", "confirmExit/yesButton_pressed.png", null);
         cancelExitBtn = new GameButton("confirmExit/noButton.png", "confirmExit/noButton_pressed.png", null);
 
@@ -52,11 +51,11 @@ public class ExitConfirmPanel extends OverlayPanel{
         cancelExitBtn.setButtonSize(200, 90);
 
         confirmExitBtn.addActionListener(e -> {
-            SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
+            SoundManager.getInstance().playSFX("/assets/music/click.wav");
             System.exit(0);
         });
         cancelExitBtn.addActionListener(e -> {
-            SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
+            SoundManager.getInstance().playSFX("/assets/music/click.wav");
             setVisible(false);
         });
 

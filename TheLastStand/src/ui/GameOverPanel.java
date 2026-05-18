@@ -1,7 +1,4 @@
-package src.ui;
-
-import src.sound.SoundManager;
-import src.fileio.SaveManager;
+package ui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -11,6 +8,8 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import fileio.SaveManager;
+import sound.SoundManager;
 
 public class GameOverPanel extends OverlayPanel {
     private JPanel container;
@@ -27,7 +26,7 @@ public class GameOverPanel extends OverlayPanel {
         this.switchPanel = switchPanel;
         this.game = game;
 
-        background = new ImageIcon("TheLastStand/assets/interface/gameOver/game_over.png").getImage();;
+        background = new ImageIcon(getClass().getResource("/assets/interface/gameOver/game_over.png")).getImage();;
         respawnBtn = new GameButton("gameOver/respawnButton.png", "gameOver/respawnButton_pressed.png", null);
         mainMenuBtn = new GameButton("mainmenuButton.png", "mainmenuButton_pressed.png", null);
 
@@ -42,13 +41,13 @@ public class GameOverPanel extends OverlayPanel {
         mainMenuBtn.setButtonSize(300, 100);
 
         respawnBtn.addActionListener(e -> {
-            SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
-            SoundManager.getInstance().playMusic("TheLastStand/assets/music/Game_music.wav");
+            SoundManager.getInstance().playSFX("/assets/music/click.wav");
+            SoundManager.getInstance().playMusic("/assets/music/Game_music.wav");
             playerRespawn();
         });
 
         mainMenuBtn.addActionListener(e -> {
-            SoundManager.getInstance().playSFX("TheLastStand/assets/music/click.wav");
+            SoundManager.getInstance().playSFX("/assets/music/click.wav");
             goToMainMenu();
         });
 

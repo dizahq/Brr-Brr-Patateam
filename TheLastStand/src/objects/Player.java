@@ -1,7 +1,7 @@
-package src.objects;
+package objects;
 
-import src.ui.Game;
-import src.sound.SoundManager;
+import ui.Game;
+import sound.SoundManager;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -67,16 +67,16 @@ public class Player extends Entity {
         // Load attack effect
         // Cardinal attack sprites
 
-        attackUp = new ImageIcon("TheLastStand/assets/player/attack/atk_up1.png").getImage();
-        attackDown = new ImageIcon("TheLastStand/assets/player/attack/atk_down1.png").getImage();
-        attackLeft = new ImageIcon("TheLastStand/assets/player/attack/atk_left1.png").getImage();
-        attackRight = new ImageIcon("TheLastStand/assets/player/attack/atk_right1.png").getImage();
+        attackUp = new ImageIcon(getClass().getResource("/assets/player/attack/atk_up1.png")).getImage();
+        attackDown = new ImageIcon(getClass().getResource("/assets/player/attack/atk_down1.png")).getImage();
+        attackLeft = new ImageIcon(getClass().getResource("/assets/player/attack/atk_left1.png")).getImage();
+        attackRight = new ImageIcon(getClass().getResource("/assets/player/attack/atk_right1.png")).getImage();
 
         // Diagonal attack sprites
-        attackUpRight = new ImageIcon("TheLastStand/assets/player/attack/atk_upRight1.png").getImage();
-        attackUpLeft = new ImageIcon("TheLastStand/assets/player/attack/atk_upLeft1.png").getImage();
-        attackDownRight = new ImageIcon("TheLastStand/assets/player/attack/atk_downRight1.png").getImage();
-        attackDownLeft = new ImageIcon("TheLastStand/assets/player/attack/atk_downLeft1.png").getImage();
+        attackUpRight = new ImageIcon(getClass().getResource("/assets/player/attack/atk_upRight1.png")).getImage();
+        attackUpLeft = new ImageIcon(getClass().getResource("/assets/player/attack/atk_upLeft1.png")).getImage();
+        attackDownRight = new ImageIcon(getClass().getResource("/assets/player/attack/atk_downRight1.png")).getImage();
+        attackDownLeft = new ImageIcon(getClass().getResource("/assets/player/attack/atk_downLeft1.png")).getImage();
     }
 
     private void updateAnimation(Image[] frames) {

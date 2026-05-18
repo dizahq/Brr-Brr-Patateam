@@ -1,8 +1,7 @@
-package src.sound;
+package sound;
 
 // Handles audio for the game
 
-import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -29,19 +28,20 @@ public class SoundManager {
 
     // Prevents audio double-loading and loops background music continuously
     public void playMusic(String filePath) {
-        // Prevent music restart if same track is alr playing
         if (currentTrack.equals(filePath)) return;
 
         stopMusic();
         try {
-            File musicPath = new File(filePath);
-            if (musicPath.exists()) {
-                AudioInputStream audioInput = AudioSystem.getAudioInputStream(musicPath);
+            java.net.URL url = getClass().getResource(filePath);
+            if (url != null) {
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(url);
                 backgroundMusic = AudioSystem.getClip();
                 backgroundMusic.open(audioInput);
                 setVolume(backgroundMusic, musicVolume);
-                backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY); // Infinite loop for BGM
+                backgroundMusic.loop(Clip.LOOP_CONTINUOUSLY);
                 currentTrack = filePath;
+            } else {
+                System.err.println("[SoundManager] Music file not found in JAR: " + filePath);
             }
         } catch (Exception e) {
             System.err.println("[SoundManager] Error loading music: " + e.getMessage());
@@ -49,27 +49,26 @@ public class SoundManager {
     }
 
     // For short sounds. Use LineListener to close the clip after it finishes, freeing up system memory.
-    public void playSFX (String filePath){
-        try{
-            File sfxPath = new File(filePath);
-            if (sfxPath.exists()){
-                AudioInputStream audioInput = AudioSystem.getAudioInputStream(sfxPath);
+    public void playSFX(String filePath) {
+        try {
+            java.net.URL url = getClass().getResource(filePath);
+            if (url != null) {
+                AudioInputStream audioInput = AudioSystem.getAudioInputStream(url);
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioInput);
                 setVolume(clip, sfxVolume);
                 clip.start();
 
-                // Auto-close sound thread when finishes
-                clip.addLineListener( e->{
-                    if (e.getType() == javax.sound.sampled.LineEvent.Type.STOP){
+                clip.addLineListener(e -> {
+                    if (e.getType() == javax.sound.sampled.LineEvent.Type.STOP) {
                         clip.close();
                     }
                 });
             }
-        }catch(Exception e){
-             System.err.println("[SoundManager] Error playing SFX: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("[SoundManager] Error playing SFX: " + e.getMessage());
         }
-    } 
+    }
 
     public void stopMusic() {
         if (backgroundMusic != null && backgroundMusic.isRunning()) {

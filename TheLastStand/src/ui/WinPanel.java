@@ -1,6 +1,4 @@
-package src.ui;
-
-import src.fileio.SaveManager;
+package ui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -10,6 +8,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import fileio.SaveManager;
 
 public class WinPanel extends OverlayPanel {
     private JPanel container; // Inner container panel used to organize and position UI components
@@ -26,7 +25,7 @@ public class WinPanel extends OverlayPanel {
         this.switchPanel = switchPanel;
         this.game = game;
 
-        background = new ImageIcon("TheLastStand/assets/interface/gameWon/game_won.png").getImage(); 
+        background = new ImageIcon(getClass().getResource("/assets/interface/gameWon/game_won.png")).getImage(); 
         mainMenuBtn = new GameButton("mainmenuButton.png", "mainmenuButton_pressed.png", null);
         exitBtn = new GameButton("mainMenu/exitButton.png", "mainMenu/exitButton_pressed.png", null);
 

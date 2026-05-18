@@ -1,4 +1,4 @@
-package src.fileio;
+package fileio;
 
 // Utility class for managing game persistence
 // Handles saving, loading, and deleting game state data using File I/O
