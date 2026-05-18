@@ -12,8 +12,8 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class SaveManager {
-    private static final String SAVE_DIR = "TheLastStand\\saves";
-    private static final String SAVE_FILE = SAVE_DIR + File.separator + "savegame.txt"; // Separator ensures it works on both windows and max/linux
+    private static final String SAVE_DIR = "TheLastStand" + File.separator + "saves";
+    private static final String SAVE_FILE = SAVE_DIR + File.separator + "savegame.txt"; // Separator ensures it works on both windows and mac/linux
 
     // Returns true if a valid save exists, false otherwise
     public static boolean hasSave() {
