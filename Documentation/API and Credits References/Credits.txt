@@ -16,6 +16,7 @@ JAVA APIS USED
 - javax.sound.sampled (Java built-in, audio playback)
 - java.awt / javax.swing (Java built-in, rendering)
 - java.io / java.nio (Java built-in, file saving/loading)
+- java.util (Java built-in, data structures)
 
 ------------------------
 ASSETS
