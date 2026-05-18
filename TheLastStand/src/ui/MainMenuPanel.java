@@ -1,8 +1,10 @@
 package ui;
 
-import sound.SoundManager;
+// Main menu screen with New Game, Continue, and Exit buttons
+
 import fileio.SaveManager;
 import fileio.SaveData;
+import sound.SoundManager;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -18,24 +20,26 @@ public class MainMenuPanel extends JPanel{
     private Consumer<String> switchPanel;
     private Game game;
 
-    //new
     private Image backgroundImage;
-
-    private GameButton newGameBtn = new GameButton("mainMenu/newgameButton.png", "mainMenu/newgameButton_pressed.png", null);
-    private GameButton continueBtn = new GameButton("mainMenu/continueButton.png", "mainMenu/continueButton_pressed.png", "mainMenu/continueButton_locked.png");
-    private GameButton exitBtn = new GameButton("mainMenu/exitButton.png", "mainMenu/exitButton_pressed.png", null);  
+    private GameButton newGameBtn;
+    private GameButton continueBtn;
+    private GameButton exitBtn;
     
     public MainMenuPanel(MainLayeredPane rootLayeredPane, Consumer<String> switchPanel, Game game){
         this.rootLayeredPane = rootLayeredPane;
         this.switchPanel = switchPanel;
         this.game = game;
 
+        backgroundImage = new ImageIcon("TheLastStand/assets/background/mainmenu.png").getImage();
+        newGameBtn = new GameButton("mainMenu/newgameButton.png", "mainMenu/newgameButton_pressed.png", null);
+        continueBtn = new GameButton("mainMenu/continueButton.png", "mainMenu/continueButton_pressed.png", "mainMenu/continueButton_locked.png");
+        exitBtn = new GameButton("mainMenu/exitButton.png", "mainMenu/exitButton_pressed.png", null); 
+        
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         newGameBtn.setAlignmentX(CENTER_ALIGNMENT);
         continueBtn.setAlignmentX(CENTER_ALIGNMENT);
         exitBtn.setAlignmentX(CENTER_ALIGNMENT);
 
-        // newGameBtn.setPreferredSize(new Dimension(300, 100));
         newGameBtn.setButtonSize(300, 100);
         continueBtn.setButtonSize(300, 100);
         exitBtn.setButtonSize(300, 100);
@@ -62,8 +66,6 @@ public class MainMenuPanel extends JPanel{
         add(exitBtn);
         add(Box.createVerticalGlue());
 
-        //bg not final
-        backgroundImage = new ImageIcon("TheLastStand/assets/background/mainmenu.png").getImage();
         refreshButtons();
 
         addHierarchyListener(e -> {
@@ -73,7 +75,6 @@ public class MainMenuPanel extends JPanel{
         });
     }
 
-    //new
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -92,25 +93,21 @@ public class MainMenuPanel extends JPanel{
         game.resetGame();
         switchPanel.accept("game");
         game.startGameThread();
-
-        // test
         System.out.println("[MainMenuPanel] New Game.");
     }
 
     public void continueGame(){
         SaveData data = SaveManager.load();
-
         if (data != null) {
             // Restore game state from the save file
             game.restoreFromSave(data);
             System.out.println("[MainMenuPanel] Continuing from: " + data);
         } else {
             // Save file wass corrupt/missing
-            System.err.println("[MainMenuPanel] No valid save found, startingnew.");
+            System.err.println("[MainMenuPanel] No valid save found, starting new game.");
             game.setCurrentLevel(0);
             game.resetGame();
         }
-
         switchPanel.accept("game");
         game.startGameThread();
     }
