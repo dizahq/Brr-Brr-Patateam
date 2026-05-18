@@ -1,6 +1,6 @@
-package ui;
+package src.ui;
 
-import fileio.SaveManager;
+import src.fileio.SaveManager;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

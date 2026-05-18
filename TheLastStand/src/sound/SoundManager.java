@@ -1,4 +1,4 @@
-package sound;
+package src.sound;
 
 // Handles audio for the game
 

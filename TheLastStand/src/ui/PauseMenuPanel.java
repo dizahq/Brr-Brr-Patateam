@@ -1,8 +1,8 @@
-package ui;
+package src.ui;
 
-import sound.SoundManager;
-import fileio.SaveData;
-import fileio.SaveManager;
+import src.sound.SoundManager;
+import src.fileio.SaveData;
+import src.fileio.SaveManager;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

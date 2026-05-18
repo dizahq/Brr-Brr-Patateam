@@ -1,7 +1,7 @@
-package ui;
+package src.ui;
 
-import fileio.SaveData;
-import fileio.SaveManager;
+import src.fileio.SaveData;
+import src.fileio.SaveManager;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -12,7 +12,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import sound.SoundManager;
+import src.sound.SoundManager;
 
 public class MainMenuPanel extends JPanel{
     private MainLayeredPane rootLayeredPane;

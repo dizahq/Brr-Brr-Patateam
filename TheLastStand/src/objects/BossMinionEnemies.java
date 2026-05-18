@@ -1,4 +1,4 @@
-package objects;
+package src.objects;
 
 // BossMinionEnemies are the weaker enemies that spawn during the boss fight
 public class BossMinionEnemies extends Enemy{

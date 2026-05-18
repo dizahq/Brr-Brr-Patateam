@@ -1,4 +1,4 @@
-package ui;
+package src.ui;
 
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;

@@ -1,6 +1,6 @@
-package ui;
+package src.ui;
 
-import sound.SoundManager;
+import src.sound.SoundManager;
 
 import java.awt.Dimension;
 import java.awt.Graphics;

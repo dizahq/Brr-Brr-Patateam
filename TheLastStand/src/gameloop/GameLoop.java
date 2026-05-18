@@ -1,6 +1,6 @@
-package gameloop;
+package src.gameloop;
 
-import ui.Game;
+import src.ui.Game;
 
 public class GameLoop implements Runnable {
     private final Game game;

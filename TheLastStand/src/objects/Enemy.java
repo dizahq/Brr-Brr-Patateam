@@ -1,6 +1,6 @@
-package objects;
+package src.objects;
 
-import sound.SoundManager;
+import src.sound.SoundManager;
 
 import java.awt.Color;
 import java.awt.Graphics;

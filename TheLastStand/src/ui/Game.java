@@ -1,7 +1,7 @@
-package ui;
+package src.ui;
 
-import fileio.SaveData;
-import gameloop.GameLoop;
+import src.fileio.SaveData;
+import src.gameloop.GameLoop;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -18,19 +18,19 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import objects.BasicEnemy;
-import objects.BossEnemy;
-import objects.Bullet;
-import objects.Enemy;
-import objects.FireRatePowerup;
-import objects.GameObject;
-import objects.MovementSpeedPowerup;
-import objects.Obstacle;
-import objects.Player;
-import objects.Powerup;
-import objects.SpeedyEnemy;
-import objects.TankyEnemy;
-import sound.SoundManager;
+import src.objects.BasicEnemy;
+import src.objects.BossEnemy;
+import src.objects.Bullet;
+import src.objects.Enemy;
+import src.objects.FireRatePowerup;
+import src.objects.GameObject;
+import src.objects.MovementSpeedPowerup;
+import src.objects.Obstacle;
+import src.objects.Player;
+import src.objects.Powerup;
+import src.objects.SpeedyEnemy;
+import src.objects.TankyEnemy;
+import src.sound.SoundManager;
 
 public class Game extends JPanel {
 

@@ -1,7 +1,7 @@
-package objects;
+package src.objects;
 
-import ui.Game;
-import sound.SoundManager;
+import src.ui.Game;
+import src.sound.SoundManager;
 
 import java.awt.Graphics;
 import java.awt.Image;

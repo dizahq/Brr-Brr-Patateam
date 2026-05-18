@@ -1,4 +1,4 @@
-package ui;
+package src.ui;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
@@ -12,7 +12,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-import sound.SoundManager;
+import src.sound.SoundManager;
 
 public class CreditsPanel extends OverlayPanel{
     private JPanel containerPanel = getContainerPanel();

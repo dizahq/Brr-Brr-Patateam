@@ -1,6 +1,6 @@
-package objects;
+package src.objects;
 
-import ui.Game;
+import src.ui.Game;
 
 import java.awt.Graphics;
 import java.awt.Image;

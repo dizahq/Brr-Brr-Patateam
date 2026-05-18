@@ -1,7 +1,7 @@
-package ui;
+package src.ui;
 
-import fileio.SaveManager;
-import sound.SoundManager;
+import src.fileio.SaveManager;
+import src.sound.SoundManager;
 
 import javax.swing.JFrame;
 import java.awt.Toolkit;
