@@ -10,13 +10,13 @@ public class GameLoop implements Runnable {
 
     private static final int TARGET_FPS = 60;
     private static final long OPTIMAL_TIME = 1_000_000_000L / TARGET_FPS;
-    private static final long MAX_LAG = OPTIMAL_TIME * 5; 
+    private static final long MAX_LAG = OPTIMAL_TIME * 5; // caps catch-up to 5 frames
 
     public GameLoop(Game game) {
         this.game = game;
     }
 
-    //Create and start the game loop
+    // Creates and start the game thread
     public synchronized void startThread() {
         if (gameThread != null && gameThread.isAlive()) return;
 
@@ -24,16 +24,16 @@ public class GameLoop implements Runnable {
         paused = false;
         gameThread = new Thread(this, "GameThread");
         gameThread.start();
-        System.out.println("[Game] Game loop starts.");
+        System.out.println("[Game] Game loop started.");
     }
 
-    //Pause the game loop
+    // Pauses game logic and rendering without stopping thread
     public void pauseThread(){
         paused = true;
         System.out.println("[Game] Game paused.");
     }
 
-   // Resumes loop after pause
+    // Resumes a paused game loop
     public void resumeThread() {
         paused = false;
         
@@ -43,6 +43,7 @@ public class GameLoop implements Runnable {
         System.out.println("[Game] Game resumes.");
     }
 
+    // Stops game loop and terminates the game thread cleanly
     public void stopThread(){
         running = false;
         paused = false;
@@ -59,7 +60,7 @@ public class GameLoop implements Runnable {
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
-            gameThread = null; // ← also null it out so startThread() can proceed
+            gameThread = null; 
         }
         
         System.out.println("[Game] Game stopped.");
@@ -84,18 +85,19 @@ public class GameLoop implements Runnable {
                         }
                     }
                 }
-                lastTime = System.nanoTime(); // Reset timer after pause
-                lag = 0L; //Reset lag
+                lastTime = System.nanoTime(); // Reset timer so paused time isn't counted
+                lag = 0L; // Reset lag
             }
 
             long now = System.nanoTime();
             long elapsed = now - lastTime;
             lastTime = now;
+
             lag += elapsed;
-            if (lag > MAX_LAG) lag = MAX_LAG; // ← add this
+            if (lag > MAX_LAG) lag = MAX_LAG;
             
 
-            // Fixed update steps
+            // Fixed-timestep updates
             int ticks = (int) (lag / OPTIMAL_TIME);
             for (int i = 0; i < ticks; i++) game.update();
             lag -= (long) ticks * OPTIMAL_TIME;
