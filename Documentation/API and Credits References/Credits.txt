@@ -16,3 +16,17 @@ JAVA APIS USED
 - javax.sound.sampled (Java built-in, audio playback)
 - java.awt / javax.swing (Java built-in, rendering)
 - java.io / java.nio (Java built-in, file saving/loading)
+
+------------------------
+ASSETS
+------------------------
+Fonts:
+- [Font name] by [Author]
+
+Music and Sound Effects:
+- https://music.youtube.com/
+
+-------------------------
+TOOLS USED 
+-------------------------
+- VS Code - Code Editor
