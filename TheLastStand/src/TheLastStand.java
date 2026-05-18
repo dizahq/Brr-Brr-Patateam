@@ -3,13 +3,13 @@
 // Initializes window
 
 import javax.swing.JFrame;
-import ui.MainFrame;
 import javax.swing.SwingUtilities;
+import ui.MainFrame;
 
 public class TheLastStand extends JFrame{
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(e-> {
-            new MainFrame()
+        SwingUtilities.invokeLater(() -> {
+            new MainFrame();
         });
     }
 }
