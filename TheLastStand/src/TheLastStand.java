@@ -7,6 +7,8 @@ import ui.MainFrame;
 
 public class TheLastStand extends JFrame{
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(e-> {new MainFrame()});
+        SwingUtilities.invokeLater(e-> {
+            new MainFrame()
+        });
     }
 }
