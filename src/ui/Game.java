@@ -359,7 +359,7 @@ public class Game extends JPanel {
             }else{
                 enemy = new BasicEnemy(0, 0, panelWidth, panelHeight);
             }
-            enemy.respawn(); // random edge position
+            enemy.respawn(obstacles); // random edge position
             enemies.add(enemy);
         }
         lastEnemySpawnTime = System.currentTimeMillis();

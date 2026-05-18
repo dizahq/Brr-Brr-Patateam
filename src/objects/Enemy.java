@@ -98,14 +98,19 @@ public abstract class Enemy extends Entity {
     public void setSpeed(int speed) { this.speed = speed; }
 
     //Teleports the enemy to a random screen edge and resets all state. 
-    public void respawn() {
-        int side = (int)(Math.random() * 4);
-        switch (side) {
-            case 0 -> { x = (int)(Math.random() * panelWidth);  y = 0; }                        // top
-            case 1 -> { x = (int)(Math.random() * panelWidth);  y = panelHeight - height; }     // bottom
-            case 2 -> { x = 0;                                  y = (int)(Math.random() * panelHeight); } // left
-            case 3 -> { x = panelWidth - width;                 y = (int)(Math.random() * panelHeight); } // right
-        }
+    public void respawn(List <Obstacle> obstacles) {
+        int attempts = 0;
+        do {
+            int side = (int)(Math.random() * 4);
+            switch (side) {
+                case 0 -> { x = (int)(Math.random() * panelWidth);  y = 0; }
+                case 1 -> { x = (int)(Math.random() * panelWidth);  y = panelHeight - height; }
+                case 2 -> { x = 0; y = (int)(Math.random() * panelHeight); }
+                case 3 -> { x = panelWidth - width; y = (int)(Math.random() * panelHeight); }
+            }
+            attempts++;
+        } while (!isPositionClear(x, y, obstacles) && attempts < 50);
+
 
         state        = State.WALK;
         attackLanded = false;
@@ -136,7 +141,7 @@ public abstract class Enemy extends Entity {
             return tickAttackAnimation(getAttackStrip());
         }
 
-        handleStuckDetection();
+        handleStuckDetection(obstacles);
 
         // Recalculate center after a possible nudge
         centerX = x + width  / 2;
@@ -229,17 +234,28 @@ public abstract class Enemy extends Entity {
     }
 
     // Detects when the enemy hasn't moved for 30 frames and nudges it
-    private void handleStuckDetection() {
+    private void handleStuckDetection(List<Obstacle> obstacles) {
         if (Math.abs(x - lastX) < 1 && Math.abs(y - lastY) < 1) {
             if (++stuckTimer > 30) {
                 path.clear();
                 pathCooldown = 0;
                 stuckTimer   = 0;
 
-                int nudgeX = (int)((Math.random() * 2 - 1) * CELL * 2);
-                int nudgeY = (int)((Math.random() * 2 - 1) * CELL * 2);
-                x = Math.max(0, Math.min(panelWidth  - width,  x + nudgeX));
-                y = Math.max(0, Math.min(panelHeight - height, y + nudgeY));
+                boolean nudged = false;
+                for (int attempt = 0; attempt < 16; attempt++) {
+                    int nudgeX = (int)((Math.random() * 2 - 1) * CELL * 3);
+                    int nudgeY = (int)((Math.random() * 2 - 1) * CELL * 3);
+                    int cx = clampX(x + nudgeX);
+                    int cy = clampY(y + nudgeY);
+                    if (isPositionClear(cx, cy, obstacles)) {
+                        x = cx;
+                        y = cy;
+                        nudged = true;
+                        break;
+                    }
+                }
+                // If no clear spot found, stay put and let A* replan next frame
+                if (!nudged) pathCooldown = 0;
             }
         } else {
             stuckTimer = 0;
@@ -248,27 +264,40 @@ public abstract class Enemy extends Entity {
         lastY = y;
     }
 
+    private boolean isPositionClear(int px, int py, List<Obstacle> obstacles) {
+        if (obstacles == null) return true;
+        Rectangle test = new Rectangle(px, py, width, height);
+        for (Obstacle obs : obstacles){
+            if (test.intersects(obs.getBounds())) return false;
+        }
+        return true;
+    }
+
     //Moves the enemy one step along the current A* path.
     private void followPath(int centerX, int centerY, List<Obstacle> obstacles) {
+        while (!path.isEmpty()) {
+            int[] next = path.peek();
+            if (Math.hypot(next[0] - centerX, next[1] - centerY) <= CELL / 2.0){
+                  path.poll();
+            }
+            else break;
+        }
+
         if (path.isEmpty()) return;
 
         int[]  next = path.peek();
         double dx   = next[0] - centerX;
         double dy   = next[1] - centerY;
         double len  = Math.hypot(dx, dy);
-
-        if (len <= CELL) {
-            path.poll();
-            return;
-        }
-
+       
         int newX = clampX((int) Math.round(x + (dx / len) * speed));
         int newY = clampY((int) Math.round(y + (dy / len) * speed));
 
-        if      (getBlockingObstacle(newX, newY, obstacles) == null) { x = newX; y = newY; }
-        else if (getBlockingObstacle(newX, y,    obstacles) == null) { x = newX; }
-        else if (getBlockingObstacle(x,    newY, obstacles) == null) { y = newY; }
-        else    { stuckTimer += 5; } // fully blocked — let stuckTimer handle the replan
+        // Only move if the destination is CLEAR — no overlaps ever
+        if      (isPositionClear(newX, newY, obstacles)) { x = newX; y = newY; }
+        else if (isPositionClear(newX, y,    obstacles)) { x = newX; }
+        else if (isPositionClear(x,    newY, obstacles)) { y = newY; }
+        else    { stuckTimer++; }
 
         double actualDx = (x + width  / 2.0) - centerX;
         double actualDy = (y + height / 2.0) - centerY;
@@ -378,9 +407,11 @@ public abstract class Enemy extends Entity {
     private int clamp(int v, int lo, int hi) { return Math.max(lo, Math.min(hi, v)); }
 
     private Obstacle getBlockingObstacle(int nx, int ny, List<Obstacle> obstacles) {
+        if (obstacles == null) return null;
         Rectangle test = new Rectangle(nx, ny, width, height);
-        for (Obstacle obs : obstacles)
+        for (Obstacle obs : obstacles){
             if (test.intersects(obs.getBounds())) return obs;
+        }
         return null;
     }
 

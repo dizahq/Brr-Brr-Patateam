@@ -1,208 +1,52 @@
 # The Last Stand
+A fast-paced, top-down 2D survival shooter built in Java Swing. Fight through escalating waves of enemies, collect power-ups, and defeat the final boss to survive.
 
-A Java Swing top-down 2D shooter where you fight through wave-based levels, collect power-ups, and take down a final boss to survive.
 
----
+## Gameplay & Controls
 
-## Table of Contents
+Move and shoot **independently** in 8 directions to outmaneuver threats. You start with **4 lives** (hearts). Clear 5 waves to advance to the next level.
 
-- [Gameplay Overview](#gameplay-overview)
-- [Controls](#controls)
-- [Levels & Waves](#levels--waves)
-- [Enemies](#enemies)
-- [Power-Ups](#power-ups)
-- [UI & Screens](#ui--screens)
-- [Save System](#save-system)
-- [Sound](#sound)
-- [Project Structure](#project-structure)
-- [How to Run](#how-to-run)
+| Action | Keys |
+|---|---|
+| **Move** | `↑` `↓` `←` `→` Arrow Keys |
+| **Shoot** | `W` `A` `S` `D` |
+| **Diagonal Shoot** | Hold two adjacent shoot keys (e.g., `W` + `D`) |
+| **Pause** | Click the Pause button (top-right corner) |
 
----
 
-## Gameplay Overview
+## Enemy Types
 
-Survive escalating waves of enemies across multiple levels. Move in 8 directions, shoot in 8 directions, dodge obstacles, and collect power-ups. Defeat the Boss Enemy on Level 4 to win.
+**Basic Enemy** — Standard speed; takes 1 hit to defeat.
+**Speedy Enemy** — Fast movement and rapid animations.
+**Tanky Enemy** — Slower but durable; takes 2 hits to defeat.
+**Boss Enemy** — Spawns on Level 4, Wave 3. Features a dedicated health bar and summons minions. Defeat the boss to win the game!
 
-- You start with 4 lives displayed as hearts in the top-left corner
-- Enemies spawn from the edges of the screen in waves
-- Each level has a different obstacle layout
-- A boss with a health bar spawns at Level 4, Wave 3
-
----
-
-## Controls
-
-| Action              | Key(s)                                           |
-|---------------------|--------------------------------------------------|
-| Move                | `↑` `↓` `←` `→` Arrow Keys                       |
-| Shoot               | `W` `A` `S` `D`                                  |
-| Diagonal shoot      | Hold two shoot keys (e.g. `W` + `D` = Northeast) |
-| Pause               | Pause button (top-right corner)                  |
-
-Movement and shooting are fully **independent** — you can move in one direction and shoot in another simultaneously.
-
----
-
-## Levels & Waves
-
-- The game has 5 waves of enemies
-- Enemy count per wave is calculated as: `(level² - 2×level + 20) / 3`
-- Spawn delay between waves increases by `level × 250ms` each level
-- Map layout alternates between even and odd level designs
-- After all waves are cleared and no enemies remain, the game advances to the next level
-- The game ends in victory when the boss on Wave 5 is defeated
-
----
-
-## Enemies
-
-| Type              | Description                                                       |
-|-------------------|-------------------------------------------------------------------|
-| `BasicEnemy`      | Default enemy; moves toward the player at normal speed            |
-| `SpeedyEnemy`     | Faster movement speed; 8-frame walk/attack animations             |
-| `TankyEnemy`      | Higher health (2 hits); slower but more durable                   |
-| `BossEnemy`       | Spawns at Level 4, Wave 3; displays a health bar; summons minions |
-
-Special enemies (`SpeedyEnemy`, `TankyEnemy`) have a spawn chance of `level × 5%`, increasing each level.
-
----
 
 ## Power-Ups
 
-| Power-Up                  | Effect                                     | Duration   |
-|---------------------------|--------------------------------------------|------------|
-| 🔴 `FireRatePowerup`      | Fire rate: 500ms → 200ms cooldown          | 5 seconds  |
-| 🔵 `MovementSpeedPowerup` | Player speed: 3 → 5                        | 10 seconds |
-| 🟢 `HealPowerUp`          | Restores 1 life (only if below max)        | Instant    |
+Walk over power-ups to gain an immediate advantage:
 
-When a timed power-up expires, the stat resets to its default value automatically.
+**Fire Rate (Red)** — Shoots more than twice as fast. *(Lasts 5 seconds)*
+**Movement Speed (Blue)** — Increases character running speed. *(Lasts 10 seconds)*
+**Heal (Green)** — Instantly restores 1 heart (up to the max of 4).
 
----
-
-## UI & Screens
-
-| Screen             | Description                                                         |
-|--------------------|---------------------------------------------------------------------|
-| Main Menu          | New Game, Continue (disabled if no save), Exit                      |
-| Game               | Main gameplay panel with HUD (hearts, wave counter, boss health bar)|
-| Pause Menu         | Resume, Back to Main Menu (auto-saves), Exit (auto-saves)           |
-| Game Over          | Respawn (restart current level) or return to Main Menu              |
-| Win Screen         | Return to Main Menu or Exit                                         |
-| Exit Confirm       | Yes/No confirmation dialog before quitting                          |
-
-All overlay panels use a semi-transparent dark background layered over the game via `JLayeredPane`.
-
----
 
 ## Save System
 
-Progress is saved to `Save/Savegame.txt` as plain text.
+The game **automatically saves** your level, wave, health, and position when you enter the Pause Menu and select **Back to Main Menu** or **Exit**.
 
-Saved data includes:
-- Current level and wave
-- Player lives remaining
-- Player position (X, Y)
-- Enemy spawn rate (difficulty scaling)
+Selecting *New Game*, or returning to the menu after a *Game Over* or *Victory*, will reset your save file.
 
-| Action                   | When it happens                                  |
-|--------------------------|--------------------------------------------------|
-| Save                     | Pause → Back to Main Menu, or Pause → Exit       |
-| Load                     | Main Menu → Continue                             |
-| Delete                   | New Game, Game Over → Main Menu, Win → Main Menu |
-| Reset (mark as empty)    | On every application startup                     |
 
----
+## 🚀 How to Run
 
-## Sound
+**Requirements:** Java 11 or higher installed.
 
-`SoundManager` is a singleton that handles background music and sound effects.
+Double-click **`TheLastStand.exe`** or **`TheLastStand.jar`** to launch in full-screen. Or compile and run via terminal:
 
-- Background music loops continuously and switches between `MainMenu_music.wav` and `Game_music.wav`
-- The same track will not restart if it is already playing
-- SFX clips are opened, played, and automatically closed after playback
-- Volume is set in decibels converted from a `0.0–1.0` float range
-
----
-
-## Project Structure
-
+```bash
+javac Codes/*.java
+java Codes.TheLastStand
 ```
-__TheLastStand/
-|── asset/
-|   ├── background/               
-│   ├── enemies/ 
-|   |   |── attack/
-|   |   └── walk/
-|   |── music/ 
-|   |── object/
-|   |── obstacles/
-|   |── player/
-|   |   |── attack/
-|   |   └── normal/
-|   └──ui/
-|── saves/
-|   |── Savegame.dat
-|   └── savegame.txt
-|── src/       
-│   ├── fileio/   
-|   |   └── SaveData.java
-|   |   └── SaveManager.java
-|   |── gameloop/
-|   |   └── GameLoop.java           
-│   ├── objects/
-|   |   |── BasicEnemy.java
-|   |   |── BossEnemy.java
-|   |   |── BossMinionEnemies.java 
-|   |   |── Bullet.java
-|   |   |── Enemy.java
-|   |   |── Entity.java
-|   |   |── FireRatePowerup.java
-|   |   |── GameObject.java 
-|   |   |── HealPowerUp.java 
-|   |   |── MovementSpeedPowerup.java
-|   |   |── Obstacle.java
-|   |   |── PLayer.java
-|   |   |── SpeedyEnemy.java
-|   |   └── TankyEnemy.java 
-|   |── sound
-|   |   └── SoundManager.java        
-|   └── ui
-|       |── ExitConfirm.java
-|       |── Game.java
-|       |── GameButton.java
-|       |── GameOverPanel.java
-|       |── MainLayeredPane.java
-|       |── MainPanel.java
-|       |── MainMenuPanel.java
-|       |── OverlayPanel.java
-|       |── PauseMenuPanel.java
-|       |── WinPanel.java
-|       └── OverlayPanel.java
-|── .gitignore
-|── README.md
-|── TheLastStand.java
-|── TheLastStand.jar
-└── TheLastStand.exe
 
----
-
-## How to Run
-
-### Requirements
-
-- Java 11 or higher
-- No external libraries — uses the Java standard library only
-
-### Steps
-
-1. Clone or download the project
-2. Compile all source files from the project root:
-   ```bash
-   javac Codes/*.java
-   ```
-3. Run the entry point:
-   ```bash
-   java Codes.TheLastStand
-   ```
-
-The game launches full-screen and undecorated, sized to your monitor's resolution. Ensure the `Entities/` and `Music/` folders are in the same directory you run the command from.
+> **Note:** Ensure the `asset/` folder stays in the same directory as the game executable for graphics and audio to load correctly.
