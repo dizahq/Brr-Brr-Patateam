@@ -45,8 +45,9 @@ Selecting *New Game*, or returning to the menu after a *Game Over* or *Victory*,
 Double-click **`TheLastStand.exe`** or **`TheLastStand.jar`** to launch in full-screen. Or compile and run via terminal:
 
 ```bash
-javac Codes/*.java
-java Codes.TheLastStand
+javac -d TheLastStand/out TheLastStand/src/TheLastStand.java TheLastStand/src/fileio/*.java TheLastStand/src/gameloop/*.java TheLastStand/src/objects/*.java TheLastStand/src/sound/*.java TheLastStand/src/ui/*.java
+
+java -cp "TheLastStand/out;TheLastStand" TheLastStand
 ```
 
 > **Note:** Ensure the `asset/` folder stays in the same directory as the game executable for graphics and audio to load correctly.
