@@ -1,5 +1,6 @@
 package ui;
 
+import fileio.SaveManager;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -8,7 +9,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import fileio.SaveManager;
 
 public class WinPanel extends OverlayPanel {
     private JPanel container; // Inner container panel used to organize and position UI components
@@ -45,7 +45,7 @@ public class WinPanel extends OverlayPanel {
         exitBtn.setButtonSize(300, 80);
 
         container.add(Box.createVerticalGlue());
-        container.add(Box.createRigidArea(new Dimension(0, 500)));
+        container.add(Box.createRigidArea(new Dimension(0, 450)));
         container.add(mainMenuBtn);
         container.add(Box.createRigidArea(new Dimension(0, 20))); 
         container.add(exitBtn);

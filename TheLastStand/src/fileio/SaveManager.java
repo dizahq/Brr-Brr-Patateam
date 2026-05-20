@@ -12,8 +12,19 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class SaveManager {
-    private static final String SAVE_DIR = "TheLastStand" + File.separator + "saves";
-    private static final String SAVE_FILE = SAVE_DIR + File.separator + "savegame.txt"; // Separator ensures it works on both windows and mac/linux
+    private static final String SAVE_DIR;
+    private static final String SAVE_FILE;
+
+    static {
+        try {
+            File jarDir = new File(SaveManager.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+            String root = jarDir.getParentFile().getParentFile().getParent();
+            SAVE_DIR = root + File.separator + "TheLastStand" + File.separator + "saves";
+        } catch (Exception e) {
+            throw new RuntimeException("Could not resolve save directory", e);
+        }
+        SAVE_FILE = SAVE_DIR + File.separator + "savegame.txt";
+    }
 
     private SaveManager() {}
 
@@ -44,6 +55,7 @@ public class SaveManager {
             
             // Write data into savegame.txt. 
             try (PrintWriter writer = new PrintWriter(new FileWriter(SAVE_FILE))) { 
+                writer.println(data.currentLevel);
                 writer.println(data.currentWave);
                 writer.println(data.lives);
                 writer.println(data.playerX);
