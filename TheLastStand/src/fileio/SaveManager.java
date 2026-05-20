@@ -16,13 +16,14 @@ public class SaveManager {
     private static final String SAVE_FILE;
 
     static {
-        try {
-            File jarDir = new File(SaveManager.class.getProtectionDomain().getCodeSource().getLocation().toURI());
-            String root = jarDir.getParentFile().getParentFile().getParent();
-            SAVE_DIR = root + File.separator + "TheLastStand" + File.separator + "saves";
-        } catch (Exception e) {
-            throw new RuntimeException("Could not resolve save directory", e);
+        String appData = System.getenv("APPDATA");
+
+        // Fallback for non-windows (Linux/Mac use home directory)
+        if (appData == null || appData.isEmpty()) {
+            appData = System.getProperty("user.home") + File.separator + ".config";
         }
+
+        SAVE_DIR = appData + File.separator + "TheLastStand" + File.separator + "saves";
         SAVE_FILE = SAVE_DIR + File.separator + "savegame.txt";
     }
 
