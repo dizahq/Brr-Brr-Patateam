@@ -150,7 +150,7 @@ public class Player extends Entity {
             dy = (dy / length) * speed;
 
             if (animationTick == 0){
-                SoundManager.getInstance().playSFX("TheLastStand/assets/music/walk.wav");
+                SoundManager.getInstance().playSFX("/assets/music/walk.wav");
 
             }
         }
@@ -217,7 +217,7 @@ public class Player extends Entity {
         //Shoot bullet
         if(canFire){
             if (shootUp || shootDown || shootLeft || shootRight) {
-                SoundManager.getInstance().playSFX("TheLastStand/assets/music/bow_and_arrow.wav");
+                SoundManager.getInstance().playSFX("/assets/music/bow_and_arrow.wav");
             }
 
             if (shootRight && shootUp) {

@@ -425,7 +425,7 @@ public abstract class Enemy extends Entity {
             if (frameIndex == 2 && !attackLanded) {
                 attackLanded = true;
                 strikeCount++;
-                SoundManager.getInstance().playSFX("TheLastStand/assets/music/sword.wav");
+                SoundManager.getInstance().playSFX("/assets/music/sword.wav");
                 if (RNG.nextInt(100) >= MISS_CHANCE) {
                     isDamageFrame = true;
                     strikeCount   = 0;

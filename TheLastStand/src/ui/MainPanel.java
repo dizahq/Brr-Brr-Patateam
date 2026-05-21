@@ -31,7 +31,7 @@ public class MainPanel extends JPanel{
 
         if (name.equals("game")) {
             SoundManager.getInstance().setMusicVolume(0.30f); // max volume
-            SoundManager.getInstance().setSFXVolume(1.0f); // game SFX louder
+            SoundManager.getInstance().setSFXVolume(0.90f); // game SFX louder
             SoundManager.getInstance().playMusic("/assets/music/Game_music.wav");
         } else if (name.equals("mainMenu")) {
             SoundManager.getInstance().setMusicVolume(.40f); // max volume
