@@ -41,9 +41,9 @@ public class MainMenuPanel extends JPanel{
         exitBtn.setAlignmentX(CENTER_ALIGNMENT);
 
         // newGameBtn.setPreferredSize(new Dimension(300, 100));
-        newGameBtn.setButtonSize(300, 100);
-        continueBtn.setButtonSize(300, 100);
-        exitBtn.setButtonSize(300, 100);
+        newGameBtn.setButtonSize(300, 90);
+        continueBtn.setButtonSize(300, 90);
+        exitBtn.setButtonSize(300, 90);
 
         newGameBtn.addActionListener(e -> {
             SoundManager.getInstance().playSFX("/assets/music/click.wav");
