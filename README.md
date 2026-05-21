@@ -45,7 +45,9 @@ Selecting *New Game*, or returning to the menu after a *Game Over* or *Victory*,
 Double-click **TheLastStand.exe** or **TheLastStand.jar** to launch in full-screen. Or compile and run via terminal:
 
 javac -d TheLastStand/out TheLastStand/src/TheLastStand.java TheLastStand/src/fileio/*.java TheLastStand/src/gameloop/*.java TheLastStand/src/objects/*.java TheLastStand/src/sound/*.java TheLastStand/src/ui/*.java
+
 or 
+
 cd Brr-Brr-Patateam
 mkdir TheLastStand\out
 javac -d TheLastStand/out TheLastStand/src/TheLastStand.java TheLastStand/src/fileio/*.java TheLastStand/src/gameloop/*.java TheLastStand/src/objects/*.java TheLastStand/src/sound/*.java TheLastStand/src/ui/*.java
