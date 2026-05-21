@@ -19,7 +19,7 @@ public class MainPanel extends JPanel{
         setLayout(cards);
         
         game = new Game(panelWidth, panelHeight, rootLayeredPane);
-        mainMenu = new MainMenuPanel(rootLayeredPane, switchPanel, game);
+        mainMenu = new MainMenuPanel(rootLayeredPane, switchPanel, game, panelWidth, panelHeight);
 
         add(mainMenu, "mainMenu");
         add(game, "game");

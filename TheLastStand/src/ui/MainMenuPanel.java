@@ -3,48 +3,81 @@ package ui;
 import fileio.SaveData;
 import fileio.SaveManager;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.util.function.Consumer;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import sound.SoundManager;
 
-public class MainMenuPanel extends JPanel{
+public class MainMenuPanel extends JPanel {
     private MainLayeredPane rootLayeredPane;
     private Consumer<String> switchPanel;
     private Game game;
 
-    //new
     private Image backgroundImage;
 
     private GameButton newGameBtn = new GameButton("mainMenu/newgameButton.png", "mainMenu/newgameButton_pressed.png", null);
     private GameButton continueBtn = new GameButton("mainMenu/continueButton.png", "mainMenu/continueButton_pressed.png", "mainMenu/continueButton_locked.png");
-    private GameButton exitBtn = new GameButton("mainMenu/exitButton.png", "mainMenu/exitButton_pressed.png", null);  
+    private GameButton exitBtn = new GameButton("mainMenu/exitButton.png", "mainMenu/exitButton_pressed.png", null);
     private GameButton helpBtn = new GameButton("mainMenu/helpButton.png", "mainMenu/helpButton_hover.png", null);
     private GameButton creditsBtn = new GameButton("mainMenu/creditsButton.png", "mainMenu/creditsButton_hover.png", null);
-    
-    public MainMenuPanel(MainLayeredPane rootLayeredPane, Consumer<String> switchPanel, Game game){
+
+    public MainMenuPanel(MainLayeredPane rootLayeredPane, Consumer<String> switchPanel, Game game, int panelWidth, int panelHeight) {
         this.rootLayeredPane = rootLayeredPane;
         this.switchPanel = switchPanel;
         this.game = game;
 
-        JPanel centerPanel = new JPanel();
+        // Button sizes
+        int btnWidth = (int)(panelWidth * 0.22);
+        int btnHeight = (int)(panelHeight * 0.11);
+        newGameBtn.setButtonSize(btnWidth, btnHeight);
+        continueBtn.setButtonSize(btnWidth, btnHeight);
+        exitBtn.setButtonSize(btnWidth, btnHeight);
+        helpBtn.setButtonSize(100, 100);
+        creditsBtn.setButtonSize(100, 100);
 
-        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-        newGameBtn.setAlignmentX(CENTER_ALIGNMENT);
-        continueBtn.setAlignmentX(CENTER_ALIGNMENT);
-        exitBtn.setAlignmentX(CENTER_ALIGNMENT);
+        // Center panel with GridBagLayout
+        JPanel centerPanel = new JPanel(new GridBagLayout());
+        centerPanel.setOpaque(false);
 
-        // newGameBtn.setPreferredSize(new Dimension(300, 100));
-        newGameBtn.setButtonSize(300, 100);
-        continueBtn.setButtonSize(300, 100);
-        exitBtn.setButtonSize(300, 100);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(8, 0, 8, 0);
 
+        // Top glue — increase weighty to push buttons further down
+        gbc.gridy = 0;
+        gbc.weighty = 4.0;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        centerPanel.add(Box.createVerticalStrut(1), gbc);
+
+        // Buttons
+        gbc.weighty = 0;
+        gbc.insets = new Insets(8, 0, 8, 0);
+
+        gbc.gridy = 1;
+        centerPanel.add(newGameBtn, gbc);
+
+        gbc.gridy = 2;
+        centerPanel.add(continueBtn, gbc);
+
+        gbc.gridy = 3;
+        centerPanel.add(exitBtn, gbc);
+
+        // Bottom glue — increase weighty to push buttons further up
+        gbc.gridy = 4;
+        gbc.weighty = 0.01;
+        gbc.insets = new Insets(0, 0, 0, 0);
+        centerPanel.add(Box.createVerticalStrut(1), gbc);
+
+        // Action listeners
         newGameBtn.addActionListener(e -> {
             SoundManager.getInstance().playSFX("/assets/music/click.wav");
             newGame();
@@ -57,22 +90,6 @@ public class MainMenuPanel extends JPanel{
             SoundManager.getInstance().playSFX("/assets/music/click.wav");
             exitGame();
         });
-
-        centerPanel.add(Box.createVerticalGlue());
-        centerPanel.add(Box.createRigidArea(new Dimension(0, 400)));
-        centerPanel.add(newGameBtn);
-        centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        centerPanel.add(continueBtn);
-        centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-        centerPanel.add(exitBtn);
-        centerPanel.add(Box.createVerticalGlue());
-
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 25, 0));
-
-        helpBtn.setButtonSize(100, 100);
-        creditsBtn.setButtonSize(100, 100);
-
         helpBtn.addActionListener(e -> {
             SoundManager.getInstance().playSFX("/assets/music/click.wav");
             help();
@@ -82,17 +99,18 @@ public class MainMenuPanel extends JPanel{
             credits();
         });
 
+        // Bottom right buttons
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 25, 0));
+        buttonPanel.setOpaque(false);
         buttonPanel.add(helpBtn);
         buttonPanel.add(creditsBtn);
 
+        // Main layout
         setLayout(new BorderLayout());
-        centerPanel.setOpaque(false);
-        buttonPanel.setOpaque(false);
-
         add(centerPanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        //bg not final
         backgroundImage = new ImageIcon(getClass().getResource("/assets/background/mainmenu.png")).getImage();
         refreshButtons();
 
@@ -103,12 +121,10 @@ public class MainMenuPanel extends JPanel{
         });
     }
 
-    //new
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (backgroundImage != null) {
-            // Stretch image to fill panel
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
     }
@@ -117,40 +133,29 @@ public class MainMenuPanel extends JPanel{
         continueBtn.setEnabled(SaveManager.hasSave());
     }
 
-    public void newGame(){
+    public void newGame() {
         SaveManager.deleteSave();
         game.resetGame();
         switchPanel.accept("game");
         game.startGameThread();
-
-        // test
         System.out.println("[MainMenuPanel] New Game.");
     }
 
-    public void continueGame(){
+    public void continueGame() {
         SaveData data = SaveManager.load();
-
         if (data != null) {
-            // Restore game state from the save file
             game.restoreFromSave(data);
             System.out.println("[MainMenuPanel] Continuing from: " + data);
         } else {
-            // Save file wass corrupt/missing
-            System.err.println("[MainMenuPanel] No valid save found, startingnew.");
+            System.err.println("[MainMenuPanel] No valid save found, starting new.");
             game.setCurrentLevel(0);
             game.resetGame();
         }
-
         switchPanel.accept("game");
         game.startGameThread();
     }
-    public void exitGame(){
-        rootLayeredPane.getExitConfirm().setVisible(true);
-    }
-    public void help(){
-        rootLayeredPane.getHelp().setVisible(true);
-    }
-    public void credits(){
-        rootLayeredPane.getCredits().setVisible(true);
-    }
+
+    public void exitGame() { rootLayeredPane.getExitConfirm().setVisible(true); }
+    public void help() { rootLayeredPane.getHelp().setVisible(true); }
+    public void credits() { rootLayeredPane.getCredits().setVisible(true); }
 }

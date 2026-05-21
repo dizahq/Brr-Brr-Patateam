@@ -15,7 +15,9 @@ public class MainFrame extends JFrame{
     
     public MainFrame(){
         // System initialization: ensures the save file is in clean state at launch
-        SaveManager.resetFile();
+        if (!SaveManager.hasSave()) {
+            SaveManager.resetFile();
+        }
         
         // Window configuration
         setBounds(0, 0, frameWidth, frameHeight); // Match screen size
