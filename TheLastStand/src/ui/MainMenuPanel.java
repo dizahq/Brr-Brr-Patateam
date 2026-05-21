@@ -59,7 +59,7 @@ public class MainMenuPanel extends JPanel{
         });
 
         centerPanel.add(Box.createVerticalGlue());
-        centerPanel.add(Box.createRigidArea(new Dimension(0, 400)));
+        centerPanel.add(Box.createRigidArea(new Dimension(0, 350)));
         centerPanel.add(newGameBtn);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
         centerPanel.add(continueBtn);
