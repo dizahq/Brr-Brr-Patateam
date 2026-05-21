@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.Toolkit;
 import javax.swing.JFrame;
+import fileio.SaveManager;
 import sound.SoundManager;
 
 public class MainFrame extends JFrame{
