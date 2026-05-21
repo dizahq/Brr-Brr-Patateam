@@ -1,8 +1,8 @@
 package ui;
 
+import fileio.SaveManager;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
-import fileio.SaveManager;
 import sound.SoundManager;
 
 public class MainFrame extends JFrame{
@@ -30,7 +30,7 @@ public class MainFrame extends JFrame{
 
         // Audio System Initialization
         SoundManager.getInstance().playMusic("/assets/music/MainMenu_music.wav");
-        SoundManager.getInstance().setMusicVolume(.50f); // max volume
+        SoundManager.getInstance().setMusicVolume(.50f); // Max volume
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
